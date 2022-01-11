@@ -1,0 +1,28 @@
+##################################################################
+#
+# Applicationで利用する環境変数
+#
+##################################################################
+AWS_REGION='ap-northeast-1'
+##################################################################
+# Cognito
+##################################################################
+# Cognitoの管理画面から取得可能
+COGNITO_IDENTITY_POOL_ID='ap-northeast-1:85001f17-7d96-408f-980c-71b26418e503'
+COGNITO_USER_POOL_ID='ap-northeast-1_hCmmoOn5J'
+COGNITO_USER_POOL_WEB_CLIENT_ID='75u30tg726sldb4td0qg0svghi'
+##################################################################
+# AppSync
+##################################################################
+# AppSyncの管理画面から取得可能
+APPSYNC_GRAPHQL_ENDPOINT='https://nbbg27nf3zfblf365d6ri7e6ym.appsync-api.ap-northeast-1.amazonaws.com/graphql'
+APPSYNC_AUTHENTICATIONTYPE='AMAZON_COGNITO_USER_POOLS'
+APPSYNC_APIKEY='da2-bz3z2nmjv5dyjanraayb24kx7e'
+##################################################################
+# S3
+##################################################################
+# serverで登録した、画像保存用のS3のバケット名
+STORAGE_AWSS3_BUCKET='chillnn-training-static-asset-ishikawam'
+STORAGE_AWSS3_REGION='ap-northeast-1'
+# serverで登録した、CloudFrontのURL（https:// から始まる）
+STORAGE_AWSS3_BASE_URL='https://dev-assets.chillnn-training.ishikawam.com'

@@ -1,0 +1,45 @@
+/* tslint:disable */
+/* eslint-disable */
+// this is an auto generated file. This will be overwritten
+
+export const addRecord = /* GraphQL */ `
+  mutation AddRecord($input: RecordMastInput!) {
+    addRecord(input: $input) {
+      cleanerID
+      createdAt
+      finishedAt
+      recordID
+      room
+      startAt
+    }
+  }
+`;
+export const addScore = /* GraphQL */ `
+  mutation AddScore($input: ScoreMastInput!) {
+    addScore(input: $input) {
+      createdAt
+      recordID
+      score
+      scoreID
+      scorerUserID
+    }
+  }
+`;
+export const updateUserMast = /* GraphQL */ `
+  mutation UpdateUserMast($input: UserMastInput!) {
+    updateUserMast(input: $input) {
+      createdAt
+      email
+      name
+      role
+      updatedAt
+      userIcon {
+        bucket
+        key
+        region
+        url
+      }
+      userID
+    }
+  }
+`;
