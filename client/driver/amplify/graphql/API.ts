@@ -128,6 +128,18 @@ export type UpdateUserMastMutation = {
   },
 };
 
+export type FetchAllRecordsQuery = {
+  fetchAllRecords:  Array< {
+    __typename: "RecordMast",
+    cleanerID: string,
+    createdAt: number,
+    finishedAt: number,
+    recordID: string,
+    room: string,
+    startAt: number,
+  } >,
+};
+
 export type FetchAllUserMastQuery = {
   fetchAllUserMast:  Array< {
     __typename: "UserMast",

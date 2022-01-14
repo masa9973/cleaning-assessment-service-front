@@ -8,23 +8,26 @@ import {
 import { recordMastRepository } from './modules/GraphqlRecordMastRepository'
 import { userMastRepository } from './modules/GraphqlUserMastRepository'
 import { s3Repository } from './modules/S3Repository'
-import { scoreMastRepository } from './modules/GraphqlCommentMastRepository'
+import { scoreMastRepository } from './modules/GraphqlScoreMastRepository'
 
 const repositoryContainer = new RepositoryContainer(
     s3Repository,
     userMastRepository,
     recordMastRepository,
-    scoreMastRepository,
+    scoreMastRepository
 )
 
 const modelFactory = new ModelFactory(repositoryContainer)
 
-export const userInteractor = new CleanerUsecase(repositoryContainer, modelFactory)
+export const userInteractor = new CleanerUsecase(
+    repositoryContainer,
+    modelFactory
+)
 
 // export const scoreInteractorFactory = function (postModel: RecordModel) {
 //     return new CommentUsecase(repositoryContainer, modelFactory, postModel);
 // }
 
 export const scoreInteractorFactory = (recordModel: RecordModel) => {
-    return new ScoreUsecase(repositoryContainer, modelFactory, recordModel);
+    return new ScoreUsecase(repositoryContainer, modelFactory, recordModel)
 }

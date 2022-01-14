@@ -5,6 +5,7 @@
         </div>
         <div class="input_container">
             <auth-input v-model="email" label="Eメール" class="input_item" />
+            <div>{{ email }}</div>
             <auth-input
                 v-model="password"
                 label="パスワード"

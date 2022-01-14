@@ -16,25 +16,3 @@ export default class AppButton extends Vue {
     }
 }
 </script>
-<style lang="stylus" scoped>
-.button_container {
-    display: inline-block;
-
-    button {
-        border: 0;
-        border-radius: 5px;
-        font-size: 16px;
-        padding: 5px 30px;
-        cursor: pointer;
-
-        @media only screen and (max-width: $spSize) {
-            font-size: 14px;
-            padding: 5px 20px;
-        }
-
-        &:disabled {
-            color: $borderColor;
-        }
-    }
-}
-</style>
