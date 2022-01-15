@@ -1,4 +1,4 @@
-import { IRecordMastRepository, RecordMast } from 'stage3-abr'
+import { IRecordMastRepository, RecordMast, RecordMastRepositoryCacheAdaptor } from 'stage3-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
@@ -34,11 +34,12 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
     }
 
     async fetchAllRecords(): Promise<RecordMast[]> {
-        console.log('callApiまで')
         return (
             await callApi<FetchAllRecordsQuery, {}>(query.fetchAllRecords, {})
         ).fetchAllRecords
     }
 }
 
-export const recordMastRepository = new GraphqlRecordMastRepository()
+export const recordMastRepository = new RecordMastRepositoryCacheAdaptor(
+    new GraphqlRecordMastRepository()
+)
