@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>清掃記録一覧から記録を選択して評価したい</div>
         <div class="records_list_container">
             <div v-for="record in records" :key="record.recordID">
                 <record-card :record-model="record" />
@@ -26,7 +25,6 @@ import UserIcon from '@/components/Organisms/User/Icon/index.vue'
     },
 })
 export default class AddScore extends Vue {
-    // fetchRecordしなきゃいけない
     public record: RecordModel | null = null
     public records: RecordModel[] = []
     public scoreModel: ScoreModel | null = null
@@ -35,7 +33,6 @@ export default class AddScore extends Vue {
 
     public async created() {
         this.records = await userInteractor.fetchAllRecords()
-        // this.user = await userInteractor.fetchUserModelByUserID(this.record!.cleanerID)
     }
 
     public async register() {
