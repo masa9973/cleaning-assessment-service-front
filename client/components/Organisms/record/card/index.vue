@@ -1,20 +1,20 @@
 <template>
-    <div>
+    <div class="record_item_container">
         <div class="record_date">
             <div>清掃日{{ new Date(createdAt) }}</div>
         </div>
         <div class="cleaner_name">
             <div>清掃者{{ name }}</div>
-        <div class="cleaner_icon">
-            <img :src="userIconUrl" />
-        </div>
+            <div class="cleaner_icon">
+                <img :src="userIconUrl" />
+            </div>
         </div>
         <div class="record_room">
             <div>部屋番号{{ room }}</div>
         </div>
-        <!-- <div class="cleaning_time">
+        <div class="cleaning_time">
             <div>清掃時間{{ time }}</div>
-        </div> -->
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -65,5 +65,26 @@ export default class RecordCard extends Vue {
     get finishedAt() {
         return this.recordModel.finishedAt
     }
+
+    get time() {
+        console.log('start', this.startAt)
+        console.log('finished', this.finishedAt)
+        return this.finishedAt - this.startAt
+    }
 }
 </script>
+<style lang="stylus" scoped>
+.record_item_container {
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+    
+    img {
+        object-fit: cover;
+        border-radius: 10000px;
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
