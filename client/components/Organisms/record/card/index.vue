@@ -29,12 +29,9 @@ import { userInteractor } from '~/api'
     },
 })
 export default class RecordCard extends Vue {
-    // @Prop({ required: true }) userModel!: UserModel
     @Prop({ required: true }) recordModel!: RecordModel
-    public userModel: UserModel | null = null
     public pageUser: UserModel | null = null
 
-    // propで渡ってきたレコードの清掃者IDからユーザーの情報を引っ張ってきたい
     async created() {
         this.pageUser = await userInteractor.fetchUserModelByUserID(
             this.recordModel.cleanerID

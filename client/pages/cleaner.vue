@@ -18,35 +18,24 @@
     </div>
 </template>
 <script lang="ts">
-import { RecordModel, UserModel } from 'stage3-abr'
+import { RecordModel } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 
 // component
-import AppInput from '~/components/Atom/AppInput.vue'
-import AppButton from '@/components/Atom/AppButton.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 import { userInteractor } from '~/api'
-// import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 
 @Component({
     components: {
-        AppInput,
-        AppButton,
     },
 })
 export default class AddRecord extends Vue {
-    // @Prop({ required: true }) recordModel!: RecordModel
-    public recordModel!: RecordModel
-    public recordModels: RecordModel[] = []
     public blancRecord: RecordModel | null = null
-    public myUserModel: UserModel | null = null
     public startTime: number = 0
     public finishedTime: number = 0
     public roomValue: string = ''
 
     public async created() {
-        // this.myUserModel = await userInteractor.fetchMyUserModel()
-        // const userID = this.myUserModel.userID
     }
 
     public getStartTime() {
@@ -61,11 +50,11 @@ export default class AddRecord extends Vue {
 
     @AsyncLoadingAndErrorHandle()
     public async register() {
-        this.recordModel = await userInteractor.createNewRecord()
-        this.recordModel!.startAt = this.startTime
-        this.recordModel!.finishedAt = this.finishedTime
-        this.recordModel!.room = this.roomValue
-        await this.recordModel.register()
+        this.blancRecord = await userInteractor.createNewRecord()
+        this.blancRecord.startAt = this.startTime
+        this.blancRecord.finishedAt = this.finishedTime
+        this.blancRecord.room = this.roomValue
+        await this.blancRecord.register()
         this.$emit('registered')
     }
 }

@@ -22,18 +22,10 @@
     </div>
 </template>
 <script lang="ts">
-import { UserModel } from 'stage3-abr'
-import { Component, Vue } from 'nuxt-property-decorator'
-import { userInteractor } from '~/api'
-@Component({
-    components: {},
-})
+import { Vue } from 'nuxt-property-decorator'
+
 export default class Top extends Vue {
-    public myUserModel: UserModel | null = null
-    public registeredUsers: UserModel[] = []
     public async created() {
-        // this.registeredUsers = await userInteractor.fetchAllUser()
-        this.myUserModel = await userInteractor.fetchMyUserModel()
     }
 }
 </script>

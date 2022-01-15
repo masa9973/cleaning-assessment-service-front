@@ -1,6 +1,5 @@
 <template>
     <div class="user_detail_container">
-        <div>ここにアイコンと自分のレコードを表示したい</div>
         <div v-if="userModel" class="user_icon_wrapper">
             <!-- icon -->
             <user-icon :user-model="userModel" />
@@ -20,7 +19,7 @@
     </div>
 </template>
 <script lang="ts">
-import { RecordModel, ScoreModel, UserModel } from 'stage3-abr'
+import { RecordModel, UserModel } from 'stage3-abr'
 import { Vue, Component } from 'nuxt-property-decorator'
 import { userInteractor } from '~/api'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
@@ -34,8 +33,6 @@ import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 export default class UserPage extends Vue {
     public userModel: UserModel | null = null
     public recordModels: RecordModel[] = []
-    public scoreModel: ScoreModel | null = null
-    public scoreModels: ScoreModel[] = []
 
     public async created() {
         const userID = this.$route.params.userID
