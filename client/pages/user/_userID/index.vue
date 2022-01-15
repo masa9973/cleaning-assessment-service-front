@@ -41,7 +41,6 @@ export default class UserPage extends Vue {
         const userID = this.$route.params.userID
         this.recordModels = await userInteractor.fetchRecordsByCleanerID(userID)
         this.userModel = await userInteractor.fetchUserModelByUserID(userID)
-        console.log('ユーザー', this.userModel)
     }
 }
 </script>
