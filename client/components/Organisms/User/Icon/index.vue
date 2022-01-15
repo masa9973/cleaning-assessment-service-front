@@ -10,9 +10,9 @@
             <div v-if="showEdit" class="edit_button" @click="openModal"></div>
         </div>
         <!-- edit -->
-        <app-modal v-model="showEditModal">
+        <!-- <app-modal v-model="showEditModal">
             <user-edit :user-model="userModel" @registered="closeModal" />
-        </app-modal>
+        </app-modal> -->
     </div>
 </template>
 <script lang="ts">

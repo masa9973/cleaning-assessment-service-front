@@ -1,6 +1,5 @@
 <template>
     <div class="user_list_container">
-        <div>{{ registeredUsers }}</div>
         <div
             v-for="(user, idx) in registeredUsers"
             :key="user.userID"
@@ -9,33 +8,35 @@
         >
             <nuxt-link
                 :to="{
-                    name: 'cleaner-userID',
+                    name: 'user-userID',
                     params: { userID: user.userID },
                 }"
                 tag="div"
                 class="link"
             >
+                <user-icon :user-model="user" class="user_icon_item" />
             </nuxt-link>
         </div>
+        <div>ここはユーザーだけ</div>
     </div>
 </template>
 <script lang="ts">
 import { UserModel } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { userInteractor } from '~/api'
+import UserIcon from '@/components/Organisms/User/Icon/index.vue'
+
 // component
 @Component({
-    components: {},
+    components: {
+        UserIcon,
+    },
 })
 export default class Top extends Vue {
     public userModel: UserModel | null = null
     public registeredUsers: UserModel[] = []
     public async created() {
         this.registeredUsers = await userInteractor.fetchAllUser()
-    }
-
-    public get name() {
-            return this.userModel!.name
     }
 }
 </script>

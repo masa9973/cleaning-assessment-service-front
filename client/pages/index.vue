@@ -2,7 +2,7 @@
     <div>
         <div class="user_mapping_container">
             <nuxt-link :to="{ name: 'top' }">
-                <button>ユーザー一覧を見る</button>
+                <button>ユーザー一覧</button>
             </nuxt-link>
         </div>
         <div class="start_cleaning_button_container">
@@ -15,7 +15,7 @@
             </nuxt-link>
         </div>
         <div class="start_scoreing_button_container">
-            <nuxt-link :to="{ name: 'manager-addscore' }">
+            <nuxt-link :to="{ name: 'manager-record_list' }">
                 <button>清掃の評価を開始する</button>
             </nuxt-link>
         </div>

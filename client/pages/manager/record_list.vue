@@ -1,24 +1,49 @@
 <template>
     <div>
-        <div>レコード一覧</div>
-        <div
-        v-for="record in registeredRecords"
-        :key="record.recordID"
-        ></div>
-        <nuxt-link :to="{ name: 'manager-addscore'}" >
-            <button>評価画面へ</button>
-        </nuxt-link>
+        <div>清掃記録一覧から記録を選択して評価したい</div>
+        <div class="records_list_container">
+            <div v-for="record in records" :key="record.recordID">
+                <record-card :record-model="record" />
+                
+                <button>この清掃を評価する</button>
+            </div>
+        </div>
     </div>
 </template>
 <script lang="ts">
-import { RecordModel } from 'stage3-abr';
-import { Vue } from 'nuxt-property-decorator'
-import { userInteractor } from '~/api';
+import { RecordModel, ScoreModel, UserModel } from 'stage3-abr'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { scoreInteractorFactory, userInteractor } from '~/api'
+import RecordCard from '@/components/Organisms/record/card/index.vue'
+import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 
-export default class RecordList extends Vue {
-    public registeredRecords: RecordModel[] = []
+// component
+
+@Component({
+    components: {
+        RecordCard,
+        UserIcon,
+    },
+})
+export default class AddScore extends Vue {
+    // fetchRecordしなきゃいけない
+    public record: RecordModel | null = null
+    public records: RecordModel[] = []
+    public scoreModel: ScoreModel | null = null
+    public scoreValue: number = 0
+    public user: UserModel | null = null
+
     public async created() {
-        this.registeredRecords = await userInteractor.fetchAllRecords()
+        this.records = await userInteractor.fetchAllRecords()
+        // this.user = await userInteractor.fetchUserModelByUserID(this.record!.cleanerID)
+    }
+
+    public async register() {
+        const recordInteractor = scoreInteractorFactory(this.record!)
+        this.scoreModel! = await recordInteractor.createNewScore()
+        this.scoreModel!.score = this.scoreValue
+        await this.scoreModel.register()
+        this.$emit('registered')
     }
 }
 </script>

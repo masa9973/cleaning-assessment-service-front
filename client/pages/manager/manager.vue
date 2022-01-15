@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>hoge{{ record }}</div>
         <nuxt-link :to="{ name: 'manager-addscore' }" >
             <button>評価画面へ</button>
         </nuxt-link>
@@ -26,8 +25,6 @@ export default class AddScore extends Vue {
 
     public async created() {
         this.records = await userInteractor.fetchAllRecords()
-        console.log('hoge', this.records)
-        console.log('hogehoge', this.record)
     }
 
     public async register() {
