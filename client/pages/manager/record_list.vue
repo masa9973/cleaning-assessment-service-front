@@ -14,14 +14,12 @@ import { RecordModel, ScoreModel, UserModel } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { scoreInteractorFactory, userInteractor } from '~/api'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
-import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 
 // component
 
 @Component({
     components: {
         RecordCard,
-        UserIcon,
     },
 })
 export default class AddScore extends Vue {
