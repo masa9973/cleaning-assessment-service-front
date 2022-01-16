@@ -1,12 +1,10 @@
 <template>
-    <div>
         <div class="records_list_container">
-            <div v-for="record in records" :key="record.recordID">
+            <div v-for="record in records" :key="record.recordID" class="record_card_with_addscorebutton">
                 <record-card :record-model="record" />
-                <add-score :record-model="record"/>
+                <add-score :record-model="record" class="addscorebutton"/>
             </div>
         </div>
-    </div>
 </template>
 <script lang="ts">
 import { RecordModel } from 'stage3-abr'
@@ -31,3 +29,12 @@ export default class RecordListForManager extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.record_card_with_addscorebutton {
+    margin-bottom: 35px;
+
+    .addscorebutton {
+        text-align: center;
+    }
+}
+</style>

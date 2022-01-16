@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="user_mapping_container">
-            <nuxt-link :to="{ name: 'top' }">
+            <nuxt-link :to="{ name: 'user_list' }">
                 <button>ユーザー一覧</button>
             </nuxt-link>
         </div>
