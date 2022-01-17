@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <div class="add_score">
         <app-modal v-model="isShowModal">
             <input v-model="scoreValue" />
-            <div>{{ recordModel.recordID }}</div>
             <button @click="register">評価を確定する</button>
         </app-modal>
         <button @click="openModal">この清掃を評価する</button>
@@ -31,12 +30,14 @@ export default class AddScore extends Vue {
     }
 
     public async register() {
-        const scoreInteractor = await scoreInteractorFactory(this.recordModel)
+        const scoreInteractor = scoreInteractorFactory(this.recordModel)
         this.blancScore = await scoreInteractor.createNewScore()
         this.blancScore.score = this.scoreValue
         await this.blancScore.register()
-        console.log('スコアに何の値が入っているか', this.blancScore)
-        this.isShowModal = false
+        await this.recordModel.switchIfScored()
+        window.alert(
+            '清掃評価は正常に送信されました。'
+        )
     }
 }
 </script>

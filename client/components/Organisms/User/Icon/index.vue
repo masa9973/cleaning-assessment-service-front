@@ -7,21 +7,28 @@
         <div class="name">
             <!-- name -->
             <div>{{ userName }}さん</div>
-            <div v-if="showEdit" class="edit_button" @click="openModal"></div>
+            <div v-if="showEdit" class="edit_button" @click="openModal">
+                <img src="~/assets/img/edit.svg" />
+            </div>
         </div>
         <!-- edit -->
-        <!-- <app-modal v-model="showEditModal">
+        <app-modal v-model="showEditModal">
             <user-edit :user-model="userModel" @registered="closeModal" />
-        </app-modal> -->
+        </app-modal>
     </div>
 </template>
 <script lang="ts">
 import { UserModel } from 'stage3-abr'
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 // component
+import AppModal from '@/components/Organisms/common/app_modal/index.vue'
+import UserEdit from '@/components/Organisms/Edit/index.vue'
 
 @Component({
-    components: {},
+    components: {
+        AppModal,
+        UserEdit,
+    },
 })
 export default class UserIcon extends Vue {
     @Prop({ required: true }) userModel!: UserModel

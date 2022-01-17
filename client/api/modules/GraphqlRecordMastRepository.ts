@@ -8,6 +8,8 @@ import {
     FetchAllRecordsQuery,
     FetchRecordsByCleanerIDQuery,
     FetchRecordsByCleanerIDQueryVariables,
+    UpdateRecordMutation,
+    UpdateRecordMutationVariables,
 } from '~/driver/amplify/graphql/API'
 
 class GraphqlRecordMastRepository implements IRecordMastRepository {
@@ -20,6 +22,17 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
                 }
             )
         ).addRecord
+    }
+
+    async updateRecordMast(input: RecordMast): Promise<RecordMast> {
+        return (
+            await callApi<UpdateRecordMutation, UpdateRecordMutationVariables>(
+                mutation.updateRecord,
+                {
+                    input,
+                }
+            )
+        ).updateRecord
     }
 
     async fetchRecordsByCleanerID(userID: string): Promise<RecordMast[]> {

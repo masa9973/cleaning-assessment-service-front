@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="user_mapping_container">
-            <nuxt-link :to="{ name: 'user_list' }">
+            <nuxt-link :to="{ name: 'user' }">
                 <button>ユーザー一覧</button>
             </nuxt-link>
         </div>
         <div class="start_cleaning_button_container">
             <nuxt-link
                 :to="{
-                    name: 'cleaner'
+                    name: 'cleaner-add_record'
                 }"
             >
                 <button>清掃を開始する</button>

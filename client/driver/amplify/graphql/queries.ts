@@ -6,6 +6,7 @@ export const fetchAllRecords = /* GraphQL */ `
   query FetchAllRecords {
     fetchAllRecords {
       cleanerID
+      cleaningTime
       createdAt
       finishedAt
       ifScored
@@ -55,6 +56,7 @@ export const fetchRecordsByCleanerID = /* GraphQL */ `
   query FetchRecordsByCleanerID($userID: ID!) {
     fetchRecordsByCleanerID(userID: $userID) {
       cleanerID
+      cleaningTime
       createdAt
       finishedAt
       ifScored

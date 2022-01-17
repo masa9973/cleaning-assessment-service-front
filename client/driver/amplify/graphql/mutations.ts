@@ -6,6 +6,7 @@ export const addRecord = /* GraphQL */ `
   mutation AddRecord($input: RecordMastInput!) {
     addRecord(input: $input) {
       cleanerID
+      cleaningTime
       createdAt
       finishedAt
       ifScored
@@ -30,6 +31,7 @@ export const updateRecord = /* GraphQL */ `
   mutation UpdateRecord($input: RecordMastInput!) {
     updateRecord(input: $input) {
       cleanerID
+      cleaningTime
       createdAt
       finishedAt
       ifScored

@@ -2,7 +2,7 @@
     <div class="user_detail_container">
         <div v-if="userModel" class="user_icon_wrapper">
             <!-- icon -->
-            <user-icon :user-model="userModel" />
+            <user-icon :user-model="userModel" :show-edit="isMyPage" />
         </div>
         <div class="image_table_wrapper">
             <!-- images -->
@@ -33,11 +33,19 @@ import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 export default class UserPage extends Vue {
     public userModel: UserModel | null = null
     public recordModels: RecordModel[] = []
+    public myUserModel: UserModel | null = null
 
     public async created() {
         const userID = this.$route.params.userID
+        this.myUserModel = await userInteractor.fetchMyUserModel()
         this.recordModels = await userInteractor.fetchRecordsByCleanerID(userID)
         this.userModel = await userInteractor.fetchUserModelByUserID(userID)
+    }
+
+    public get isMyPage() {
+        return (
+            this.myUserModel && this.myUserModel.userID === this.$route.params.userID
+        )
     }
 }
 </script>

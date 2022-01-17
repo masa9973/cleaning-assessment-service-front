@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>清掃者の記録を見る</div>
+        <div>ユーザーをタップして清掃者の記録を見る</div>
         <div class="user_list_container">
             <div
                 v-for="(user, idx) in registeredUsers"
@@ -42,3 +42,19 @@ export default class Top extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.user_list_container {
+    display: flex;
+    .user_icon_wrapper  {
+        box-sizing: border-box;
+        width: 30%;
+        margin-right: 5%;
+        cursor: pointer;
+        padding-bottom: 30px;
+
+        &.three {
+            margin-right: 0;
+        }
+    }
+}
+</style>

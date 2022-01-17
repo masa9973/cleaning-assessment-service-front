@@ -12,10 +12,6 @@
                 <div>さん</div>
             </div>
         </div>
-        <div class="self_introduction_container">
-            <div>自己紹介</div>
-            <app-input v-model="userModel.userSelfIntroduction"></app-input>
-        </div>
     </div>
 </template>
 <script lang="ts">
