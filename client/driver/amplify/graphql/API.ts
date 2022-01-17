@@ -6,6 +6,7 @@ export type RecordMastInput = {
   cleanerID: string,
   createdAt: number,
   finishedAt: number,
+  ifScored?: boolean | null,
   recordID: string,
   room: string,
   startAt: number,
@@ -16,6 +17,7 @@ export type RecordMast = {
   cleanerID: string,
   createdAt: number,
   finishedAt: number,
+  ifScored?: boolean | null,
   recordID: string,
   room: string,
   startAt: number,
@@ -84,6 +86,7 @@ export type AddRecordMutation = {
     cleanerID: string,
     createdAt: number,
     finishedAt: number,
+    ifScored?: boolean | null,
     recordID: string,
     room: string,
     startAt: number,
@@ -102,6 +105,23 @@ export type AddScoreMutation = {
     score: number,
     scoreID: string,
     scorerUserID: string,
+  },
+};
+
+export type UpdateRecordMutationVariables = {
+  input: RecordMastInput,
+};
+
+export type UpdateRecordMutation = {
+  updateRecord:  {
+    __typename: "RecordMast",
+    cleanerID: string,
+    createdAt: number,
+    finishedAt: number,
+    ifScored?: boolean | null,
+    recordID: string,
+    room: string,
+    startAt: number,
   },
 };
 
@@ -134,6 +154,7 @@ export type FetchAllRecordsQuery = {
     cleanerID: string,
     createdAt: number,
     finishedAt: number,
+    ifScored?: boolean | null,
     recordID: string,
     room: string,
     startAt: number,
@@ -188,6 +209,7 @@ export type FetchRecordsByCleanerIDQuery = {
     cleanerID: string,
     createdAt: number,
     finishedAt: number,
+    ifScored?: boolean | null,
     recordID: string,
     room: string,
     startAt: number,

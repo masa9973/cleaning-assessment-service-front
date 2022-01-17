@@ -8,6 +8,7 @@ export const fetchAllRecords = /* GraphQL */ `
       cleanerID
       createdAt
       finishedAt
+      ifScored
       recordID
       room
       startAt
@@ -56,6 +57,7 @@ export const fetchRecordsByCleanerID = /* GraphQL */ `
       cleanerID
       createdAt
       finishedAt
+      ifScored
       recordID
       room
       startAt

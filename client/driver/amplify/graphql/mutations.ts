@@ -8,6 +8,7 @@ export const addRecord = /* GraphQL */ `
       cleanerID
       createdAt
       finishedAt
+      ifScored
       recordID
       room
       startAt
@@ -22,6 +23,19 @@ export const addScore = /* GraphQL */ `
       score
       scoreID
       scorerUserID
+    }
+  }
+`;
+export const updateRecord = /* GraphQL */ `
+  mutation UpdateRecord($input: RecordMastInput!) {
+    updateRecord(input: $input) {
+      cleanerID
+      createdAt
+      finishedAt
+      ifScored
+      recordID
+      room
+      startAt
     }
   }
 `;
