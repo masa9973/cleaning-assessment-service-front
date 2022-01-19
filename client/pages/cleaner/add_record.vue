@@ -1,31 +1,39 @@
 <template>
-    <div>
+    <div class="record_add_container">
         <div class="time_add_cotainer">
-            <div>開始時刻{{ viewStartTime }}</div>
-            <button :disabled="ifPushStartButton" @click="getStartTime">
-                清掃を開始
-            </button>
-            <div>終了時刻{{ viewFinishedTime }}</div>
-            <button :disabled="ifPushFinishButton" @click="getFinishTime">
-                清掃を終了
-            </button>
+            <div class="start_time">
+                <div>開始時刻{{ viewStartTime }}</div>
+                <app-button :disabled="ifPushStartButton" @click="getStartTime">
+                    清掃を開始
+                </app-button>
+            </div>
+            <div class="finish_time">
+                <div>終了時刻{{ viewFinishedTime }}</div>
+                <app-button
+                    :disabled="ifPushFinishButton"
+                    @click="getFinishTime"
+                >
+                    清掃を終了
+                </app-button>
+            </div>
         </div>
         <div class="room_add_container">
             <div>清掃部屋</div>
-            <input v-model="roomValue" />
+            <app-input v-model="roomValue" />
         </div>
-        <div class="button">
-            <button :disabled="!roomValue" @click="openModal">完了</button>
+        <div class="app-button">
+            <app-button :disabled="!roomValue" @click="openModal"
+                >完了</app-button
+            >
         </div>
 
         <app-modal v-model="isShowModal" class="check_modal">
             <div class="cleaning_result">
                 <div>開始時刻{{ viewStartTime }}</div>
                 <div>終了時刻{{ viewFinishedTime }}</div>
-                <div>時間(ms){{ time }}</div>
                 <div>清掃時間{{ viewTime }}</div>
                 <div>清掃部屋{{ roomValue }}</div>
-                <button @click="register">送信する</button>
+                <app-button @click="register">送信する</app-button>
             </div>
         </app-modal>
     </div>
@@ -34,6 +42,8 @@
 import { RecordModel } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
+import AppButton from '@/components/Atom/AppButton.vue'
+import AppInput from '@/components/Atom/AppInput.vue'
 
 // component
 import { userInteractor } from '~/api'
@@ -41,6 +51,8 @@ import { userInteractor } from '~/api'
 @Component({
     components: {
         AppModal,
+        AppButton,
+        AppInput,
     },
 })
 export default class AddRecord extends Vue {
@@ -95,9 +107,7 @@ export default class AddRecord extends Vue {
         this.blancRecord.finishedAt = this.finishedTime
         this.blancRecord.room = this.roomValue
         await this.blancRecord.register()
-        window.alert(
-            '清掃記録は正常に送信されました。'
-        )
+        window.alert('清掃記録は正常に送信されました。')
         this.startTime = 0
         this.finishedTime = 0
         this.viewStartTime = '00:00:00'
@@ -109,7 +119,18 @@ export default class AddRecord extends Vue {
 }
 </script>
 <style lang="stylus">
-.cleaning_result {
+.record_add_container {
     text-align: center;
+    .start_time {
+        margin-bottom: 40px;
+    }
+
+    .finish_time {
+        margin-bottom: 40px;
+    }
+
+    .cleaning_result {
+        text-align: center;
+    }
 }
 </style>
