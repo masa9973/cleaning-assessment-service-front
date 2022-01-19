@@ -2,27 +2,72 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+export type HotelMastInput = {
+  hotelID: string,
+  hotelName: string,
+};
+
+export type HotelMast = {
+  __typename: "HotelMast",
+  hotelID: string,
+  hotelName: string,
+};
+
 export type RecordMastInput = {
   cleanerID: string,
+  cleaningRoomID: string,
   cleaningTime: number,
   createdAt: number,
   finishedAt: number,
+  hotelID: string,
   ifScored: boolean,
   recordID: string,
-  room: string,
   startAt: number,
 };
 
 export type RecordMast = {
   __typename: "RecordMast",
   cleanerID: string,
+  cleaningRoomID: string,
   cleaningTime: number,
   createdAt: number,
   finishedAt: number,
+  hotelID: string,
   ifScored: boolean,
   recordID: string,
-  room: string,
   startAt: number,
+};
+
+export type RoomMastInput = {
+  createdAt: number,
+  hotelID: string,
+  roomIcon?: S3ObjectInput | null,
+  roomID: string,
+  roomName: string,
+};
+
+export type S3ObjectInput = {
+  bucket: string,
+  key: string,
+  region: string,
+  url: string,
+};
+
+export type RoomMast = {
+  __typename: "RoomMast",
+  createdAt: number,
+  hotelID: string,
+  roomIcon?: S3Object | null,
+  roomID: string,
+  roomName: string,
+};
+
+export type S3Object = {
+  __typename: "S3Object",
+  bucket: string,
+  key: string,
+  region: string,
+  url: string,
 };
 
 export type ScoreMastInput = {
@@ -45,6 +90,7 @@ export type ScoreMast = {
 export type UserMastInput = {
   createdAt: number,
   email: string,
+  hotelID: string,
   name: string,
   role: string,
   updatedAt: number,
@@ -52,17 +98,11 @@ export type UserMastInput = {
   userID: string,
 };
 
-export type S3ObjectInput = {
-  bucket: string,
-  key: string,
-  region: string,
-  url: string,
-};
-
 export type UserMast = {
   __typename: "UserMast",
   createdAt: number,
   email: string,
+  hotelID: string,
   name: string,
   role: string,
   updatedAt: number,
@@ -70,12 +110,16 @@ export type UserMast = {
   userID: string,
 };
 
-export type S3Object = {
-  __typename: "S3Object",
-  bucket: string,
-  key: string,
-  region: string,
-  url: string,
+export type AddHotelMutationVariables = {
+  input: HotelMastInput,
+};
+
+export type AddHotelMutation = {
+  addHotel:  {
+    __typename: "HotelMast",
+    hotelID: string,
+    hotelName: string,
+  },
 };
 
 export type AddRecordMutationVariables = {
@@ -86,13 +130,35 @@ export type AddRecordMutation = {
   addRecord:  {
     __typename: "RecordMast",
     cleanerID: string,
+    cleaningRoomID: string,
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
+    hotelID: string,
     ifScored: boolean,
     recordID: string,
-    room: string,
     startAt: number,
+  },
+};
+
+export type AddRoomMutationVariables = {
+  input: RoomMastInput,
+};
+
+export type AddRoomMutation = {
+  addRoom:  {
+    __typename: "RoomMast",
+    createdAt: number,
+    hotelID: string,
+    roomIcon?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+      url: string,
+    } | null,
+    roomID: string,
+    roomName: string,
   },
 };
 
@@ -119,12 +185,13 @@ export type UpdateRecordMutation = {
   updateRecord:  {
     __typename: "RecordMast",
     cleanerID: string,
+    cleaningRoomID: string,
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
+    hotelID: string,
     ifScored: boolean,
     recordID: string,
-    room: string,
     startAt: number,
   },
 };
@@ -138,6 +205,7 @@ export type UpdateUserMastMutation = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
+    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
@@ -152,25 +220,35 @@ export type UpdateUserMastMutation = {
   },
 };
 
-export type FetchAllRecordsQuery = {
-  fetchAllRecords:  Array< {
+export type FetchAllRecordsByHotelIDQueryVariables = {
+  hotelID: string,
+};
+
+export type FetchAllRecordsByHotelIDQuery = {
+  fetchAllRecordsByHotelID:  Array< {
     __typename: "RecordMast",
     cleanerID: string,
+    cleaningRoomID: string,
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
+    hotelID: string,
     ifScored: boolean,
     recordID: string,
-    room: string,
     startAt: number,
   } >,
 };
 
-export type FetchAllUserMastQuery = {
-  fetchAllUserMast:  Array< {
+export type FetchAllUserByHotelIDQueryVariables = {
+  hotelID: string,
+};
+
+export type FetchAllUserByHotelIDQuery = {
+  fetchAllUserByHotelID:  Array< {
     __typename: "UserMast",
     createdAt: number,
     email: string,
+    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
@@ -190,6 +268,7 @@ export type FetchMyUserMastQuery = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
+    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
@@ -212,13 +291,54 @@ export type FetchRecordsByCleanerIDQuery = {
   fetchRecordsByCleanerID:  Array< {
     __typename: "RecordMast",
     cleanerID: string,
+    cleaningRoomID: string,
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
+    hotelID: string,
     ifScored: boolean,
     recordID: string,
-    room: string,
     startAt: number,
+  } >,
+};
+
+export type FetchRecordsByRoomIDQueryVariables = {
+  cleaningRoomID: string,
+};
+
+export type FetchRecordsByRoomIDQuery = {
+  fetchRecordsByRoomID:  Array< {
+    __typename: "RecordMast",
+    cleanerID: string,
+    cleaningRoomID: string,
+    cleaningTime: number,
+    createdAt: number,
+    finishedAt: number,
+    hotelID: string,
+    ifScored: boolean,
+    recordID: string,
+    startAt: number,
+  } >,
+};
+
+export type FetchRoomsByHotelIDQueryVariables = {
+  hotelID: string,
+};
+
+export type FetchRoomsByHotelIDQuery = {
+  fetchRoomsByHotelID:  Array< {
+    __typename: "RoomMast",
+    createdAt: number,
+    hotelID: string,
+    roomIcon?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+      url: string,
+    } | null,
+    roomID: string,
+    roomName: string,
   } >,
 };
 
@@ -246,6 +366,7 @@ export type FetchUserMastByUserIDQuery = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
+    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,

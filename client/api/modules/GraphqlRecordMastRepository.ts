@@ -5,9 +5,11 @@ import * as mutation from '@/driver/amplify/graphql/mutations'
 import {
     AddRecordMutation,
     AddRecordMutationVariables,
-    FetchAllRecordsQuery,
+    FetchAllRecordsByHotelIDQuery,
     FetchRecordsByCleanerIDQuery,
     FetchRecordsByCleanerIDQueryVariables,
+    FetchRecordsByRoomIDQuery,
+    FetchRecordsByRoomIDQueryVariables,
     UpdateRecordMutation,
     UpdateRecordMutationVariables,
 } from '~/driver/amplify/graphql/API'
@@ -46,10 +48,20 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
         ).fetchRecordsByCleanerID
     }
 
-    async fetchAllRecords(): Promise<RecordMast[]> {
+    async fetchRecordsByRoomID(cleaningRoomID: string): Promise<RecordMast[]> {
         return (
-            await callApi<FetchAllRecordsQuery, {}>(query.fetchAllRecords, {})
-        ).fetchAllRecords
+            await callApi<
+                FetchRecordsByRoomIDQuery, FetchRecordsByRoomIDQueryVariables
+                >(query.fetchRecordsByRoomID, {
+                    cleaningRoomID,
+                })
+        ).fetchRecordsByRoomID
+    }
+
+    async fetchAllRecordsByHotelID(): Promise<RecordMast[]> {
+        return (
+            await callApi<FetchAllRecordsByHotelIDQuery, {}>(query.fetchAllRecordsByHotelID, {})
+        ).fetchAllRecordsByHotelID
     }
 }
 

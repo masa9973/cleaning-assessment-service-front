@@ -2,25 +2,27 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const fetchAllRecords = /* GraphQL */ `
-  query FetchAllRecords {
-    fetchAllRecords {
+export const fetchAllRecordsByHotelID = /* GraphQL */ `
+  query FetchAllRecordsByHotelID($hotelID: ID!) {
+    fetchAllRecordsByHotelID(hotelID: $hotelID) {
       cleanerID
+      cleaningRoomID
       cleaningTime
       createdAt
       finishedAt
+      hotelID
       ifScored
       recordID
-      room
       startAt
     }
   }
 `;
-export const fetchAllUserMast = /* GraphQL */ `
-  query FetchAllUserMast {
-    fetchAllUserMast {
+export const fetchAllUserByHotelID = /* GraphQL */ `
+  query FetchAllUserByHotelID($hotelID: ID!) {
+    fetchAllUserByHotelID(hotelID: $hotelID) {
       createdAt
       email
+      hotelID
       name
       role
       updatedAt
@@ -39,6 +41,7 @@ export const fetchMyUserMast = /* GraphQL */ `
     fetchMyUserMast {
       createdAt
       email
+      hotelID
       name
       role
       updatedAt
@@ -56,13 +59,45 @@ export const fetchRecordsByCleanerID = /* GraphQL */ `
   query FetchRecordsByCleanerID($userID: ID!) {
     fetchRecordsByCleanerID(userID: $userID) {
       cleanerID
+      cleaningRoomID
       cleaningTime
       createdAt
       finishedAt
+      hotelID
       ifScored
       recordID
-      room
       startAt
+    }
+  }
+`;
+export const fetchRecordsByRoomID = /* GraphQL */ `
+  query FetchRecordsByRoomID($cleaningRoomID: ID!) {
+    fetchRecordsByRoomID(cleaningRoomID: $cleaningRoomID) {
+      cleanerID
+      cleaningRoomID
+      cleaningTime
+      createdAt
+      finishedAt
+      hotelID
+      ifScored
+      recordID
+      startAt
+    }
+  }
+`;
+export const fetchRoomsByHotelID = /* GraphQL */ `
+  query FetchRoomsByHotelID($hotelID: ID!) {
+    fetchRoomsByHotelID(hotelID: $hotelID) {
+      createdAt
+      hotelID
+      roomIcon {
+        bucket
+        key
+        region
+        url
+      }
+      roomID
+      roomName
     }
   }
 `;
@@ -82,6 +117,7 @@ export const fetchUserMastByUserID = /* GraphQL */ `
     fetchUserMastByUserID(userID: $userID) {
       createdAt
       email
+      hotelID
       name
       role
       updatedAt
