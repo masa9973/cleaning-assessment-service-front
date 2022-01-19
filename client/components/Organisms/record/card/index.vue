@@ -75,9 +75,9 @@ export default class RecordCard extends Vue {
         return this.recordModel.cleanerID
     }
 
-    get room() {
-        return this.recordModel.room
-    }
+    // get room() {
+    //     return this.recordModel.room
+    // }
 
     get userIconUrl() {
         return this.recordUser?.userIcon

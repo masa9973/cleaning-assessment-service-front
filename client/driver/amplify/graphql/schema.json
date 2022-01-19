@@ -16,7 +16,7 @@
           "name" : "fetchAllRecordsByHotelID",
           "description" : null,
           "args" : [ {
-            "name" : "hotelID",
+            "name" : "recordHotelID",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -52,7 +52,7 @@
           "name" : "fetchAllUserByHotelID",
           "description" : null,
           "args" : [ {
-            "name" : "hotelID",
+            "name" : "userHotelID",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -85,6 +85,30 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "fetchHotelByHotelID",
+          "description" : null,
+          "args" : [ {
+            "name" : "hotelID",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "ID",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "HotelMast",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "fetchMyUserMast",
           "description" : null,
           "args" : [ ],
@@ -99,7 +123,7 @@
           "name" : "fetchRecordsByCleanerID",
           "description" : null,
           "args" : [ {
-            "name" : "userID",
+            "name" : "cleanerID",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -171,7 +195,7 @@
           "name" : "fetchRoomsByHotelID",
           "description" : null,
           "args" : [ {
-            "name" : "hotelID",
+            "name" : "roomHotelID",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -348,21 +372,6 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "hotelID",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "ifScored",
           "description" : null,
           "args" : [ ],
@@ -372,6 +381,21 @@
             "ofType" : {
               "kind" : "SCALAR",
               "name" : "Boolean",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "recordHotelID",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
               "ofType" : null
             }
           },
@@ -483,21 +507,6 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "hotelID",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "name",
           "description" : null,
           "args" : [ ],
@@ -539,6 +548,17 @@
               "name" : "AWSTimestamp",
               "ofType" : null
             }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "userHotelID",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -662,6 +682,45 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
+        "name" : "HotelMast",
+        "description" : null,
+        "fields" : [ {
+          "name" : "hotelID",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "hotelName",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
         "name" : "RoomMast",
         "description" : null,
         "fields" : [ {
@@ -680,7 +739,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "hotelID",
+          "name" : "roomHotelID",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1002,45 +1061,6 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "OBJECT",
-        "name" : "HotelMast",
-        "description" : null,
-        "fields" : [ {
-          "name" : "hotelID",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "hotelName",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "inputFields" : null,
-        "interfaces" : [ ],
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
         "kind" : "INPUT_OBJECT",
         "name" : "HotelMastInput",
         "description" : null,
@@ -1146,19 +1166,6 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "hotelID",
-          "description" : null,
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
           "name" : "ifScored",
           "description" : null,
           "type" : {
@@ -1167,6 +1174,19 @@
             "ofType" : {
               "kind" : "SCALAR",
               "name" : "Boolean",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "recordHotelID",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
               "ofType" : null
             }
           },
@@ -1220,7 +1240,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "hotelID",
+          "name" : "roomHotelID",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1438,19 +1458,6 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "hotelID",
-          "description" : null,
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
           "name" : "name",
           "description" : null,
           "type" : {
@@ -1487,6 +1494,15 @@
               "name" : "AWSTimestamp",
               "ofType" : null
             }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userHotelID",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
@@ -2347,6 +2363,23 @@
         "onFragment" : false,
         "onField" : true
       }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_oidc",
         "description" : "Tells the service this field/object has access authorized by an OIDC token.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
@@ -2417,23 +2450,6 @@
         "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

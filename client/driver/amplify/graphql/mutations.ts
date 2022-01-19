@@ -18,8 +18,8 @@ export const addRecord = /* GraphQL */ `
       cleaningTime
       createdAt
       finishedAt
-      hotelID
       ifScored
+      recordHotelID
       recordID
       startAt
     }
@@ -29,7 +29,7 @@ export const addRoom = /* GraphQL */ `
   mutation AddRoom($input: RoomMastInput!) {
     addRoom(input: $input) {
       createdAt
-      hotelID
+      roomHotelID
       roomIcon {
         bucket
         key
@@ -60,8 +60,8 @@ export const updateRecord = /* GraphQL */ `
       cleaningTime
       createdAt
       finishedAt
-      hotelID
       ifScored
+      recordHotelID
       recordID
       startAt
     }
@@ -72,10 +72,10 @@ export const updateUserMast = /* GraphQL */ `
     updateUserMast(input: $input) {
       createdAt
       email
-      hotelID
       name
       role
       updatedAt
+      userHotelID
       userIcon {
         bucket
         key

@@ -3,29 +3,29 @@
 // this is an auto generated file. This will be overwritten
 
 export const fetchAllRecordsByHotelID = /* GraphQL */ `
-  query FetchAllRecordsByHotelID($hotelID: ID!) {
-    fetchAllRecordsByHotelID(hotelID: $hotelID) {
+  query FetchAllRecordsByHotelID($recordHotelID: ID!) {
+    fetchAllRecordsByHotelID(recordHotelID: $recordHotelID) {
       cleanerID
       cleaningRoomID
       cleaningTime
       createdAt
       finishedAt
-      hotelID
       ifScored
+      recordHotelID
       recordID
       startAt
     }
   }
 `;
 export const fetchAllUserByHotelID = /* GraphQL */ `
-  query FetchAllUserByHotelID($hotelID: ID!) {
-    fetchAllUserByHotelID(hotelID: $hotelID) {
+  query FetchAllUserByHotelID($userHotelID: ID!) {
+    fetchAllUserByHotelID(userHotelID: $userHotelID) {
       createdAt
       email
-      hotelID
       name
       role
       updatedAt
+      userHotelID
       userIcon {
         bucket
         key
@@ -36,15 +36,23 @@ export const fetchAllUserByHotelID = /* GraphQL */ `
     }
   }
 `;
+export const fetchHotelByHotelID = /* GraphQL */ `
+  query FetchHotelByHotelID($hotelID: ID!) {
+    fetchHotelByHotelID(hotelID: $hotelID) {
+      hotelID
+      hotelName
+    }
+  }
+`;
 export const fetchMyUserMast = /* GraphQL */ `
   query FetchMyUserMast {
     fetchMyUserMast {
       createdAt
       email
-      hotelID
       name
       role
       updatedAt
+      userHotelID
       userIcon {
         bucket
         key
@@ -56,15 +64,15 @@ export const fetchMyUserMast = /* GraphQL */ `
   }
 `;
 export const fetchRecordsByCleanerID = /* GraphQL */ `
-  query FetchRecordsByCleanerID($userID: ID!) {
-    fetchRecordsByCleanerID(userID: $userID) {
+  query FetchRecordsByCleanerID($cleanerID: ID!) {
+    fetchRecordsByCleanerID(cleanerID: $cleanerID) {
       cleanerID
       cleaningRoomID
       cleaningTime
       createdAt
       finishedAt
-      hotelID
       ifScored
+      recordHotelID
       recordID
       startAt
     }
@@ -78,18 +86,18 @@ export const fetchRecordsByRoomID = /* GraphQL */ `
       cleaningTime
       createdAt
       finishedAt
-      hotelID
       ifScored
+      recordHotelID
       recordID
       startAt
     }
   }
 `;
 export const fetchRoomsByHotelID = /* GraphQL */ `
-  query FetchRoomsByHotelID($hotelID: ID!) {
-    fetchRoomsByHotelID(hotelID: $hotelID) {
+  query FetchRoomsByHotelID($roomHotelID: ID!) {
+    fetchRoomsByHotelID(roomHotelID: $roomHotelID) {
       createdAt
-      hotelID
+      roomHotelID
       roomIcon {
         bucket
         key
@@ -117,10 +125,10 @@ export const fetchUserMastByUserID = /* GraphQL */ `
     fetchUserMastByUserID(userID: $userID) {
       createdAt
       email
-      hotelID
       name
       role
       updatedAt
+      userHotelID
       userIcon {
         bucket
         key

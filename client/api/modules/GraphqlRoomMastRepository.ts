@@ -16,11 +16,11 @@ class GraphqlRoomMastRepository implements IRoomMastRepository {
         ).addRoom
     }
 
-    async fetchRoomsByHotelID(hotelID: string): Promise<RoomMast[]> {
+    async fetchRoomsByHotelID(roomHotelID: string): Promise<RoomMast[]> {
         return ((
             await callApi<FetchRoomsByHotelIDQuery, FetchRoomsByHotelIDQueryVariables>(
                 query.fetchRoomsByHotelID, {
-                    hotelID,
+                    roomHotelID,
                 })
             ).fetchRoomsByHotelID
         )

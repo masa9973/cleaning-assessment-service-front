@@ -28,10 +28,6 @@ export const userInteractor = new CleanerUsecase(
     modelFactory
 )
 
-// export const scoreInteractorFactory = function (postModel: RecordModel) {
-//     return new CommentUsecase(repositoryContainer, modelFactory, postModel);
-// }
-
 export const scoreInteractorFactory = (recordModel: RecordModel) => {
     return new ScoreUsecase(repositoryContainer, modelFactory, recordModel)
 }

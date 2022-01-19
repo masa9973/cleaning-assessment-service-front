@@ -1,4 +1,8 @@
-import { IRecordMastRepository, RecordMast, RecordMastRepositoryCacheAdaptor } from 'stage3-abr'
+import {
+    IRecordMastRepository,
+    RecordMast,
+    RecordMastRepositoryCacheAdaptor,
+} from 'stage3-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
@@ -6,6 +10,7 @@ import {
     AddRecordMutation,
     AddRecordMutationVariables,
     FetchAllRecordsByHotelIDQuery,
+    FetchAllRecordsByHotelIDQueryVariables,
     FetchRecordsByCleanerIDQuery,
     FetchRecordsByCleanerIDQueryVariables,
     FetchRecordsByRoomIDQuery,
@@ -37,13 +42,13 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
         ).updateRecord
     }
 
-    async fetchRecordsByCleanerID(userID: string): Promise<RecordMast[]> {
+    async fetchRecordsByCleanerID(cleanerID: string): Promise<RecordMast[]> {
         return (
             await callApi<
                 FetchRecordsByCleanerIDQuery,
                 FetchRecordsByCleanerIDQueryVariables
             >(query.fetchRecordsByCleanerID, {
-                userID,
+                cleanerID,
             })
         ).fetchRecordsByCleanerID
     }
@@ -51,16 +56,22 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
     async fetchRecordsByRoomID(cleaningRoomID: string): Promise<RecordMast[]> {
         return (
             await callApi<
-                FetchRecordsByRoomIDQuery, FetchRecordsByRoomIDQueryVariables
-                >(query.fetchRecordsByRoomID, {
-                    cleaningRoomID,
-                })
+                FetchRecordsByRoomIDQuery,
+                FetchRecordsByRoomIDQueryVariables
+            >(query.fetchRecordsByRoomID, {
+                cleaningRoomID,
+            })
         ).fetchRecordsByRoomID
     }
 
-    async fetchAllRecordsByHotelID(): Promise<RecordMast[]> {
+    async fetchAllRecordsByHotelID(
+        recordHotelID: string
+    ): Promise<RecordMast[]> {
         return (
-            await callApi<FetchAllRecordsByHotelIDQuery, {}>(query.fetchAllRecordsByHotelID, {})
+            await callApi<
+                FetchAllRecordsByHotelIDQuery,
+                FetchAllRecordsByHotelIDQueryVariables
+            >(query.fetchAllRecordsByHotelID, { recordHotelID })
         ).fetchAllRecordsByHotelID
     }
 }

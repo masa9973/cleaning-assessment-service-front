@@ -19,8 +19,8 @@ export type RecordMastInput = {
   cleaningTime: number,
   createdAt: number,
   finishedAt: number,
-  hotelID: string,
   ifScored: boolean,
+  recordHotelID: string,
   recordID: string,
   startAt: number,
 };
@@ -32,15 +32,15 @@ export type RecordMast = {
   cleaningTime: number,
   createdAt: number,
   finishedAt: number,
-  hotelID: string,
   ifScored: boolean,
+  recordHotelID: string,
   recordID: string,
   startAt: number,
 };
 
 export type RoomMastInput = {
   createdAt: number,
-  hotelID: string,
+  roomHotelID: string,
   roomIcon?: S3ObjectInput | null,
   roomID: string,
   roomName: string,
@@ -56,7 +56,7 @@ export type S3ObjectInput = {
 export type RoomMast = {
   __typename: "RoomMast",
   createdAt: number,
-  hotelID: string,
+  roomHotelID: string,
   roomIcon?: S3Object | null,
   roomID: string,
   roomName: string,
@@ -90,10 +90,10 @@ export type ScoreMast = {
 export type UserMastInput = {
   createdAt: number,
   email: string,
-  hotelID: string,
   name: string,
   role: string,
   updatedAt: number,
+  userHotelID?: string | null,
   userIcon?: S3ObjectInput | null,
   userID: string,
 };
@@ -102,10 +102,10 @@ export type UserMast = {
   __typename: "UserMast",
   createdAt: number,
   email: string,
-  hotelID: string,
   name: string,
   role: string,
   updatedAt: number,
+  userHotelID?: string | null,
   userIcon?: S3Object | null,
   userID: string,
 };
@@ -134,8 +134,8 @@ export type AddRecordMutation = {
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
-    hotelID: string,
     ifScored: boolean,
+    recordHotelID: string,
     recordID: string,
     startAt: number,
   },
@@ -149,7 +149,7 @@ export type AddRoomMutation = {
   addRoom:  {
     __typename: "RoomMast",
     createdAt: number,
-    hotelID: string,
+    roomHotelID: string,
     roomIcon?:  {
       __typename: "S3Object",
       bucket: string,
@@ -189,8 +189,8 @@ export type UpdateRecordMutation = {
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
-    hotelID: string,
     ifScored: boolean,
+    recordHotelID: string,
     recordID: string,
     startAt: number,
   },
@@ -205,10 +205,10 @@ export type UpdateUserMastMutation = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
-    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
+    userHotelID?: string | null,
     userIcon?:  {
       __typename: "S3Object",
       bucket: string,
@@ -221,7 +221,7 @@ export type UpdateUserMastMutation = {
 };
 
 export type FetchAllRecordsByHotelIDQueryVariables = {
-  hotelID: string,
+  recordHotelID: string,
 };
 
 export type FetchAllRecordsByHotelIDQuery = {
@@ -232,15 +232,15 @@ export type FetchAllRecordsByHotelIDQuery = {
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
-    hotelID: string,
     ifScored: boolean,
+    recordHotelID: string,
     recordID: string,
     startAt: number,
   } >,
 };
 
 export type FetchAllUserByHotelIDQueryVariables = {
-  hotelID: string,
+  userHotelID: string,
 };
 
 export type FetchAllUserByHotelIDQuery = {
@@ -248,10 +248,10 @@ export type FetchAllUserByHotelIDQuery = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
-    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
+    userHotelID?: string | null,
     userIcon?:  {
       __typename: "S3Object",
       bucket: string,
@@ -263,15 +263,27 @@ export type FetchAllUserByHotelIDQuery = {
   } >,
 };
 
+export type FetchHotelByHotelIDQueryVariables = {
+  hotelID: string,
+};
+
+export type FetchHotelByHotelIDQuery = {
+  fetchHotelByHotelID?:  {
+    __typename: "HotelMast",
+    hotelID: string,
+    hotelName: string,
+  } | null,
+};
+
 export type FetchMyUserMastQuery = {
   fetchMyUserMast?:  {
     __typename: "UserMast",
     createdAt: number,
     email: string,
-    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
+    userHotelID?: string | null,
     userIcon?:  {
       __typename: "S3Object",
       bucket: string,
@@ -284,7 +296,7 @@ export type FetchMyUserMastQuery = {
 };
 
 export type FetchRecordsByCleanerIDQueryVariables = {
-  userID: string,
+  cleanerID: string,
 };
 
 export type FetchRecordsByCleanerIDQuery = {
@@ -295,8 +307,8 @@ export type FetchRecordsByCleanerIDQuery = {
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
-    hotelID: string,
     ifScored: boolean,
+    recordHotelID: string,
     recordID: string,
     startAt: number,
   } >,
@@ -314,22 +326,22 @@ export type FetchRecordsByRoomIDQuery = {
     cleaningTime: number,
     createdAt: number,
     finishedAt: number,
-    hotelID: string,
     ifScored: boolean,
+    recordHotelID: string,
     recordID: string,
     startAt: number,
   } >,
 };
 
 export type FetchRoomsByHotelIDQueryVariables = {
-  hotelID: string,
+  roomHotelID: string,
 };
 
 export type FetchRoomsByHotelIDQuery = {
   fetchRoomsByHotelID:  Array< {
     __typename: "RoomMast",
     createdAt: number,
-    hotelID: string,
+    roomHotelID: string,
     roomIcon?:  {
       __typename: "S3Object",
       bucket: string,
@@ -366,10 +378,10 @@ export type FetchUserMastByUserIDQuery = {
     __typename: "UserMast",
     createdAt: number,
     email: string,
-    hotelID: string,
     name: string,
     role: string,
     updatedAt: number,
+    userHotelID?: string | null,
     userIcon?:  {
       __typename: "S3Object",
       bucket: string,

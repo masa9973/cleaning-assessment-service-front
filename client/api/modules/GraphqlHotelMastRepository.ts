@@ -1,7 +1,8 @@
 import { HotelMast, IHotelMastRepository } from 'stage3-abr';
 import { callApi } from '../base';
-import { AddHotelMutation, AddHotelMutationVariables } from '~/driver/amplify/graphql/API';
+import { AddHotelMutation, AddHotelMutationVariables, FetchHotelByHotelIDQuery, FetchHotelByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as mutation from '@/driver/amplify/graphql/mutations'
+import * as query from '@/driver/amplify/graphql/queries'
 
 
 class GraphqlHotelMastRepository implements IHotelMastRepository {
@@ -14,6 +15,15 @@ class GraphqlHotelMastRepository implements IHotelMastRepository {
                 }
             )
         ).addHotel
+    }
+
+    async fetchHotelByHotelID(hotelID: string): Promise<HotelMast | null> {
+        return (
+            await callApi<FetchHotelByHotelIDQuery, FetchHotelByHotelIDQueryVariables
+            >(query.fetchHotelByHotelID, {
+                hotelID,
+            })
+        ).fetchHotelByHotelID || null
     }
 }
 

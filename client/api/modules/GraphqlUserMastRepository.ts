@@ -6,6 +6,7 @@ import {
 import { callApi } from '../base'
 import {
     FetchAllUserByHotelIDQuery,
+    FetchAllUserByHotelIDQueryVariables,
     FetchMyUserMastQuery,
     FetchUserMastByUserIDQuery,
     FetchUserMastByUserIDQueryVariables,
@@ -51,9 +52,9 @@ class GraphqlUserMastRepository implements IUserMastRepository {
         )
     }
 
-    async fetchAllUserByHotelID(): Promise<UserMast[]> {
+    async fetchAllUserByHotelID(userHotelID: string): Promise<UserMast[]> {
         return (
-            await callApi<FetchAllUserByHotelIDQuery, {}>(query.fetchAllUserByHotelID, {})
+            await callApi<FetchAllUserByHotelIDQuery, FetchAllUserByHotelIDQueryVariables>(query.fetchAllUserByHotelID, {userHotelID})
         ).fetchAllUserByHotelID
     }
 }
