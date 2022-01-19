@@ -106,6 +106,7 @@ export default class RecordCard extends Vue {
     padding: 5px;
     margin: 5px;
     border-radius: 8px;
+    width: 420px;
 
     img {
         object-fit: cover;

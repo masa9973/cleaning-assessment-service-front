@@ -1,13 +1,15 @@
 <template>
     <div class="records_list_container">
         <div>未評価清掃リスト</div>
-        <div
-            v-for="record in records"
-            :key="record.recordID"
-            class="record_card_with_addscorebutton"
-        >
-            <record-card v-if="!record.ifScored" :record-model="record" />
-            <add-score v-if="!record.ifScored" :record-model="record" />
+        <div class="record_card_container">
+            <div
+                v-for="record in records"
+                :key="record.recordID"
+                class="record_card_with_addscorebutton"
+            >
+                <record-card v-if="!record.ifScored" :record-model="record" />
+                <add-score v-if="!record.ifScored" :record-model="record" />
+            </div>
         </div>
     </div>
 </template>
@@ -35,11 +37,20 @@ export default class RecordListForManager extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
-.record_card_with_addscorebutton {
-    margin-bottom: 35px;
 
-    .addscorebutton {
-        text-align: center;
+.record_list_container {
+    text-align: center;
+
+.record_card_container {
+
+    .record_card_with_addscorebutton {
+        margin-bottom: 35px;
+        padding: auto;
+
+        .addscorebutton {
+            text-align: center;
+        }
     }
+}
 }
 </style>

@@ -27,7 +27,7 @@ export default class AppInput extends Vue {
 
     input {
         box-sizing: border-box;
-        width: 100%;
+        width: 330px;
         border: 1px solid $borderColor;
         padding: 10px 20px;
         border-radius: 5px;
