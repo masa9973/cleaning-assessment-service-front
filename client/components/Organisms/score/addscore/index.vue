@@ -2,9 +2,9 @@
     <div class="add_score">
         <app-modal v-model="isShowModal">
             <input v-model="scoreValue" />
-            <button @click="register">評価を確定する</button>
+            <app-button @click="register">評価を確定する</app-button>
         </app-modal>
-        <button @click="openModal">この清掃を評価する</button>
+        <app-button @click="openModal">この清掃を評価する</app-button>
     </div>
 </template>
 <script lang="ts">
@@ -12,10 +12,12 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { RecordModel, ScoreModel } from 'stage3-abr'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import { scoreInteractorFactory } from '~/api'
+import AppButton from '@/components/Atom/AppButton.vue'
 
 @Component({
     components: {
-        AppModal
+        AppModal,
+        AppButton,
     }
 })
 
@@ -41,3 +43,8 @@ export default class AddScore extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.add_score {
+    text-align: center;
+}
+</style>

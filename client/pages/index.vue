@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="user_mapping_container">
+    <div class="menu_container">
+        <div class="user_mapping_button_container">
             <nuxt-link :to="{ name: 'user' }">
                 <button>ユーザー一覧</button>
             </nuxt-link>
@@ -22,10 +22,27 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
+import AppButton from '@/components/Atom/AppButton.vue'
+
+@Component({
+    components: {
+        AppButton
+    }
+})
 
 export default class Top extends Vue {
     public async created() {
     }
 }
 </script>
+<style lang="stylus" scoped>
+// .menu_container {
+//     text-align: center;
+//     padding: auto;
+//     margin: 30px;
+    // .start_cleaning_button_container {
+    // margin: 30px;
+    // }
+// }
+</style>
