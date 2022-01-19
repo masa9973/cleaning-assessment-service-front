@@ -22,27 +22,10 @@
     </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import AppButton from '@/components/Atom/AppButton.vue'
-
-@Component({
-    components: {
-        AppButton
-    }
-})
+import { Vue } from 'nuxt-property-decorator'
 
 export default class Top extends Vue {
     public async created() {
     }
 }
 </script>
-<style lang="stylus" scoped>
-// .menu_container {
-//     text-align: center;
-//     padding: auto;
-//     margin: 30px;
-    // .start_cleaning_button_container {
-    // margin: 30px;
-    // }
-// }
-</style>

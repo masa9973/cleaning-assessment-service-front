@@ -33,6 +33,7 @@ import AppButton from '@/components/Atom/AppButton.vue'
 import LinkButton from '@/components/Atom/LinkButton.vue'
 import { authInteractor } from '~/driver/amplify/auth'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
+import { RepositoryContainer } from 'stage3-abr'
 
 @Component({
     layout: 'auth',
@@ -54,6 +55,7 @@ export default class SignUpPage extends Vue {
     @AsyncLoadingAndErrorHandle()
     public async authSignUp() {
         await authInteractor.signUp(this.email, this.password)
+        await 
         window.alert(
             '認証用のメールを送信しました。認証コードをご確認ください。'
         )
