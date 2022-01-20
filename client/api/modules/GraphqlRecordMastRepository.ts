@@ -1,7 +1,6 @@
 import {
     IRecordMastRepository,
     RecordMast,
-    RecordMastRepositoryCacheAdaptor,
 } from 'stage3-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
@@ -76,6 +75,5 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
     }
 }
 
-export const recordMastRepository = new RecordMastRepositoryCacheAdaptor(
-    new GraphqlRecordMastRepository()
-)
+export const recordMastRepository = new GraphqlRecordMastRepository()
+

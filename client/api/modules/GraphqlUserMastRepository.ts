@@ -1,7 +1,6 @@
 import {
     IUserMastRepository,
     UserMast,
-    UserMastRepositoryCacheAdaptor,
 } from 'stage3-abr'
 import { callApi } from '../base'
 import {
@@ -59,6 +58,4 @@ class GraphqlUserMastRepository implements IUserMastRepository {
     }
 }
 
-export const userMastRepository = new UserMastRepositoryCacheAdaptor(
-    new GraphqlUserMastRepository()
-)
+export const userMastRepository = new GraphqlUserMastRepository()
