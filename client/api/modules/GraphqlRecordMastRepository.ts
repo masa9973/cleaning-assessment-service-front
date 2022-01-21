@@ -10,6 +10,8 @@ import {
     AddRecordMutationVariables,
     FetchAllRecordsByHotelIDQuery,
     FetchAllRecordsByHotelIDQueryVariables,
+    FetchRecordByRecordIDQuery,
+    FetchRecordByRecordIDQueryVariables,
     FetchRecordsByCleanerIDQuery,
     FetchRecordsByCleanerIDQueryVariables,
     FetchRecordsByRoomIDQuery,
@@ -30,7 +32,7 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
         ).addRecord
     }
 
-    async updateRecordMast(input: RecordMast): Promise<RecordMast> {
+    async updateRecord(input: RecordMast): Promise<RecordMast> {
         return (
             await callApi<UpdateRecordMutation, UpdateRecordMutationVariables>(
                 mutation.updateRecord,
@@ -72,6 +74,14 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
                 FetchAllRecordsByHotelIDQueryVariables
             >(query.fetchAllRecordsByHotelID, { recordHotelID })
         ).fetchAllRecordsByHotelID
+    }
+
+    async fetchRecordByRecordID(recordID: string): Promise<RecordMast | null> {
+        return (
+            await callApi<
+            FetchRecordByRecordIDQuery, FetchRecordByRecordIDQueryVariables>
+            (query.fetchRecordByRecordID, {recordID})
+        ).fetchRecordByRecordID || null
     }
 }
 

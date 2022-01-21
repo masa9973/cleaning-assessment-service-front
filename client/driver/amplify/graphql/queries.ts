@@ -63,6 +63,21 @@ export const fetchMyUserMast = /* GraphQL */ `
     }
   }
 `;
+export const fetchRecordByRecordID = /* GraphQL */ `
+  query FetchRecordByRecordID($recordID: ID!) {
+    fetchRecordByRecordID(recordID: $recordID) {
+      cleanerID
+      cleaningRoomID
+      cleaningTime
+      createdAt
+      finishedAt
+      ifScored
+      recordHotelID
+      recordID
+      startAt
+    }
+  }
+`;
 export const fetchRecordsByCleanerID = /* GraphQL */ `
   query FetchRecordsByCleanerID($cleanerID: ID!) {
     fetchRecordsByCleanerID(cleanerID: $cleanerID) {
