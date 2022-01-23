@@ -11,11 +11,6 @@
                 type="password"
                 class="input_item"
             />
-            <auth-input
-                v-model="hotelNameValue"
-                label="施設名"
-                class="input_item"
-            />
         </div>
         <div class="button_container">
             <app-button :disabled="disabled" @click="signIn"
@@ -31,7 +26,6 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { HotelModel } from 'stage3-abr'
 // component
 import AuthTitle from '@/components/Organisms/Auth/AuthTitle.vue'
 import AuthInput from '@/components/Organisms/Auth/AuthInput.vue'
@@ -52,18 +46,14 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 export default class SignInPage extends Vue {
     public email: string = ''
     public password: string = ''
-    public hotelModel: HotelModel | null = null
-    public hotelNameValue: string =''
 
     public get disabled() {
-        return !this.email || !this.password || !this.hotelNameValue
+        return !this.email || !this.password
     }
 
     @AsyncLoadingAndErrorHandle()
     public async signIn() {
         await authInteractor.signIn(this.email, this.password)
-        this.hotelModel!.hotelName = this.hotelNameValue
-        await this.hotelModel!.register()
         this.$router.push({
             name: 'index',
         })

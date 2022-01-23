@@ -1,7 +1,7 @@
 <template>
     <div class="auth_signup_container">
         <div>
-            <auth-title>新規登録</auth-title>
+            <auth-title>新規管理者登録</auth-title>
         </div>
         <div class="input_container">
             <auth-input v-model="email" label="Eメール" class="input_item" />
@@ -14,7 +14,7 @@
         </div>
         <div class="button_container">
             <app-button :disabled="disabled" @click="authSignUp"
-                >新規登録</app-button
+                >新規管理者登録</app-button
             >
         </div>
         <div class="link_container">
@@ -33,7 +33,6 @@ import AppButton from '@/components/Atom/AppButton.vue'
 import LinkButton from '@/components/Atom/LinkButton.vue'
 import { authInteractor } from '~/driver/amplify/auth'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
-import { RepositoryContainer } from 'stage3-abr'
 
 @Component({
     layout: 'auth',
@@ -55,7 +54,6 @@ export default class SignUpPage extends Vue {
     @AsyncLoadingAndErrorHandle()
     public async authSignUp() {
         await authInteractor.signUp(this.email, this.password)
-        await 
         window.alert(
             '認証用のメールを送信しました。認証コードをご確認ください。'
         )
