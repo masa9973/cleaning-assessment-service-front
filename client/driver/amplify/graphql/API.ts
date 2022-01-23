@@ -352,6 +352,27 @@ export type FetchRecordsByRoomIDQuery = {
   } >,
 };
 
+export type FetchRoomByRoomIDQueryVariables = {
+  roomID: string,
+};
+
+export type FetchRoomByRoomIDQuery = {
+  fetchRoomByRoomID?:  {
+    __typename: "RoomMast",
+    createdAt: number,
+    roomHotelID: string,
+    roomIcon?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+      url: string,
+    } | null,
+    roomID: string,
+    roomName: string,
+  } | null,
+};
+
 export type FetchRoomsByHotelIDQueryVariables = {
   roomHotelID: string,
 };

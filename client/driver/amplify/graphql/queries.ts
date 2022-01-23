@@ -108,6 +108,22 @@ export const fetchRecordsByRoomID = /* GraphQL */ `
     }
   }
 `;
+export const fetchRoomByRoomID = /* GraphQL */ `
+  query FetchRoomByRoomID($roomID: ID!) {
+    fetchRoomByRoomID(roomID: $roomID) {
+      createdAt
+      roomHotelID
+      roomIcon {
+        bucket
+        key
+        region
+        url
+      }
+      roomID
+      roomName
+    }
+  }
+`;
 export const fetchRoomsByHotelID = /* GraphQL */ `
   query FetchRoomsByHotelID($roomHotelID: ID!) {
     fetchRoomsByHotelID(roomHotelID: $roomHotelID) {
