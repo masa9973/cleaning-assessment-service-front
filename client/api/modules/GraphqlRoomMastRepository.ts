@@ -1,6 +1,6 @@
 import { IRoomMastRepository, RoomMast } from 'stage3-abr';
 import { callApi } from '../base';
-import { AddRoomMutation, AddRoomMutationVariables, FetchRoomsByHotelIDQuery, FetchRoomsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
+import { AddRoomMutation, AddRoomMutationVariables, FetchRoomByRoomIDQuery, FetchRoomByRoomIDQueryVariables, FetchRoomsByHotelIDQuery, FetchRoomsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
 
@@ -23,6 +23,16 @@ class GraphqlRoomMastRepository implements IRoomMastRepository {
                     roomHotelID,
                 })
             ).fetchRoomsByHotelID
+        )
+    }
+
+    async fetchRoomByRoomID(roomID: string): Promise<RoomMast | null> {
+        return (
+            (
+                await callApi<
+                FetchRoomByRoomIDQuery, FetchRoomByRoomIDQueryVariables>
+                (query.fetchRoomByRoomID, {roomID}))
+                .fetchRoomByRoomID || null
         )
     }
 }
