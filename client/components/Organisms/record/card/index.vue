@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="record_room">
-            <div>部屋番号{{ room }}</div>
+            <div>部屋{{ cleaningRoomName }}</div>
         </div>
         <div class="cleaning_time">
             <div>清掃時間{{ getTimeString(cleaningTime) }}</div>
@@ -24,7 +24,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, ScoreModel, UserModel } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode, RecordModel, RoomModel, ScoreModel, UserModel } from 'stage3-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'
 
@@ -38,6 +38,10 @@ export default class RecordCard extends Vue {
     public recordUser: UserModel | null = null
     public scoreItems: ScoreModel[] = []
     public viewCleaningDate: string = ''
+    public room: RoomModel | null = null
+    public user: UserModel | null = null
+    public roomHotelID: string = ''
+    public cleaningRoomName: string = ''
 
     async created() {
         this.recordUser = await userInteractor.fetchUserModelByUserID(
@@ -46,6 +50,11 @@ export default class RecordCard extends Vue {
         this.scoreItems = await this.recordModel.fetchScoresByRecordID(
             this.recordModel.recordID
         )
+        this.room = await userInteractor.fetchRoomByRoomID(this.recordModel.cleaningRoomID)
+        if (!this.room) {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+        }
+        this.cleaningRoomName = this.room.roomName
     }
 
     public getViewCleaningDate(createdAt: number) {
@@ -75,10 +84,6 @@ export default class RecordCard extends Vue {
         return this.recordModel.cleanerID
     }
 
-    // get room() {
-    //     return this.recordModel.room
-    // }
-
     get userIconUrl() {
         return this.recordUser?.userIcon
     }
@@ -104,9 +109,9 @@ export default class RecordCard extends Vue {
 .record_item_container {
     border: 1px solid;
     padding: 5px;
-    margin: 5px;
+    margin: auto;
     border-radius: 8px;
-    width: 420px;
+    width: 90%
 
     img {
         object-fit: cover;
