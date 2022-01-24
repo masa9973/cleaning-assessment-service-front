@@ -36,6 +36,10 @@ export default class AppCleanerFooter extends Vue {}
         display: flex;
         // justify-content: center;
         // align-items: center;
+        img {
+            width: 100%;
+            height: auto;
+        }
     }
     .record_button {
         display: flex;
