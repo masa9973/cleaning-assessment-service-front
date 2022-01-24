@@ -17,12 +17,18 @@ import AppCleanerFooter from '@/components/Organisms/common/app_footer/cleaner_f
         AppCleanerFooter,
     },
 })
-export default class CleanerLayout extends Vue {
-}
+export default class CleanerLayout extends Vue {}
 </script>
 <style lang="stylus" scoped>
 .app_cleaner_footer {
-    position: sticky;
-    bottom: 0;
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    // justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%
+    height: 50px;
+    background-color: #c4c4c4
 }
 </style>
