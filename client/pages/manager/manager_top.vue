@@ -123,11 +123,10 @@ export default class ManagerTopPage extends Vue {
 </script>
 <style lang="stylus" scoped>
 .assigned_cleaning {
-    justify-content: center;
-    align-items: center;
-
+    // justify-content: center;
+    // align-items: center;
     .record_card_list {
-        justify-content: center;
+        // justify-content: center;
     }
 }
 
