@@ -75,6 +75,6 @@ export default class UserRecordList extends Vue {
 </script>
 <style lang="stylus" scoped>
 .blanc {
-    height: 50px;
+    height: 56px;
 }
 </style>

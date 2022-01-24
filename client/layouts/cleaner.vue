@@ -28,7 +28,7 @@ export default class CleanerLayout extends Vue {}
     justify-content: space-around;
     align-items: center;
     width: 100%
-    height: 50px;
+    height: 56px;
     background-color: #c4c4c4
 }
 </style>

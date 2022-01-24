@@ -1,22 +1,31 @@
 <template>
     <div>
         <div>ここで清掃ルームの登録と施設名の登録をします。</div>
-        <div>https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{ roomHotelID }}</div>
+        <div>
+            https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
+                roomHotelID
+            }}
+        </div>
         <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div>
         <div class="room_list_container">
             <div>登録済みの部屋一覧</div>
-                <div
-                    v-for="room in rooms"
-                    :key="room.roomID"
-                    class="room_icon_wrapper"
-                >
-                    {{ room.roomName }}
-                </div>
+            <div
+                v-for="room in rooms"
+                :key="room.roomID"
+                class="room_icon_wrapper"
+            >
+                {{ room.roomName }}
+            </div>
         </div>
         <button @click="openModal">部屋を登録する</button>
         <app-modal v-model="isShowModal">
-            <app-input v-model="roomNameValue"></app-input>
-            <app-button @click="register">登録する</app-button>
+            <div class="modal_inner">
+                <div class="input_container">
+                    <div>部屋名</div>
+                    <app-input v-model="roomNameValue" />
+                </div>
+                <app-button @click="register">登録する</app-button>
+            </div>
         </app-modal>
     </div>
 </template>
@@ -60,3 +69,11 @@ export default class ManagerConfig extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.modal_inner {
+    text-align: center;
+    .input_container {
+        margin-bottom: 5px;
+    }
+}
+</style>

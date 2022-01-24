@@ -1,11 +1,12 @@
 <template>
     <div class="user_detail_container">
+        <div>ここでユーザーのrole変更をしたい</div>
+        <button @click="roleChange">ロール変更</button>
         <div v-if="userModel" class="user_icon_wrapper">
             <!-- icon -->
-            <user-icon :user-model="userModel" :show-edit="isMyPage" />
+            <user-icon :user-model="userModel" />
         </div>
-        <div class="image_table_wrapper">
-            <!-- images -->
+        <div >
             <div
                 v-for="record in recordModels"
                 :key="record.recordID"
@@ -36,17 +37,15 @@ export default class UserPage extends Vue {
     public myUserModel: UserModel | null = null
 
     public async created() {
-        const cleanerID = this.$route.params.userID
         const userID = this.$route.params.userID
-        this.myUserModel = await userInteractor.fetchMyUserModel()
-        this.recordModels = await userInteractor.fetchRecordsByCleanerID(cleanerID)
+        this.recordModels = await userInteractor.fetchRecordsByCleanerID(userID)
         this.userModel = await userInteractor.fetchUserModelByUserID(userID)
     }
 
-    public get isMyPage() {
-        return (
-            this.myUserModel && this.myUserModel.userID === this.$route.params.userID
-        )
+    public async roleChange() {
+        window.confirm('このユーザーを管理者に変更しますか？')
+        this.userModel!.role = 'manager'
+        await this.userModel!.register()
     }
 }
 </script>

@@ -18,27 +18,29 @@
         </div>
         <app-modal v-model="isShowModal">
             <div class="modal_inner">
-                <div>部屋を選択</div>
-                <select v-model="selectedRoomID">
-                    <option
-                        v-for="room in rooms"
-                        :key="room.roomID"
-                        :value="room.roomID"
-                    >
-                        {{ room.roomName }}
-                    </option>
-                </select>
-                <div>清掃者を選択</div>
-                <select v-model="selectedUserID">
-                    <option
-                        v-for="cleaner in cleaners"
-                        :key="cleaner.userID"
-                        :value="cleaner.userID"
-                    >
-                        {{ cleaner.name }}
-                    </option>
-                </select>
-                <app-button @click="assigned">アサインする</app-button>
+                <div class="room_user_selecter">
+                    <div>部屋を選択</div>
+                    <select v-model="selectedRoomID">
+                        <option
+                            v-for="room in rooms"
+                            :key="room.roomID"
+                            :value="room.roomID"
+                        >
+                            {{ room.roomName }}
+                        </option>
+                    </select>
+                    <div>清掃者を選択</div>
+                    <select v-model="selectedUserID">
+                        <option
+                            v-for="cleaner in cleaners"
+                            :key="cleaner.userID"
+                            :value="cleaner.userID"
+                        >
+                            {{ cleaner.name }}
+                        </option>
+                    </select>
+                </div>
+                <app-button :disabled="!selectedRoomID || !selectedUserID" @click="assigned">アサインする</app-button>
             </div>
         </app-modal>
         <div class="this_will_be_footer">
@@ -71,14 +73,12 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
-import AppInput from '@/components/Atom/AppInput.vue'
 import AssginedRecordCard from '@/components/Organisms/record/assgined_card/index.vue'
 import { userInteractor } from '~/api'
 @Component({
     components: {
         AppModal,
         AppButton,
-        AppInput,
         AssginedRecordCard,
     },
 })
@@ -118,15 +118,16 @@ export default class ManagerTopPage extends Vue {
         this.blancRecord.finishedAt = 0
         await this.blancRecord.register()
         window.alert('清掃がアサインされました')
+        this.selectedRoomID = ''
+        this.selectedUserID = ''
+        this.isShowModal = false
+        this.$router.push({ name: 'manager-manager_top' })
     }
 }
 </script>
 <style lang="stylus" scoped>
 .assigned_cleaning {
-    // justify-content: center;
-    // align-items: center;
     .record_card_list {
-        // justify-content: center;
     }
 }
 
@@ -145,6 +146,14 @@ export default class ManagerTopPage extends Vue {
         align-items: center;
         background-color: white;
         font-size: 24px;
+    }
+}
+
+.modal_inner {
+    text-align: center;
+    .room_user_selecter {
+        display: flex;
+        margin-bottom: 5px;
     }
 }
 
