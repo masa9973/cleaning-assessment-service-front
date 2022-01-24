@@ -12,7 +12,7 @@
                 class="record_card_container"
             >
                 <div class="record_card">
-                    <record-card :record-model="record" />
+                    <!-- <record-card :record-model="record" /> -->
                 </div>
             </div>
         </div>
@@ -36,9 +36,10 @@ export default class UserPage extends Vue {
     public myUserModel: UserModel | null = null
 
     public async created() {
+        const cleanerID = this.$route.params.userID
         const userID = this.$route.params.userID
         this.myUserModel = await userInteractor.fetchMyUserModel()
-        this.recordModels = await userInteractor.fetchRecordsByCleanerID(userID)
+        this.recordModels = await userInteractor.fetchRecordsByCleanerID(cleanerID)
         this.userModel = await userInteractor.fetchUserModelByUserID(userID)
     }
 
