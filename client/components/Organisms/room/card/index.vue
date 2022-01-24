@@ -1,8 +1,6 @@
 <template>
     <div class="room_card">
-        <div>
             <div>{{ cleaningRoomName }}</div>
-        </div>
     </div>
 </template>
 <script lang="ts">
@@ -27,4 +25,6 @@ export default class RoomCard extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
 
+</style>
