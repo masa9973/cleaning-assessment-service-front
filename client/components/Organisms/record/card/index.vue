@@ -107,12 +107,13 @@ export default class RecordCard extends Vue {
 </script>
 <style lang="stylus" scoped>
 .record_item_container {
-    border: 1px solid;
+    // border: 1px solid;
+    box-shadow: 0 0 5px 0 $shadowColor;
     padding: 5px;
-    margin: auto;
+    margin: 10px auto;
     border-radius: 8px;
     width: 90%
-
+    background-color: #F9F9FA;
     img {
         object-fit: cover;
         border-radius: 10000px;

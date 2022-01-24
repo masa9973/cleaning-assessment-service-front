@@ -19,18 +19,23 @@
             </div>
         </div>
         <div class="app-button">
-            <app-button @click="openModal"
-                >完了</app-button
-            >
+            <app-button @click="openModal">完了</app-button>
         </div>
         <app-modal v-model="isShowModal" class="check_modal">
             <div class="cleaning_result">
-                <div>開始時刻{{ viewStartTime }}</div>
-                <div>終了時刻{{ viewFinishedTime }}</div>
-                <div>清掃時間{{ viewTime }}</div>
                 <div>清掃部屋{{ recordRoomName }}</div>
-                <app-button @click="register">送信する</app-button>
-                <app-button @click="resetFinishButton">まだ終わってない</app-button>
+                <div>{{ viewStartTime }}〜{{ viewFinishedTime }}</div>
+                <div>{{ viewTime }}</div>
+                <app-button
+                    :disabled="!ifPushStartButton || !ifPushFinishButton"
+                    @click="register"
+                    >送信する</app-button
+                >
+                <app-button
+                    :disabled="!ifPushFinishButton"
+                    @click="resetFinishButton"
+                    >まだ終わってない</app-button
+                >
             </div>
         </app-modal>
     </div>
@@ -68,10 +73,13 @@ export default class AddRecord extends Vue {
     public recordRoom: RoomMast | null = null
     public recordRoomName: string = ''
 
-
     public async created() {
-        this.blancRecord = await userInteractor.fetchRecordByRecordID(this.$route.params.recordID)
-        this.recordRoom = await userInteractor.fetchRoomByRoomID(this.blancRecord.cleaningRoomID)
+        this.blancRecord = await userInteractor.fetchRecordByRecordID(
+            this.$route.params.recordID
+        )
+        this.recordRoom = await userInteractor.fetchRoomByRoomID(
+            this.blancRecord.cleaningRoomID
+        )
         this.recordRoomName = this.recordRoom!.roomName
     }
 
@@ -103,13 +111,15 @@ export default class AddRecord extends Vue {
     }
 
     public async register() {
-        this.blancRecord = await userInteractor.fetchRecordByRecordID(this.$route.params.recordID)
+        this.blancRecord = await userInteractor.fetchRecordByRecordID(
+            this.$route.params.recordID
+        )
         this.blancRecord.startAt = this.startTime
         this.blancRecord.finishedAt = this.finishedTime
         await this.blancRecord.register()
         window.alert('清掃記録は正常に送信されました。')
         this.$router.push({
-            name: 'cleaner-cleaner_top'
+            name: 'cleaner-cleaner_top',
         })
     }
 }
@@ -117,6 +127,7 @@ export default class AddRecord extends Vue {
 <style lang="stylus">
 .record_add_container {
     text-align: center;
+
     .start_time {
         margin-bottom: 40px;
     }

@@ -31,18 +31,18 @@ export default class AssginedRecordCard extends Vue {
             this.recordModel.cleaningRoomID
         )
         this.cleaningRoomName = this.roomModel!.roomName
-        console.log('user', this.user)
     }
 }
 </script>
 <style lang="stylus" scoped>
 .assgined_record_card {
     display: flex;
-    border: 1px solid;
+    box-shadow: 0 0 5px 0 $shadowColor;
     padding: 5px;
-    margin: auto;
+    margin: 10px auto;
     border-radius: 8px;
     width: 90%;
+    background-color: #F9F9FA;
 
     .user_icon_wrapper {
     }
