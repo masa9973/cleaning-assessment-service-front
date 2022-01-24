@@ -1,12 +1,13 @@
 <template>
     <div class="record_list_associated_with_user">
         <div>ここにユーザーのレコード一覧を表示する</div>
-        <div v-for="record in records" :key="record.recordID">
-            <record-card :record-model="record" />
-        </div>
         <link-button :to="{ name: 'cleaner-record_list-room' }"
             >部屋に紐づくレコードを表示する</link-button
         >
+        <div v-for="record in records" :key="record.recordID">
+            <record-card :record-model="record" />
+        </div>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -34,3 +35,8 @@ export default class UserRecordList extends Vue {
     }
 }
 </script>
+<style lang="stylus" scoped>
+.blanc {
+    height: 50px;
+}
+</style>
