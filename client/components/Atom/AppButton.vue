@@ -26,7 +26,7 @@ export default class AppButton extends Vue {
         font-size: 16px;
         padding: 5px 30px;
         cursor: pointer;
-        width: 330px;
+        width: 300px;
         height: 44px;
 
         @media only screen and (max-width: $spSize) {
