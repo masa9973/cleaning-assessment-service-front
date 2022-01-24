@@ -14,11 +14,11 @@
     </div>
 </template>
 <script lang="ts">
-import { RecordModel } from 'stage3-abr'
+import { RecordModel, UserModel } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
-import { userInteractor } from '~/api'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
 import AddScore from '@/components/Organisms/score/addscore/index.vue'
+import { userInteractor } from '~/api'
 
 // component
 
@@ -29,10 +29,14 @@ import AddScore from '@/components/Organisms/score/addscore/index.vue'
     },
 })
 export default class RecordListForManager extends Vue {
+    public user: UserModel | null = null
+    public recordsHotelID: string = ''
     public records: RecordModel[] = []
 
     public async created() {
-        this.records = await userInteractor.fetchAllRecords()
+        this.user = await userInteractor.fetchMyUserModel()
+        this.recordsHotelID = this.user.userHotelID
+        this.records = await userInteractor.fetchAllRecordsByHotelID(this.recordsHotelID)
     }
 }
 </script>
