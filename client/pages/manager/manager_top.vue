@@ -5,7 +5,6 @@
                 v-for="assginedRecord in assginedRecords"
                 :key="assginedRecord.recordID"
             >
-                <!-- recordCardをここに出したい -->
                 <div
                     v-if="assginedRecord.cleaningTime === 0"
                     class="record_card_list"
@@ -14,31 +13,33 @@
                 </div>
             </div>
         </div>
-        <div class="button_container">
-            <div class="button" @click="openModal">＋</div>
+        <div class="plus_button_container">
+            <div class="plus_button" @click="openModal">＋</div>
         </div>
         <app-modal v-model="isShowModal">
-            <div>清掃する部屋を選択</div>
-            <select v-model="selectedRoomID">
-                <option
-                    v-for="room in rooms"
-                    :key="room.roomID"
-                    :value="room.roomID"
-                >
-                    {{ room.roomName }}
-                </option>
-            </select>
-            <div>清掃者を選択</div>
-            <select v-model="selectedUserID">
-                <option
-                    v-for="cleaner in cleaners"
-                    :key="cleaner.userID"
-                    :value="cleaner.userID"
-                >
-                    {{ cleaner.name }}
-                </option>
-            </select>
-            <app-button @click="assigned">アサインする</app-button>
+            <div class="modal_inner">
+                <div>部屋を選択</div>
+                <select v-model="selectedRoomID">
+                    <option
+                        v-for="room in rooms"
+                        :key="room.roomID"
+                        :value="room.roomID"
+                    >
+                        {{ room.roomName }}
+                    </option>
+                </select>
+                <div>清掃者を選択</div>
+                <select v-model="selectedUserID">
+                    <option
+                        v-for="cleaner in cleaners"
+                        :key="cleaner.userID"
+                        :value="cleaner.userID"
+                    >
+                        {{ cleaner.name }}
+                    </option>
+                </select>
+                <app-button @click="assigned">アサインする</app-button>
+            </div>
         </app-modal>
         <div class="this_will_be_footer">
             <nuxt-link
@@ -102,7 +103,6 @@ export default class ManagerTopPage extends Vue {
         this.assginedRecords = await userInteractor.fetchAllRecordsByHotelID(
             this.roomHotelID
         )
-        console.log('アサインされたレコード', this.assginedRecords)
     }
 
     public openModal() {
@@ -131,12 +131,12 @@ export default class ManagerTopPage extends Vue {
     }
 }
 
-.button_container {
+.plus_button_container {
     position: fixed;
     right: 10%;
     bottom: 10%;
 
-    .button {
+    .plus_button {
         width: 50px;
         height: 50px;
         border-radius: 30px;
@@ -151,6 +151,6 @@ export default class ManagerTopPage extends Vue {
 
 .this_will_be_footer {
     position: fixed;
-    bottom 0px;
+    bottom: 0px;
 }
 </style>
