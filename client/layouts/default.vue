@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { UserModel } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode, UserModel } from 'stage3-abr'
 import { authInteractor } from '~/driver/amplify/auth'
 import { userInteractor } from '~/api'
 @Component({
@@ -20,8 +20,15 @@ export default class DefaultLayout extends Vue {
         if (!isSignIn) {
             this.$router.push({ name: 'auth-signin' })
         }
-
         this.userModel = await userInteractor.fetchMyUserModel()
+        const userRole = this.userModel.role
+        if (userRole === 'manager' ) {
+            this.$router.push({ name: 'manager-manager_top' })
+        } else if (userRole === 'cleaner' ) {
+            this.$router.push({ name: 'cleaner-cleaner_top' })
+        } else {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_401_notSignIn)
+        }
     }
 }
 </script>
