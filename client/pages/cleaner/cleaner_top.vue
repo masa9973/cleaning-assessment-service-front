@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div v-if="user" class="user_icon_wrapper">
+            <!-- icon -->
+            <user-icon :user-model="user" :show-edit="isMyPage" />
+        </div>
         <div>
             タップして清掃を開始する
         </div>
@@ -15,32 +19,31 @@
                     }"
                 >
                     <div v-if="userAssginedRecord.cleaningTime === 0">
-                        {{ userAssginedRecord.recordID }}
+                        <room-card :room-i-d="userAssginedRecord.cleaningRoomID"></room-card>
                     </div>
                 </nuxt-link>
             </div>
-        </div>
-        <div class="this_will_be_footer">
-            <nuxt-link :to="{ name: 'cleaner-cleaner_top' }">
-                <button>ホーム</button>
-            </nuxt-link>
-            <nuxt-link :to="{ name: 'cleaner-record_list-user' }">
-                <button>記録をみる</button>
-            </nuxt-link>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
 import { userInteractor } from '~/api'
+import UserIcon from '@/components/Organisms/User/Icon/index.vue'
+import RoomCard from '@/components/Organisms/room/card/index.vue'
 @Component({
     layout: 'cleaner',
-    components: {},
+    components: {
+        UserIcon,
+        RoomCard,
+    },
 })
 export default class CleanerTopPage extends Vue {
     public userAssginedRecords: RecordModel[] = []
     public user: UserModel | null = null
+    public isMyPage = true
+    public roomModel: RoomModel | null = null
 
     public async created() {
         this.user = await userInteractor.fetchMyUserModel()
