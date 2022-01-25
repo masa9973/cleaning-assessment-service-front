@@ -48,7 +48,18 @@ export const addScore = /* GraphQL */ `
       recordID
       score
       scoreID
+      scoreItemID
       scorerUserID
+    }
+  }
+`;
+export const addScoreItem = /* GraphQL */ `
+  mutation AddScoreItem($input: ScoreItemMastInput!) {
+    addScoreItem(input: $input) {
+      createdAt
+      scoreItemHotelID
+      scoreItemID
+      scoreItemName
     }
   }
 `;

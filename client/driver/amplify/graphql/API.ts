@@ -75,6 +75,7 @@ export type ScoreMastInput = {
   recordID: string,
   score: number,
   scoreID: string,
+  scoreItemID: string,
   scorerUserID: string,
 };
 
@@ -84,7 +85,23 @@ export type ScoreMast = {
   recordID: string,
   score: number,
   scoreID: string,
+  scoreItemID: string,
   scorerUserID: string,
+};
+
+export type ScoreItemMastInput = {
+  createdAt: number,
+  scoreItemHotelID: string,
+  scoreItemID: string,
+  scoreItemName: string,
+};
+
+export type ScoreItemMast = {
+  __typename: "ScoreItemMast",
+  createdAt: number,
+  scoreItemHotelID: string,
+  scoreItemID: string,
+  scoreItemName: string,
 };
 
 export type UserMastInput = {
@@ -173,7 +190,22 @@ export type AddScoreMutation = {
     recordID: string,
     score: number,
     scoreID: string,
+    scoreItemID: string,
     scorerUserID: string,
+  },
+};
+
+export type AddScoreItemMutationVariables = {
+  input: ScoreItemMastInput,
+};
+
+export type AddScoreItemMutation = {
+  addScoreItem:  {
+    __typename: "ScoreItemMast",
+    createdAt: number,
+    scoreItemHotelID: string,
+    scoreItemID: string,
+    scoreItemName: string,
   },
 };
 
@@ -394,6 +426,34 @@ export type FetchRoomsByHotelIDQuery = {
   } >,
 };
 
+export type FetchScoreItemByScoreItemIDQueryVariables = {
+  scoreItemID: string,
+};
+
+export type FetchScoreItemByScoreItemIDQuery = {
+  fetchScoreItemByScoreItemID?:  {
+    __typename: "ScoreItemMast",
+    createdAt: number,
+    scoreItemHotelID: string,
+    scoreItemID: string,
+    scoreItemName: string,
+  } | null,
+};
+
+export type FetchScoreItemsByHotelIDQueryVariables = {
+  scoreItemHotelID: string,
+};
+
+export type FetchScoreItemsByHotelIDQuery = {
+  fetchScoreItemsByHotelID:  Array< {
+    __typename: "ScoreItemMast",
+    createdAt: number,
+    scoreItemHotelID: string,
+    scoreItemID: string,
+    scoreItemName: string,
+  } >,
+};
+
 export type FetchScoresByRecordIDQueryVariables = {
   recordID: string,
 };
@@ -405,6 +465,7 @@ export type FetchScoresByRecordIDQuery = {
     recordID: string,
     score: number,
     scoreID: string,
+    scoreItemID: string,
     scorerUserID: string,
   } >,
 };

@@ -11,6 +11,7 @@ import { s3Repository } from './modules/S3Repository'
 import { scoreMastRepository } from './modules/GraphqlScoreMastRepository'
 import { hotelMastRepository } from './modules/GraphqlHotelMastRepository'
 import { roomMastRepository } from './modules/GraphqlRoomMastRepository'
+import { scoreItemMastRepository } from './modules/GraphqlScoreItemMastRepository'
 
 const repositoryContainer = new RepositoryContainer(
     s3Repository,
@@ -18,7 +19,8 @@ const repositoryContainer = new RepositoryContainer(
     recordMastRepository,
     scoreMastRepository,
     hotelMastRepository,
-    roomMastRepository
+    roomMastRepository,
+    scoreItemMastRepository,
 )
 
 const modelFactory = new ModelFactory(repositoryContainer)

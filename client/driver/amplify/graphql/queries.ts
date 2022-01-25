@@ -140,6 +140,26 @@ export const fetchRoomsByHotelID = /* GraphQL */ `
     }
   }
 `;
+export const fetchScoreItemByScoreItemID = /* GraphQL */ `
+  query FetchScoreItemByScoreItemID($scoreItemID: ID!) {
+    fetchScoreItemByScoreItemID(scoreItemID: $scoreItemID) {
+      createdAt
+      scoreItemHotelID
+      scoreItemID
+      scoreItemName
+    }
+  }
+`;
+export const fetchScoreItemsByHotelID = /* GraphQL */ `
+  query FetchScoreItemsByHotelID($scoreItemHotelID: ID!) {
+    fetchScoreItemsByHotelID(scoreItemHotelID: $scoreItemHotelID) {
+      createdAt
+      scoreItemHotelID
+      scoreItemID
+      scoreItemName
+    }
+  }
+`;
 export const fetchScoresByRecordID = /* GraphQL */ `
   query FetchScoresByRecordID($recordID: ID!) {
     fetchScoresByRecordID(recordID: $recordID) {
@@ -147,6 +167,7 @@ export const fetchScoresByRecordID = /* GraphQL */ `
       recordID
       score
       scoreID
+      scoreItemID
       scorerUserID
     }
   }

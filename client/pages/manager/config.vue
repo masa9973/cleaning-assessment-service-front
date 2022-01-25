@@ -24,18 +24,45 @@
                     <div>部屋名</div>
                     <app-input v-model="roomNameValue" />
                 </div>
-                <app-button @click="register">登録する</app-button>
+                <app-button :disabled="!roomNameValue" @click="register"
+                    >登録する</app-button
+                >
+            </div>
+        </app-modal>
+        <div class="item_list_container">
+            <div>登録済みの評価項目</div>
+            <div
+                v-for="item in items"
+                :key="item.itemID"
+                class="item_icon_wrapper"
+            >
+                {{ item.scoreItemName }}
+            </div>
+        </div>
+        <button @click="openAddItemModal">評価項目を登録する</button>
+        <app-modal v-model="isShowAddItemModal">
+            <div class="modal_inner">
+                <div class="input_container">
+                    <div>項目名</div>
+                    <app-input v-model="scoreItemNameValue" />
+                </div>
+                <app-button
+                    :disabled="!scoreItemNameValue"
+                    @click="registerScoreItem"
+                    >登録する</app-button
+                >
             </div>
         </app-modal>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RoomModel, UserModel } from 'stage3-abr'
+import { RoomModel, ScoreItemModel, UserModel } from 'stage3-abr'
 import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import AppInput from '@/components/Atom/AppInput.vue'
+import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 @Component({
     components: {
         AppModal,
@@ -50,15 +77,27 @@ export default class ManagerConfig extends Vue {
     public blancRoom: RoomModel | null = null
     public roomNameValue: string = ''
     public isShowModal: boolean = false
+    public isShowAddItemModal: boolean = false
+    public blancScoreItem: ScoreItemModel | null = null
+    public scoreItemNameValue: string = ''
+    public items: ScoreItemModel[] = []
 
     public async created() {
         this.user = await userInteractor.fetchMyUserModel()
         this.roomHotelID = this.user.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
+        this.items = await userInteractor.fetchScoreItemsByHotelID(
+            this.roomHotelID
+        )
+        console.log('items', this.items)
     }
 
     public openModal() {
         this.isShowModal = true
+    }
+
+    public openAddItemModal() {
+        this.isShowAddItemModal = true
     }
 
     public async register() {
@@ -67,11 +106,21 @@ export default class ManagerConfig extends Vue {
         window.alert('部屋登録完了。続けて別の部屋を登録できます')
         this.roomNameValue = ''
     }
+
+    @AsyncLoadingAndErrorHandle()
+    public async registerScoreItem() {
+        this.blancScoreItem = await userInteractor.createNewScoreItem(
+            this.scoreItemNameValue
+        )
+        await this.blancScoreItem.register()
+        this.scoreItemNameValue = ''
+    }
 }
 </script>
 <style lang="stylus" scoped>
 .modal_inner {
     text-align: center;
+
     .input_container {
         margin-bottom: 5px;
     }

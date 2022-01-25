@@ -63,7 +63,7 @@ export default {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [],
-    // loading: '~/components/Organisms/Loading.vue',
+    loading: '~/components/Organisms/Loading.vue',
     srcDir: './client/',
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

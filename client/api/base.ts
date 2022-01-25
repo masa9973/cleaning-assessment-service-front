@@ -15,6 +15,7 @@ export async function callApi<U, T>(query: any, variables: T): Promise<U> {
         )) as GraphQLResult<U>
         return response.data!
     } catch (err) {
+        console.error(err)
         const errorCode = (err as any).errors[0].message as ErrorCode
         throw new ChillnnTrainingError(errorCode)
     }

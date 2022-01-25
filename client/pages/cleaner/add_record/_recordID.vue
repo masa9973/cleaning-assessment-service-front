@@ -77,9 +77,10 @@ export default class AddRecord extends Vue {
         this.blancRecord = await userInteractor.fetchRecordByRecordID(
             this.$route.params.recordID
         )
-        this.recordRoom = await userInteractor.fetchRoomByRoomID(
-            this.blancRecord.cleaningRoomID
-        )
+        // fetchScoreItemして、そのバリューをここで追加する
+        // this.recordRoom = await userInteractor.fetchRoomByRoomID(
+        //     this.blancRecord.cleaningRoomID
+        // )
         this.recordRoomName = this.recordRoom!.roomName
     }
 
