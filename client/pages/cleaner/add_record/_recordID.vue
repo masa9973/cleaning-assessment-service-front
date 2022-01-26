@@ -22,18 +22,19 @@
         </div>
         <app-modal v-model="isShowModal" class="check_modal">
             <div class="cleaning_result">
-                <div>清掃部屋{{ recordRoomName }}</div>
                 <div>{{ viewStartTime }}〜{{ viewFinishedTime }}</div>
-                <div>{{ viewTime }}</div>
+                <div class="view_time">{{ viewTime }}</div>
                 <app-button
+                    class="app_button"
                     :disabled="!ifPushStartButton || !ifPushFinishButton"
                     @click="register"
                     >送信する</app-button
                 >
                 <app-button
+                class="app_button"
                     :disabled="!ifPushFinishButton"
                     @click="resetFinishButton"
-                    >まだ終わってない</app-button
+                    >まだ終わっていない</app-button
                 >
             </div>
         </app-modal>
@@ -125,6 +126,12 @@ export default class AddRecord extends Vue {
 
     .cleaning_result {
         text-align: center;
+        .view_time {
+            font-size: 24px;
+        }
+        .app_button {
+            padding-bottom: 5px;
+        }
     }
 }
 </style>
