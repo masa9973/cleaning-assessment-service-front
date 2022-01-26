@@ -1,7 +1,6 @@
 <template>
     <div class="record_add_container">
         <div class="time_add_cotainer">
-            <div>現在のお部屋{{ recordRoomName }}</div>
             <div class="start_time">
                 <div>開始時刻{{ viewStartTime }}</div>
                 <app-button :disabled="ifPushStartButton" @click="getStartTime">
@@ -41,7 +40,7 @@
     </div>
 </template>
 <script lang="ts">
-import { RecordModel, RoomMast, timeStampToStringTime } from 'stage3-abr'
+import { millisecondToStringTime, RecordModel, RoomMast, timeStampToStringTime } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
@@ -81,16 +80,12 @@ export default class AddRecord extends Vue {
         // this.recordRoom = await userInteractor.fetchRoomByRoomID(
         //     this.blancRecord.cleaningRoomID
         // )
-        this.recordRoomName = this.recordRoom!.roomName
     }
 
     public openModal() {
         this.isShowModal = true
         this.time = this.finishedTime - this.startTime
-        const HH = Math.floor(this.time / 3600000)
-        const mm = Math.floor(this.time / 60000)
-        const ss = Math.floor(this.time / 1000)
-        this.viewTime = `${HH}時間${mm}分${ss}秒`
+        this.viewTime = millisecondToStringTime(this.time)
     }
 
     public getStartTime() {

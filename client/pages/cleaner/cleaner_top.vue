@@ -19,7 +19,7 @@
                     }"
                 >
                     <div v-if="userAssginedRecord.cleaningTime === 0">
-                        <room-card :room-i-d="userAssginedRecord.cleaningRoomID"></room-card>
+                        <room-card :room-i-d="userAssginedRecord.cleaningRoomID" />
                     </div>
                 </nuxt-link>
             </div>
