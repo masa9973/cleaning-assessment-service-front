@@ -7,9 +7,13 @@
                 :key="record.recordID"
                 class="record_card_with_addscorebutton"
             >
-                <add-score v-if="!record.ifScored" :record-model="record" />
+                <add-score
+                    v-if="!record.ifScored && !!record.cleaningTime"
+                    :record-model="record"
+                />
             </div>
         </div>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -56,5 +60,9 @@ export default class RecordListForManager extends Vue {
             }
         }
     }
+}
+
+.blanc {
+    height: 60px;
 }
 </style>
