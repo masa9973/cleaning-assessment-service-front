@@ -17,6 +17,7 @@
         </div>
         <div class="score_list_container">
             <div v-for="scoreItem in scoreItems" :key="scoreItem.scoreID">
+                <score-item-card :score-item="scoreItem" />
                 <div>清掃評価{{ scoreItem.score }}</div>
             </div>
         </div>
@@ -27,10 +28,12 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ChillnnTrainingError, ErrorCode, RecordModel, RoomModel, ScoreModel, UserModel } from 'stage3-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'
+import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
 
 @Component({
     components: {
         UserIcon,
+        ScoreItemCard,
     },
 })
 export default class RecordCard extends Vue {
@@ -74,6 +77,14 @@ export default class RecordCard extends Vue {
         const mm = Math.floor(diffTime / 60000)
         const ss = Math.floor(diffTime / 1000)
         return `${HH}時間${mm}分${ss}秒`
+    }
+
+    public async getItemName(scoreItemID: string) {
+        const res = await userInteractor.fetchScoreItemByScoreItemID(scoreItemID)
+        if (!res) {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+        }
+        return res.scoreItemName
     }
 
     get createdAt() {
