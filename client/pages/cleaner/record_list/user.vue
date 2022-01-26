@@ -29,6 +29,7 @@
                 </option>
             </select>
         </div>
+        <div>選んだ項目の平均スコア</div>
         <div v-if="!ifFiltering" class="user_all_records">
             <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
             <div v-for="record in records" :key="record.recordID">
@@ -39,7 +40,6 @@
             <div>
                 この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}
             </div>
-            <div>選んだカテゴリの平均値</div>
             <div v-for="record in resultRecords" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
@@ -50,6 +50,8 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import {
+    ChillnnTrainingError,
+    ErrorCode,
     millisecondToStringTime,
     RecordModel,
     RoomModel,
@@ -87,8 +89,11 @@ export default class UserRecordList extends Vue {
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
-        this.records = await userInteractor.fetchRecordsByCleanerID(
+        const scoredRecords = await userInteractor.fetchRecordsByCleanerID(
             this.user.userID
+        )
+        this.records = scoredRecords.filter(
+            (record) => record.ifScored === true
         )
         this.hotelID = this.user.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.hotelID)
@@ -100,6 +105,9 @@ export default class UserRecordList extends Vue {
         const cleaningTimeResults = []
         for (let i = 0; i < this.records.length; i++) {
             cleaningTimeResults[i] = this.records[i].cleaningTime
+        }
+        if (cleaningTimeResults.length === 0) {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
         }
         this.avarageCleaningTime =
             cleaningTimeResults.reduce((a, b) => a + b) /
@@ -131,6 +139,9 @@ export default class UserRecordList extends Vue {
         for (let i = 0; i < selectedScores.length; i++) {
             selectedScoresValues[i] = selectedScores[i].score
         }
+        if (selectedScoresValues.length === 0) {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+        }
         this.avarageScore =
             selectedScoresValues.reduce((a, b) => a + b) /
             selectedScoresValues.length
@@ -147,10 +158,11 @@ export default class UserRecordList extends Vue {
         for (let i = 0; i < this.resultRecords.length; i++) {
             cleaningTimeResults[i] = this.resultRecords[i].cleaningTime
         }
-        const reducer = (sum: number, currentValue: number) =>
-            sum + currentValue
+        if (cleaningTimeResults.length === 0) {
+            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+        }
         this.filteredAvarageCleaningTime =
-            cleaningTimeResults.reduce(reducer) / cleaningTimeResults.length
+            cleaningTimeResults.reduce((a, b) => a + b) / cleaningTimeResults.length
         this.viewFilteredAvarageCleaningTime = millisecondToStringTime(
             this.filteredAvarageCleaningTime
         )
