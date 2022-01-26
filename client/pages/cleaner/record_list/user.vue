@@ -1,19 +1,21 @@
 <template>
     <div class="record_list_associated_with_user">
-        <div>部屋を選択</div>
-        <select v-model="selectedRoomID">
-            <option
-                v-for="room in rooms"
-                :key="room.roomID"
-                :value="room.roomID"
-            >
-                {{ room.roomName }}
-            </option>
-        </select>
-        <button :disabled="!selectedRoomID" @click="filterRecord">
-            選んだ部屋の記録をみる
-        </button>
-        <button @click="reset">リセット</button>
+        <div class="record_sort_container">
+            <div>部屋を選択</div>
+            <select v-model="selectedRoomID">
+                <option
+                    v-for="room in rooms"
+                    :key="room.roomID"
+                    :value="room.roomID"
+                >
+                    {{ room.roomName }}
+                </option>
+            </select>
+            <button :disabled="!selectedRoomID" @click="filterRecord">
+                選んだ部屋の記録をみる
+            </button>
+            <button @click="reset">リセット</button>
+        </div>
         <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
         <div v-if="!ifFiltering" class="user_all_records">
             <div v-for="record in records" :key="record.recordID">
@@ -99,6 +101,6 @@ export default class UserRecordList extends Vue {
 </script>
 <style lang="stylus" scoped>
 .blanc {
-    height: 56px;
+    height: 60px;
 }
 </style>
