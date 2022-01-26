@@ -13,7 +13,7 @@
             <div>部屋{{ cleaningRoomName }}</div>
         </div>
         <div class="cleaning_time">
-            <div>清掃時間{{ getTimeString(cleaningTime) }}</div>
+            <div>清掃時間{{ cleaningTime }}</div>
         </div>
         <div class="score_list_container">
             <div v-for="scoreItem in scoreItems" :key="scoreItem.scoreID">
@@ -25,7 +25,15 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { ChillnnTrainingError, ErrorCode, RecordModel, RoomModel, ScoreModel, UserModel } from 'stage3-abr'
+import {
+    ChillnnTrainingError,
+    ErrorCode,
+    millisecondToStringTime,
+    RecordModel,
+    RoomModel,
+    ScoreModel,
+    UserModel,
+} from 'stage3-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'
 import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
@@ -53,9 +61,13 @@ export default class RecordCard extends Vue {
         this.scoreItems = await this.recordModel.fetchScoresByRecordID(
             this.recordModel.recordID
         )
-        this.room = await userInteractor.fetchRoomByRoomID(this.recordModel.cleaningRoomID)
+        this.room = await userInteractor.fetchRoomByRoomID(
+            this.recordModel.cleaningRoomID
+        )
         if (!this.room) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
         }
         this.cleaningRoomName = this.room.roomName
     }
@@ -71,18 +83,14 @@ export default class RecordCard extends Vue {
         return `${yyyy}/${MM}/${dd} ${HH}:${mm}:${ss}`
     }
 
-    public getTimeString(time: number) {
-        const diffTime = time
-        const HH = Math.floor(diffTime / 3600000)
-        const mm = Math.floor(diffTime / 60000)
-        const ss = Math.floor(diffTime / 1000)
-        return `${HH}時間${mm}分${ss}秒`
-    }
-
     public async getItemName(scoreItemID: string) {
-        const res = await userInteractor.fetchScoreItemByScoreItemID(scoreItemID)
+        const res = await userInteractor.fetchScoreItemByScoreItemID(
+            scoreItemID
+        )
         if (!res) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
         }
         return res.scoreItemName
     }
@@ -112,19 +120,19 @@ export default class RecordCard extends Vue {
     }
 
     get cleaningTime() {
-        return this.recordModel.cleaningTime
+        return millisecondToStringTime(this.recordModel.cleaningTime)
     }
 }
 </script>
 <style lang="stylus" scoped>
 .record_item_container {
-    // border: 1px solid;
     box-shadow: 0 0 5px 0 $shadowColor;
     padding: 5px;
     margin: 10px auto;
     border-radius: 8px;
-    width: 90%
+    width: 90%;
     background-color: #F9F9FA;
+
     img {
         object-fit: cover;
         border-radius: 10000px;
