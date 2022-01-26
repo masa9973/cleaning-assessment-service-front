@@ -15,15 +15,31 @@
                 選んだ部屋の記録をみる
             </button>
             <button @click="reset">リセット</button>
+            <div>項目を選択</div>
+            <button :disabled="!selectedScoreItemID" @click="filterItem">
+                項目を選ぶ
+            </button>
+            <select v-model="selectedScoreItemID">
+                <option
+                    v-for="item in items"
+                    :key="item.scoreItemID"
+                    :value="item.scoreItemID"
+                >
+                    {{ item.scoreItemName }}
+                </option>
+            </select>
         </div>
         <div v-if="!ifFiltering" class="user_all_records">
-        <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
+            <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
             <div v-for="record in records" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
         </div>
         <div v-else class="user_filtered_records">
-            <div>この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}</div>
+            <div>
+                この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}
+            </div>
+            <div>選んだカテゴリの平均値</div>
             <div v-for="record in resultRecords" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
@@ -37,6 +53,8 @@ import {
     millisecondToStringTime,
     RecordModel,
     RoomModel,
+    ScoreItemModel,
+    ScoreModel,
     UserModel,
 } from 'stage3-abr'
 import { userInteractor } from '~/api'
@@ -58,11 +76,14 @@ export default class UserRecordList extends Vue {
     public roomHotelID: string = ''
     public resultRecords: RecordModel[] = []
     public ifFiltering: boolean = false
-    public i: number = 0
     public avarageCleaningTime: number = 0
     public viewAvarageCleaningTime: string = ''
     public filteredAvarageCleaningTime: number = 0
     public viewFilteredAvarageCleaningTime: string = ''
+    public items: ScoreItemModel[] = []
+    public selectedScoreItemID: string = ''
+    public scores: ScoreModel[] = []
+    public avarageScore: number = 0
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
@@ -71,22 +92,48 @@ export default class UserRecordList extends Vue {
         )
         this.roomHotelID = this.user.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
+        this.items = await userInteractor.fetchScoreItemsByHotelID(
+            this.roomHotelID
+        )
 
         // 平均時間の算出
-        // this.records[i].cleaningTimeでi番目のcleaningTimeを持ってこれる
         const cleaningTimeResults = []
-        for (this.i = 0; this.i < this.records.length; this.i++) {
-            cleaningTimeResults[this.i] = this.records[this.i].cleaningTime
+        for (let i = 0; i < this.records.length; i++) {
+            cleaningTimeResults[i] = this.records[i].cleaningTime
         }
-        const reducer = (sum: number, currentValue: number) =>
-            sum + currentValue
         this.avarageCleaningTime =
-            cleaningTimeResults.reduce(reducer) / cleaningTimeResults.length
-
-        // ミリ秒変換
+            cleaningTimeResults.reduce((a, b) => a + b) /
+            cleaningTimeResults.length
         this.viewAvarageCleaningTime = millisecondToStringTime(
             this.avarageCleaningTime
         )
+
+        // 平均スコアの算出
+        const recordIDs = []
+        for (let m = 0; m < this.records.length; m++) {
+            recordIDs[m] = this.records[m].recordID
+        }
+
+        const recordScores = []
+        for (let m = 0; m < this.records.length; m++) {
+            recordScores[m] = await userInteractor.fetchScoresByRecordID(
+                recordIDs[m]
+            )
+        }
+        this.scores = recordScores.reduce((a, b) => [...a, ...b], [])
+    }
+
+    public filterItem() {
+        const selectedScores = this.scores.filter(
+            (score) => score.scoreItemID === this.selectedScoreItemID
+        )
+        const selectedScoresValues = []
+        for (let i = 0; i < selectedScores.length; i++) {
+            selectedScoresValues[i] = selectedScores[i].score
+        }
+        this.avarageScore =
+            selectedScoresValues.reduce((a, b) => a + b) /
+            selectedScoresValues.length
     }
 
     public filterRecord() {
@@ -94,15 +141,19 @@ export default class UserRecordList extends Vue {
             (record) => record.cleaningRoomID === this.selectedRoomID
         )
         this.ifFiltering = true
+
+        // 平均時間算出
         const cleaningTimeResults = []
-        for (this.i = 0; this.i < this.resultRecords.length; this.i++) {
-            cleaningTimeResults[this.i] = this.resultRecords[this.i].cleaningTime
+        for (let i = 0; i < this.resultRecords.length; i++) {
+            cleaningTimeResults[i] = this.resultRecords[i].cleaningTime
         }
         const reducer = (sum: number, currentValue: number) =>
             sum + currentValue
         this.filteredAvarageCleaningTime =
             cleaningTimeResults.reduce(reducer) / cleaningTimeResults.length
-        this.viewFilteredAvarageCleaningTime = millisecondToStringTime(this.filteredAvarageCleaningTime)
+        this.viewFilteredAvarageCleaningTime = millisecondToStringTime(
+            this.filteredAvarageCleaningTime
+        )
     }
 
     public reset() {
