@@ -1,12 +1,11 @@
 <template>
     <div>
-        <div>ここで清掃ルームの登録と施設名の登録をします。</div>
-        <div>
+        <!-- <div>
             https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
                 roomHotelID
             }}
         </div>
-        <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div>
+        <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div> -->
         <div class="room_list_container">
             <div>登録済みの部屋一覧</div>
             <div
@@ -33,7 +32,7 @@
             <div>登録済みの評価項目</div>
             <div
                 v-for="item in items"
-                :key="item.itemID"
+                :key="item.scoreItemID"
                 class="item_icon_wrapper"
             >
                 {{ item.scoreItemName }}
@@ -64,6 +63,7 @@ import AppButton from '@/components/Atom/AppButton.vue'
 import AppInput from '@/components/Atom/AppInput.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 @Component({
+    layout: 'manager',
     components: {
         AppModal,
         AppButton,
@@ -89,7 +89,6 @@ export default class ManagerConfig extends Vue {
         this.items = await userInteractor.fetchScoreItemsByHotelID(
             this.roomHotelID
         )
-        console.log('items', this.items)
     }
 
     public openModal() {
@@ -100,11 +99,13 @@ export default class ManagerConfig extends Vue {
         this.isShowAddItemModal = true
     }
 
+    @AsyncLoadingAndErrorHandle()
     public async register() {
         this.blancRoom = await userInteractor.createNewRoom(this.roomNameValue)
         await this.blancRoom.register()
         window.alert('部屋登録完了。続けて別の部屋を登録できます')
         this.roomNameValue = ''
+        this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
     }
 
     @AsyncLoadingAndErrorHandle()
@@ -114,6 +115,9 @@ export default class ManagerConfig extends Vue {
         )
         await this.blancScoreItem.register()
         this.scoreItemNameValue = ''
+        this.items = await userInteractor.fetchScoreItemsByHotelID(
+            this.roomHotelID
+        )
     }
 }
 </script>
