@@ -8,6 +8,12 @@
             <record-card :record-model="propRecordModel" />
         </div>
         <app-modal v-model="isShowModal">
+            <div class="modal_inner_score_list_container">
+                <div v-for="score in scores" :key="score.scoreID">
+                    <score-item-card :score-item="score" />
+                    <div>清掃評価{{ score.score }}</div>
+                </div>
+            </div>
             <input v-model="scoreValue" />
             <div>項目を選択</div>
             <select v-model="selectedScoreItemID">
@@ -32,12 +38,14 @@ import { scoreInteractorFactory, userInteractor } from '~/api'
 import AppButton from '@/components/Atom/AppButton.vue'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
+import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
 
 @Component({
     components: {
         AppModal,
         AppButton,
         RecordCard,
+        ScoreItemCard,
     },
 })
 export default class AddScore extends Vue {
@@ -61,9 +69,7 @@ export default class AddScore extends Vue {
         this.propRecordModel = await userInteractor.fetchRecordByRecordID(
             this.propRecordID
         )
-        // scoreを取得
-        // const scoreInteractor = scoreInteractorFactory(this.recordModel)
-        // this.scores = await userInteractor.
+        this.scores = await this.recordModel.fetchScores()
     }
 
     public openModal() {
@@ -82,6 +88,7 @@ export default class AddScore extends Vue {
         this.propRecordModel = await userInteractor.fetchRecordByRecordID(
             this.propRecordID
         )
+        this.scores = await this.recordModel.fetchScores()
     }
 
     public async scored() {
