@@ -10,8 +10,11 @@
                 {{ room.roomName }}
             </option>
         </select>
-        <button :disabled="!selectedRoomID" @click="filterRecord">選んだ部屋の記録をみる</button>
+        <button :disabled="!selectedRoomID" @click="filterRecord">
+            選んだ部屋の記録をみる
+        </button>
         <button @click="reset">リセット</button>
+        <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
         <!-- <link-button :to="{ name: 'cleaner-record_list-room' }"
             >部屋ごとのレコードを表示する</link-button
         > -->
@@ -30,7 +33,12 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import {
+    millisecondToStringTime,
+    RecordModel,
+    RoomModel,
+    UserModel,
+} from 'stage3-abr'
 import { userInteractor } from '~/api'
 import LinkButton from '@/components/Atom/LinkButton.vue'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
@@ -50,6 +58,9 @@ export default class UserRecordList extends Vue {
     public roomHotelID: string = ''
     public resultRecords: RecordModel[] = []
     public ifFiltering: boolean = false
+    public i: number = 0
+    public avarageCleaningTime: number = 0
+    public viewAvarageCleaningTime: string = ''
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
@@ -58,6 +69,22 @@ export default class UserRecordList extends Vue {
         )
         this.roomHotelID = this.user.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
+
+        // 平均時間の算出
+        // this.records[i].cleaningTimeでi番目のcleaningTimeを持ってこれる
+        const cleaningTimeResults = []
+        for (this.i = 0; this.i < this.records.length; this.i++) {
+            cleaningTimeResults[this.i] = this.records[this.i].cleaningTime
+        }
+        const reducer = (sum: number, currentValue: number) =>
+            sum + currentValue
+        this.avarageCleaningTime =
+            cleaningTimeResults.reduce(reducer) / cleaningTimeResults.length
+
+        // ミリ秒変換
+        this.viewAvarageCleaningTime = millisecondToStringTime(
+            this.avarageCleaningTime
+        )
     }
 
     public filterRecord() {
