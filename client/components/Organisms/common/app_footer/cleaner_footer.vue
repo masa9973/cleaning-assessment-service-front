@@ -1,23 +1,30 @@
 <template>
-    <div class="footer_item_container">
-        <div class="home_button">
+    <div class="cleaner_footer_item_container">
+        <div class="footer_button">
             <nuxt-link
+                tag="div"
                 :to="{
                     name: 'cleaner-cleaner_top',
                 }"
             >
-                <img src="~/assets/img/account_circle.png" />
-                <div>ホーム</div>
+                <div class="image_container">
+                    <img src="~/assets/img/account_circle.png" />
+                </div>
+                <div class="text_container">ホーム</div>
             </nuxt-link>
         </div>
-        <div class="record_button">
+        <div class="footer_button">
             <nuxt-link
+                tag="div"
+                active-class=""
                 :to="{
                     name: 'cleaner-record_list-user',
                 }"
             >
-                <img src="~/assets/img/schedule.png" />
-                <div>記録をみる</div>
+                <div class="image_container">
+                    <img src="~/assets/img/schedule.png" />
+                </div>
+                <div class="text_container">記録を見る</div>
             </nuxt-link>
         </div>
     </div>
@@ -29,10 +36,22 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class AppCleanerFooter extends Vue {}
 </script>
 <style lang="stylus" scoped>
-.footer_item_container {
+.cleaner_footer_item_container {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
     background-color: #c4c4c4;
+    position: fixed;
+    bottom: 0px;
+
+    .footer_button {
+        width: 30%;
+        text-align: center;
+        align-items: center;
+    .image_container {
+        
+        height: 36px;
+    }
+    }
 }
 </style>

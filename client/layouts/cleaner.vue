@@ -21,14 +21,6 @@ export default class CleanerLayout extends Vue {}
 </script>
 <style lang="stylus" scoped>
 .app_cleaner_footer {
-    position: fixed;
-    bottom: 0px;
-    display: flex;
-    // justify-content: center;
-    justify-content: space-around;
-    align-items: center;
     width: 100%
-    height: 56px;
-    background-color: #c4c4c4
 }
 </style>

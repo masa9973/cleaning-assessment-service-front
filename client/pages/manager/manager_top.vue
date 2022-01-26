@@ -43,29 +43,6 @@
                 <app-button :disabled="!selectedRoomID || !selectedUserID" @click="assigned">アサインする</app-button>
             </div>
         </app-modal>
-        <div class="this_will_be_footer">
-            <nuxt-link
-                :to="{
-                    name: 'manager-unscored_record_list',
-                }"
-            >
-                <button>清掃記録の評価を開始する</button>
-            </nuxt-link>
-            <nuxt-link
-                :to="{
-                    name: 'manager-record_list',
-                }"
-            >
-                <button>過去の記録を見る</button>
-            </nuxt-link>
-            <nuxt-link
-                :to="{
-                    name: 'manager-config',
-                }"
-            >
-                <button>清掃者を追加する</button>
-            </nuxt-link>
-        </div>
     </div>
 </template>
 <script lang="ts">
@@ -75,7 +52,9 @@ import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import AssginedRecordCard from '@/components/Organisms/record/assgined_card/index.vue'
 import { userInteractor } from '~/api'
+import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 @Component({
+    layout: 'manager',
     components: {
         AppModal,
         AppButton,
@@ -109,6 +88,7 @@ export default class ManagerTopPage extends Vue {
         this.isShowModal = true
     }
 
+    @AsyncLoadingAndErrorHandle()
     public async assigned() {
         this.blancRecord = await userInteractor.createNewRecord()
         this.blancRecord.cleanerID = this.selectedUserID
@@ -117,11 +97,12 @@ export default class ManagerTopPage extends Vue {
         this.blancRecord.startAt = 0
         this.blancRecord.finishedAt = 0
         await this.blancRecord.register()
-        window.alert('清掃がアサインされました')
         this.selectedRoomID = ''
         this.selectedUserID = ''
         this.isShowModal = false
-        this.$router.push({ name: 'manager-manager_top' })
+        this.assginedRecords = await userInteractor.fetchAllRecordsByHotelID(
+            this.roomHotelID
+        )
     }
 }
 </script>

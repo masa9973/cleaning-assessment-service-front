@@ -7,7 +7,6 @@
                 :key="record.recordID"
                 class="record_card_with_addscorebutton"
             >
-                <record-card v-if="!record.ifScored" :record-model="record" />
                 <add-score v-if="!record.ifScored" :record-model="record" />
             </div>
         </div>
@@ -23,6 +22,7 @@ import { userInteractor } from '~/api'
 // component
 
 @Component({
+    layout: 'manager',
     components: {
         RecordCard,
         AddScore,
@@ -36,25 +36,25 @@ export default class RecordListForManager extends Vue {
     public async created() {
         this.user = await userInteractor.fetchMyUserModel()
         this.recordsHotelID = this.user.userHotelID
-        this.records = await userInteractor.fetchAllRecordsByHotelID(this.recordsHotelID)
+        this.records = await userInteractor.fetchAllRecordsByHotelID(
+            this.recordsHotelID
+        )
     }
 }
 </script>
 <style lang="stylus" scoped>
-
 .record_list_container {
     text-align: center;
 
-.record_card_container {
+    .record_card_container {
+        .record_card_with_addscorebutton {
+            margin-bottom: 35px;
+            padding: auto;
 
-    .record_card_with_addscorebutton {
-        margin-bottom: 35px;
-        padding: auto;
-
-        .addscorebutton {
-            text-align: center;
+            .addscorebutton {
+                text-align: center;
+            }
         }
     }
-}
 }
 </style>

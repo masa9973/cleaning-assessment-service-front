@@ -32,6 +32,7 @@ import { userInteractor } from '~/api'
 
 // component
 @Component({
+    layout: 'manager',
     components: {
         UserIcon,
     },
