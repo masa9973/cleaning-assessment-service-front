@@ -16,13 +16,14 @@
             </button>
             <button @click="reset">リセット</button>
         </div>
-        <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
         <div v-if="!ifFiltering" class="user_all_records">
+        <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
             <div v-for="record in records" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
         </div>
         <div v-else class="user_filtered_records">
+            <div>この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}</div>
             <div v-for="record in resultRecords" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
@@ -60,6 +61,8 @@ export default class UserRecordList extends Vue {
     public i: number = 0
     public avarageCleaningTime: number = 0
     public viewAvarageCleaningTime: string = ''
+    public filteredAvarageCleaningTime: number = 0
+    public viewFilteredAvarageCleaningTime: string = ''
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
@@ -91,6 +94,15 @@ export default class UserRecordList extends Vue {
             (record) => record.cleaningRoomID === this.selectedRoomID
         )
         this.ifFiltering = true
+        const cleaningTimeResults = []
+        for (this.i = 0; this.i < this.resultRecords.length; this.i++) {
+            cleaningTimeResults[this.i] = this.resultRecords[this.i].cleaningTime
+        }
+        const reducer = (sum: number, currentValue: number) =>
+            sum + currentValue
+        this.filteredAvarageCleaningTime =
+            cleaningTimeResults.reduce(reducer) / cleaningTimeResults.length
+        this.viewFilteredAvarageCleaningTime = millisecondToStringTime(this.filteredAvarageCleaningTime)
     }
 
     public reset() {
