@@ -40,7 +40,7 @@
     </div>
 </template>
 <script lang="ts">
-import { millisecondToStringTime, RecordModel, RoomMast, timeStampToStringTime } from 'stage3-abr'
+import { millisecondToStringTime, RecordModel, timeStampToStringTime } from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
@@ -63,29 +63,20 @@ export default class AddRecord extends Vue {
     public blancRecord: RecordModel | null = null
     public startTime: number = 0
     public finishedTime: number = 0
-    public roomValue: string = ''
     public viewStartTime: string = '00:00:00'
     public viewFinishedTime: string = '00:00:00'
     public isShowModal: boolean = false
-    public time: number = 0
     public viewTime: string = ''
-    public recordRoom: RoomMast | null = null
-    public recordRoomName: string = ''
 
     public async created() {
         this.blancRecord = await userInteractor.fetchRecordByRecordID(
             this.$route.params.recordID
         )
-        // fetchScoreItemして、そのバリューをここで追加する
-        // this.recordRoom = await userInteractor.fetchRoomByRoomID(
-        //     this.blancRecord.cleaningRoomID
-        // )
     }
 
     public openModal() {
         this.isShowModal = true
-        this.time = this.finishedTime - this.startTime
-        this.viewTime = millisecondToStringTime(this.time)
+        this.viewTime = millisecondToStringTime(this.finishedTime - this.startTime)
     }
 
     public getStartTime() {

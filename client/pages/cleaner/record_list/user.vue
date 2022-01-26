@@ -73,7 +73,7 @@ export default class UserRecordList extends Vue {
     public records: RecordModel[] = []
     public selectedRoomID: string = ''
     public rooms: RoomModel[] = []
-    public roomHotelID: string = ''
+    public hotelID: string = ''
     public resultRecords: RecordModel[] = []
     public ifFiltering: boolean = false
     public avarageCleaningTime: number = 0
@@ -90,10 +90,10 @@ export default class UserRecordList extends Vue {
         this.records = await userInteractor.fetchRecordsByCleanerID(
             this.user.userID
         )
-        this.roomHotelID = this.user.userHotelID
-        this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
+        this.hotelID = this.user.userHotelID
+        this.rooms = await userInteractor.fetchRoomsByHotelID(this.hotelID)
         this.items = await userInteractor.fetchScoreItemsByHotelID(
-            this.roomHotelID
+            this.hotelID
         )
 
         // 平均時間の算出

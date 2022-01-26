@@ -31,7 +31,7 @@
                 <nuxt-link
                     tag="div"
                     :to="{
-                        name: 'manager-record_list',
+                        name: 'manager-user_list',
                     }"
                 >
                     <div class="image_container">
