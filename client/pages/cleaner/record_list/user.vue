@@ -15,9 +15,6 @@
         </button>
         <button @click="reset">リセット</button>
         <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
-        <!-- <link-button :to="{ name: 'cleaner-record_list-room' }"
-            >部屋ごとのレコードを表示する</link-button
-        > -->
         <div v-if="!ifFiltering" class="user_all_records">
             <div v-for="record in records" :key="record.recordID">
                 <record-card :record-model="record" />
