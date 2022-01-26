@@ -21,14 +21,14 @@ export default class DefaultLayout extends Vue {
             this.$router.push({ name: 'auth-signin' })
         }
         this.userModel = await userInteractor.fetchMyUserModel()
-        const userRole = this.userModel.role
-        if (userRole === 'manager' ) {
-            this.$router.push({ name: 'manager-manager_top' })
-        } else if (userRole === 'cleaner' ) {
-            this.$router.push({ name: 'cleaner-cleaner_top' })
-        } else {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_401_notSignIn)
-        }
+        // const userRole = this.userModel.role
+        // if (userRole === 'manager' ) {
+        //     this.$router.push({ name: 'manager-manager_top' })
+        // } else if (userRole === 'cleaner' ) {
+        //     this.$router.push({ name: 'cleaner-cleaner_top' })
+        // } else {
+        //     throw new ChillnnTrainingError(ErrorCode.chillnnTraining_401_notSignIn)
+        // }
     }
 }
 </script>
