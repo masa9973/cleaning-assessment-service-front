@@ -36,13 +36,18 @@
                             :key="cleaner.userID"
                             :value="cleaner.userID"
                         >
-                            {{ cleaner.name }}
+                                {{ cleaner.name }}
                         </option>
                     </select>
                 </div>
-                <app-button :disabled="!selectedRoomID || !selectedUserID" @click="assigned">アサインする</app-button>
+                <app-button
+                    :disabled="!selectedRoomID || !selectedUserID"
+                    @click="assigned"
+                    >アサインする</app-button
+                >
             </div>
         </app-modal>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -64,8 +69,9 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 export default class ManagerTopPage extends Vue {
     public isShowModal: boolean = false
     public rooms: RoomModel[] = []
-    public user: UserModel | null = null
+    public currentUser: UserModel | null = null
     public roomHotelID: string = ''
+    public users: UserModel[] = []
     public cleaners: UserModel[] = []
     public selectedRoomID: string = ''
     public selectedUserID: string = ''
@@ -73,12 +79,13 @@ export default class ManagerTopPage extends Vue {
     public assginedRecords: RecordModel[] = []
 
     public async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        this.roomHotelID = this.user.userHotelID
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.roomHotelID = this.currentUser.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
-        this.cleaners = await userInteractor.fetchAllUserByHotelID(
+        this.users = await userInteractor.fetchAllUserByHotelID(
             this.roomHotelID
         )
+        this.cleaners = this.users.filter((user) => user.role === 'cleaner')
         this.assginedRecords = await userInteractor.fetchAllRecordsByHotelID(
             this.roomHotelID
         )
@@ -132,6 +139,7 @@ export default class ManagerTopPage extends Vue {
 
 .modal_inner {
     text-align: center;
+
     .room_user_selecter {
         display: flex;
         margin-bottom: 5px;
@@ -141,5 +149,9 @@ export default class ManagerTopPage extends Vue {
 .this_will_be_footer {
     position: fixed;
     bottom: 0px;
+}
+
+.blanc {
+    height: 60px;
 }
 </style>

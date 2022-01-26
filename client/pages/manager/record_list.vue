@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div>やっぱユーザーリストにしたい</div>
         <div>ユーザーをタップして清掃者の記録を見る</div>
-        <div>ここのユーザーはcleanerだけにしたい</div>
         <div class="user_list_container">
             <div
                 v-for="(user, idx) in registeredUsers"
@@ -18,10 +16,13 @@
                     tag="div"
                     class="link"
                 >
-                    <user-icon :user-model="user" class="user_icon_item" />
+                    <div v-if="user.role === 'cleaner'">
+                        <user-icon :user-model="user" class="user_icon_item" />
+                    </div>
                 </nuxt-link>
             </div>
         </div>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -63,5 +64,9 @@ export default class Top extends Vue {
             margin-right: 0;
         }
     }
+}
+
+.blanc {
+    height: 60px;
 }
 </style>

@@ -52,6 +52,7 @@
                 >
             </div>
         </app-modal>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -128,5 +129,8 @@ export default class ManagerConfig extends Vue {
     .input_container {
         margin-bottom: 5px;
     }
+}
+.blanc {
+    height: 60px;
 }
 </style>
