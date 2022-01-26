@@ -83,7 +83,6 @@ export default class AddScore extends Vue {
         this.blancScore.scoreItemID = this.selectedScoreItemID
         this.blancScore.score = this.scoreValue
         await this.blancScore.register()
-        // await this.recordModel.switchIfScored()
         // window.alert('清掃評価は正常に送信されました。')
         this.propRecordModel = await userInteractor.fetchRecordByRecordID(
             this.propRecordID
@@ -91,6 +90,7 @@ export default class AddScore extends Vue {
         this.scores = await this.recordModel.fetchScores()
     }
 
+    @AsyncLoadingAndErrorHandle()
     public async scored() {
         await this.recordModel.switchIfScored()
     }
