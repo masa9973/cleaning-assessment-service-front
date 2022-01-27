@@ -1,43 +1,58 @@
 <template>
     <div class="add_score">
         <div
-            v-if="propRecordModel"
+            v-if="recordModel"
             class="record_card_for_add_score"
             @click="openModal"
         >
-            <record-card :record-model="propRecordModel" />
+            <record-card :record-model="recordModel" />
         </div>
         <app-modal v-model="isShowModal">
             <div class="modal_inner_score_list_container">
-                <div v-for="score in scores" :key="score.scoreID">
+                <div
+                    v-for="score in scores"
+                    :key="score.scoreID"
+                    class="score_item_container"
+                >
+                    <div id="form_area"></div>
                     <score-item-card :score-item="score" />
-                    <div>清掃評価{{ score.score }}</div>
                 </div>
             </div>
-            <input v-model="scoreValue" />
-            <div>項目を選択</div>
-            <select v-model="selectedScoreItemID">
-                <option
-                    v-for="item in items"
-                    :key="item.scoreItemID"
-                    :value="item.scoreItemID"
+            <!-- <div class="add_score_container">
+                <div>項目を選択</div>
+                <select v-model="selectedScoreItemID">
+                    <option
+                        v-for="item in items"
+                        :key="item.scoreItemID"
+                        :value="item.scoreItemID"
+                    >
+                        {{ item.scoreItemName }}
+                    </option>
+                </select>
+                <input v-model="scoreValue" />
+            </div> -->
+            <div class="score_list_container">
+                <div v-for="score in scores" :key="score.scoreID"></div>
+            </div>
+            <div class="app_button_container">
+                <app-button class="app_button" @click="register"
+                    >スコアを追加</app-button
                 >
-                    {{ item.scoreItemName }}
-                </option>
-            </select>
-            <app-button @click="register">追加</app-button>
-            <app-button @click="scored">確定</app-button>
+                <app-button class="app_button" @click="scored"
+                    >評価済みにする</app-button
+                >
+            </div>
         </app-modal>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { RecordModel, ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
-import AppModal from '@/components/Organisms/common/app_modal/index.vue'
+import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 import { scoreInteractorFactory, userInteractor } from '~/api'
+import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
-import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
 
 @Component({
@@ -50,26 +65,43 @@ import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vu
 })
 export default class AddScore extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
-    public blancScore: ScoreModel | null = null
-    public scoreValue: number = 0
-    public isShowModal: boolean = false
-    public items: ScoreItemModel[] = []
     public user: UserModel | null = null
     public hotelID: string = ''
-    public selectedScoreItemID: string = ''
+    public items: ScoreItemModel[] = []
     public scores: ScoreModel[] = []
-    public propRecordID: string = ''
-    public propRecordModel: RecordModel | null = null
+    public isShowModal: boolean = false
+    public blancScore: ScoreModel | null = null
+    public scoreValue: number = 0
+    public selectedScoreItemID: string = ''
+    public scoreValues: number[] = []
+    public blancScores: ScoreModel[] = []
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
         this.hotelID = this.user.userHotelID
         this.items = await userInteractor.fetchScoreItemsByHotelID(this.hotelID)
-        this.propRecordID = this.recordModel.recordID
-        this.propRecordModel = await userInteractor.fetchRecordByRecordID(
-            this.propRecordID
-        )
         this.scores = await this.recordModel.fetchScores()
+        // const scoreInteractor = scoreInteractorFactory(this.recordModel)
+        // this.scoreValues = [10, 10]
+        // for (let m = 0; m < this.items.length; m++) {
+        //     this.blancScores[m] = await scoreInteractor.createNewScore()
+        //     this.blancScores[m].scoreItemID = this.items[m].scoreItemID
+        //     this.blancScores[m].score = this.scoreValues[m]
+        //     await this.blancScores[m].register()
+        // }
+        for (let m = 0; m < this.items.length; m++) {
+            this.addForm()
+        }
+        console.log(this.items.length)
+    }
+
+    public addForm() {
+        const i = 0
+        const inputData = document.createElement('input')
+        inputData.type = 'text'
+        inputData.id = 'inputform_' + i
+        const parent = document.getElementById('form_area')
+        parent?.appendChild(inputData)
     }
 
     public openModal() {
@@ -84,20 +116,26 @@ export default class AddScore extends Vue {
         this.blancScore.score = this.scoreValue
         await this.blancScore.register()
         // window.alert('清掃評価は正常に送信されました。')
-        this.propRecordModel = await userInteractor.fetchRecordByRecordID(
-            this.propRecordID
-        )
         this.scores = await this.recordModel.fetchScores()
     }
 
     @AsyncLoadingAndErrorHandle()
     public async scored() {
         await this.recordModel.switchIfScored()
+        this.$emit('registered')
     }
 }
 </script>
 <style lang="stylus" scoped>
-.add_score {
-    // text-align: center;
+.add_score_container {
+    padding-bottom: 5px;
+}
+
+.app_button_container {
+    text-align: center;
+
+    .app_button {
+        padding-bottom: 5px;
+    }
 }
 </style>
