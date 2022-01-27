@@ -4,26 +4,28 @@
             <!-- icon -->
             <user-icon :user-model="user" :show-edit="isMyPage" />
         </div>
-        <div>
-            タップして清掃を開始する
-        </div>
         <div class="user_assigned_record_list">
-            <div
-                v-for="userAssginedRecord in userAssginedRecords"
-                :key="userAssginedRecord.recordID"
-            >
-                <nuxt-link
-                    :to="{
-                        name: 'cleaner-add_record-recordID',
-                        params: { recordID: userAssginedRecord.recordID },
-                    }"
+            <div v-if="filteredassignedRecords.length">
+                <div
+                    v-for="userassignedRecord in filteredassignedRecords"
+                    :key="userassignedRecord.recordID"
                 >
-                    <div v-if="userAssginedRecord.cleaningTime === 0">
-                        <room-card :room-i-d="userAssginedRecord.cleaningRoomID" />
-                    </div>
-                </nuxt-link>
+                    <nuxt-link
+                        tag="div"
+                        :to="{
+                            name: 'cleaner-add_record-recordID',
+                            params: { recordID: userassignedRecord.recordID },
+                        }"
+                    >
+                        <room-card
+                            :room-i-d="userassignedRecord.cleaningRoomID"
+                        />
+                    </nuxt-link>
+                </div>
             </div>
+            <div v-else>アサインされている清掃はありません</div>
         </div>
+        <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
@@ -40,7 +42,8 @@ import RoomCard from '@/components/Organisms/room/card/index.vue'
     },
 })
 export default class CleanerTopPage extends Vue {
-    public userAssginedRecords: RecordModel[] = []
+    public userassignedRecords: RecordModel[] = []
+    public filteredassignedRecords: RecordModel[] = []
     public user: UserModel | null = null
     public isMyPage = true
     public roomModel: RoomModel | null = null
@@ -48,9 +51,21 @@ export default class CleanerTopPage extends Vue {
     public async created() {
         this.user = await userInteractor.fetchMyUserModel()
         const myCleanerID = this.user.userID
-        this.userAssginedRecords = await userInteractor.fetchRecordsByCleanerID(
+        this.userassignedRecords = await userInteractor.fetchRecordsByCleanerID(
             myCleanerID
+        )
+        this.filteredassignedRecords = this.userassignedRecords.filter(
+            (record) => record.cleaningTime === 0
         )
     }
 }
 </script>
+<style lang="stylus" scoped>
+.user_icon_wrapper {
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.blanc {
+    height: 60px
+}
+</style>

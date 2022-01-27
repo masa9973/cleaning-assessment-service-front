@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>項目{{ scoreItemName }}</div>
+        <div>{{ scoreItemName }}:</div>
     </div>
 </template>
 <script lang="ts">

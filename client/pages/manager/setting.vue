@@ -1,11 +1,16 @@
 <template>
     <div>
-        <!-- <div>
-            https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
-                roomHotelID
-            }}
+        <div class="invite_cleaner_url_container">
+            <div>
+                https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
+                    roomHotelID
+                }}
+            </div>
+            <div id="inviteUrl">
+                localhost:3000/auth_cleaner/signin/{{ roomHotelID }}
+            </div>
         </div>
-        <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div> -->
+        <button @click="writeToClipboard">localhostのurlコピー</button>
         <div class="room_list_container">
             <div>登録済みの部屋一覧</div>
             <div
@@ -90,7 +95,6 @@ export default class ManagerConfig extends Vue {
         this.items = await userInteractor.fetchScoreItemsByHotelID(
             this.roomHotelID
         )
-        console.log(this.rooms)
     }
 
     public openModal() {
@@ -99,6 +103,18 @@ export default class ManagerConfig extends Vue {
 
     public openAddItemModal() {
         this.isShowAddItemModal = true
+    }
+
+    public writeToClipboard() {
+        const copyText = this.$el.querySelector('#inviteUrl')!.textContent
+        navigator.clipboard
+            .writeText(copyText!)
+            .then(() => {
+                window.alert('copied!')
+            })
+            .catch((e) => {
+                console.error(e)
+            })
     }
 
     @AsyncLoadingAndErrorHandle()
@@ -124,6 +140,10 @@ export default class ManagerConfig extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
+.invite_cleaner_url_container {
+    word-break: break-all;
+}
+
 .modal_inner {
     text-align: center;
 
@@ -131,6 +151,7 @@ export default class ManagerConfig extends Vue {
         margin-bottom: 5px;
     }
 }
+
 .blanc {
     height: 60px;
 }

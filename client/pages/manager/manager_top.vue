@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="assigned_cleaning">
-            <div
-                v-for="assginedRecord in assginedRecords"
-                :key="assginedRecord.recordID"
-            >
+            <div v-if="filteredAssignedRecords.length">
                 <div
-                    v-if="assginedRecord.cleaningTime === 0"
-                    class="record_card_list"
+                    v-for="assignedRecord in filteredAssignedRecords"
+                    :key="assignedRecord.recordID"
                 >
-                    <assgined-record-card :record-model="assginedRecord" />
+                    <div class="record_card_list">
+                        <assigned-record-card :record-model="assignedRecord" />
+                    </div>
                 </div>
             </div>
+            <div v-else>右下のボタンから清掃をアサインしましょう。</div>
         </div>
         <div class="plus_button_container">
             <div class="plus_button" @click="openModal">＋</div>
@@ -19,26 +19,36 @@
         <app-modal v-model="isShowModal">
             <div class="modal_inner">
                 <div class="room_user_selecter">
-                    <div>部屋を選択</div>
-                    <select v-model="selectedRoomID">
-                        <option
-                            v-for="room in rooms"
-                            :key="room.roomID"
-                            :value="room.roomID"
-                        >
-                            {{ room.roomName }}
-                        </option>
-                    </select>
-                    <div>清掃者を選択</div>
-                    <select v-model="selectedUserID">
-                        <option
-                            v-for="cleaner in cleaners"
-                            :key="cleaner.userID"
-                            :value="cleaner.userID"
-                        >
-                                {{ cleaner.name }}
-                        </option>
-                    </select>
+                    <div class="room_selecter">
+                        <div v-if="rooms.length">
+                            <div>部屋を選択</div>
+                            <select v-model="selectedRoomID">
+                                <option
+                                    v-for="room in rooms"
+                                    :key="room.roomID"
+                                    :value="room.roomID"
+                                >
+                                    {{ room.roomName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-else>設定から部屋を追加しましょう。</div>
+                    </div>
+                    <div class="user_selecter">
+                        <div v-if="cleaners.length">
+                            <div>清掃者を選択</div>
+                            <select v-model="selectedUserID">
+                                <option
+                                    v-for="cleaner in cleaners"
+                                    :key="cleaner.userID"
+                                    :value="cleaner.userID"
+                                >
+                                    {{ cleaner.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-else>設定から清掃者を登録しましょう。</div>
+                    </div>
                 </div>
                 <app-button
                     :disabled="!selectedRoomID || !selectedUserID"
@@ -55,7 +65,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
-import AssginedRecordCard from '@/components/Organisms/record/assgined_card/index.vue'
+import assignedRecordCard from '@/components/Organisms/record/assigned_card/index.vue'
 import { userInteractor } from '~/api'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 @Component({
@@ -63,7 +73,7 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
     components: {
         AppModal,
         AppButton,
-        AssginedRecordCard,
+        assignedRecordCard,
     },
 })
 export default class ManagerTopPage extends Vue {
@@ -76,7 +86,8 @@ export default class ManagerTopPage extends Vue {
     public selectedRoomID: string = ''
     public selectedUserID: string = ''
     public blancRecord: RecordModel | null = null
-    public assginedRecords: RecordModel[] = []
+    public assignedRecords: RecordModel[] = []
+    public filteredAssignedRecords: RecordModel[] = []
 
     public async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
@@ -86,8 +97,11 @@ export default class ManagerTopPage extends Vue {
             this.roomHotelID
         )
         this.cleaners = this.users.filter((user) => user.role === 'cleaner')
-        this.assginedRecords = await userInteractor.fetchAllRecordsByHotelID(
+        this.assignedRecords = await userInteractor.fetchAllRecordsByHotelID(
             this.roomHotelID
+        )
+        this.filteredAssignedRecords = this.assignedRecords.filter(
+            (record) => record.cleaningTime === 0
         )
     }
 
@@ -107,8 +121,11 @@ export default class ManagerTopPage extends Vue {
         this.selectedRoomID = ''
         this.selectedUserID = ''
         this.isShowModal = false
-        this.assginedRecords = await userInteractor.fetchAllRecordsByHotelID(
+        this.assignedRecords = await userInteractor.fetchAllRecordsByHotelID(
             this.roomHotelID
+        )
+        this.filteredAssignedRecords = this.assignedRecords.filter(
+            (record) => record.cleaningTime === 0
         )
     }
 }
@@ -143,6 +160,15 @@ export default class ManagerTopPage extends Vue {
     .room_user_selecter {
         display: flex;
         margin-bottom: 5px;
+        justify-content: space-evenly;
+
+        .room_selecter {
+            display: flex;
+        }
+
+        .user_selecter {
+            display: flex;
+        }
     }
 }
 

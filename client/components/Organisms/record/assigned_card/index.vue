@@ -1,5 +1,5 @@
 <template>
-    <div class="assgined_record_card">
+    <div class="assigned_record_card">
         <div v-if="user" class="user_icon_wrapper">
             <user-icon :user-model="user" :show-edit="isMyPage" />
         </div>
@@ -17,7 +17,7 @@ import UserIcon from '@/components//Organisms/User/Icon/index.vue'
         UserIcon,
     },
 })
-export default class AssginedRecordCard extends Vue {
+export default class assignedRecordCard extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
     public user: UserModel | null = null
     public roomModel: RoomModel | null = null
@@ -35,7 +35,7 @@ export default class AssginedRecordCard extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
-.assgined_record_card {
+.assigned_record_card {
     display: flex;
     box-shadow: 0 0 5px 0 $shadowColor;
     padding: 5px;

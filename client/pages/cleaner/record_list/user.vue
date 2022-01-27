@@ -36,7 +36,7 @@
                 <record-card :record-model="record" />
             </div>
         </div>
-        <div v-else class="user_filtered_records">
+        <div v-else-if="resultRecords.length" class="user_filtered_records">
             <div>
                 この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}
             </div>
@@ -44,6 +44,7 @@
                 <record-card :record-model="record" />
             </div>
         </div>
+        <div v-else>選択された部屋の記録はありません</div>
         <div class="blanc"></div>
     </div>
 </template>
@@ -106,7 +107,8 @@ export default class UserRecordList extends Vue {
         for (let i = 0; i < this.records.length; i++) {
             cleaningTimeResults[i] = this.records[i].cleaningTime
         }
-        if (cleaningTimeResults.length === 0) {
+        if (cleaningTimeResults.length === 0) 
+        {
             throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
         }
         this.avarageCleaningTime =

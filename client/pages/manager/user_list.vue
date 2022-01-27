@@ -1,26 +1,34 @@
 <template>
     <div>
         <div>ユーザーをタップして清掃者の記録を見る</div>
-        <div class="user_list_container">
-            <div
-                v-for="(user, idx) in registeredUsers"
-                :key="user.userID"
-                class="user_icon_wrapper"
-                :class="{ three: !((idx + 1) % 3) }"
-            >
-                <nuxt-link
-                    :to="{
-                        name: 'user-userID',
-                        params: { userID: user.userID },
-                    }"
-                    tag="div"
-                    class="link"
-                >
-                    <div v-if="user.role === 'cleaner'">
-                        <user-icon :user-model="user" class="user_icon_item" />
+        <div>
+            <div v-if="cleaners.length">
+                <div class="user_list_container">
+                    <div
+                        v-for="(user, idx) in cleaners"
+                        :key="user.userID"
+                        class="user_icon_wrapper"
+                        :class="{ three: !((idx + 1) % 3) }"
+                    >
+                        <nuxt-link
+                            :to="{
+                                name: 'user-userID',
+                                params: { userID: user.userID },
+                            }"
+                            tag="div"
+                            class="link"
+                        >
+                            <div>
+                                <user-icon
+                                    :user-model="user"
+                                    class="user_icon_item"
+                                />
+                            </div>
+                        </nuxt-link>
                     </div>
-                </nuxt-link>
+                </div>
             </div>
+            <div v-else>設定から清掃者を登録しましょう。</div>
         </div>
         <div class="blanc"></div>
     </div>
@@ -41,10 +49,15 @@ import { userInteractor } from '~/api'
 export default class Top extends Vue {
     public userModel: UserModel | null = null
     public registeredUsers: UserModel[] = []
+    public cleaners: UserModel[] = []
+
     public async created() {
         this.userModel = await userInteractor.fetchMyUserModel()
         this.registeredUsers = await userInteractor.fetchAllUserByHotelID(
             this.userModel.userHotelID
+        )
+        this.cleaners = this.registeredUsers.filter(
+            (user) => user.role === 'cleaner'
         )
     }
 }
