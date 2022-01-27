@@ -90,6 +90,7 @@ export default class ManagerConfig extends Vue {
         this.items = await userInteractor.fetchScoreItemsByHotelID(
             this.roomHotelID
         )
+        console.log(this.rooms)
     }
 
     public openModal() {

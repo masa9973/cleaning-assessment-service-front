@@ -44,7 +44,7 @@
                 <nuxt-link
                     tag="div"
                     :to="{
-                        name: 'manager-config',
+                        name: 'manager-setting',
                     }"
                 >
                     <div class="image_container">

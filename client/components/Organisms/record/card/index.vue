@@ -17,8 +17,10 @@
         </div>
         <div class="score_list_container">
             <div v-for="score in scores" :key="score.scoreID">
-                <score-item-card :score-item="score" />
-                <div>清掃評価{{ score.score }}</div>
+                <div class="score_item_container">
+                    <score-item-card :score-item="score" />
+                    <div>{{ score.score }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -120,6 +122,9 @@ export default class RecordCard extends Vue {
     border-radius: 8px;
     width: 90%;
     background-color: #F9F9FA;
+    .score_item_container {
+        display: flex;
+    }
 
     img {
         object-fit: cover;
