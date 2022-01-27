@@ -63,6 +63,32 @@ export const addScoreItem = /* GraphQL */ `
     }
   }
 `;
+export const deleteRoom = /* GraphQL */ `
+  mutation DeleteRoom($roomID: ID!) {
+    deleteRoom(roomID: $roomID) {
+      createdAt
+      roomHotelID
+      roomIcon {
+        bucket
+        key
+        region
+        url
+      }
+      roomID
+      roomName
+    }
+  }
+`;
+export const deleteScoreItem = /* GraphQL */ `
+  mutation DeleteScoreItem($scoreItemID: ID!) {
+    deleteScoreItem(scoreItemID: $scoreItemID) {
+      createdAt
+      scoreItemHotelID
+      scoreItemID
+      scoreItemName
+    }
+  }
+`;
 export const updateRecord = /* GraphQL */ `
   mutation UpdateRecord($input: RecordMastInput!) {
     updateRecord(input: $input) {

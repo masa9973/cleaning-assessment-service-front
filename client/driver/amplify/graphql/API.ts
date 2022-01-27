@@ -209,6 +209,41 @@ export type AddScoreItemMutation = {
   },
 };
 
+export type DeleteRoomMutationVariables = {
+  roomID: string,
+};
+
+export type DeleteRoomMutation = {
+  deleteRoom:  {
+    __typename: "RoomMast",
+    createdAt: number,
+    roomHotelID: string,
+    roomIcon?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+      url: string,
+    } | null,
+    roomID: string,
+    roomName: string,
+  },
+};
+
+export type DeleteScoreItemMutationVariables = {
+  scoreItemID: string,
+};
+
+export type DeleteScoreItemMutation = {
+  deleteScoreItem:  {
+    __typename: "ScoreItemMast",
+    createdAt: number,
+    scoreItemHotelID: string,
+    scoreItemID: string,
+    scoreItemName: string,
+  },
+};
+
 export type UpdateRecordMutationVariables = {
   input: RecordMastInput,
 };

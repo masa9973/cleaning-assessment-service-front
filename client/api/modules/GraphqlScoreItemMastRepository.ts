@@ -1,6 +1,6 @@
 import { IScoreItemMastRepository, ScoreItemMast } from 'stage3-abr';
 import { callApi } from '../base';
-import { AddScoreItemMutation, AddScoreItemMutationVariables, FetchScoreItemByScoreItemIDQuery, FetchScoreItemByScoreItemIDQueryVariables, FetchScoreItemsByHotelIDQuery, FetchScoreItemsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
+import { AddScoreItemMutation, AddScoreItemMutationVariables, DeleteScoreItemMutation, DeleteScoreItemMutationVariables, FetchScoreItemByScoreItemIDQuery, FetchScoreItemByScoreItemIDQueryVariables, FetchScoreItemsByHotelIDQuery, FetchScoreItemsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
 
@@ -14,6 +14,14 @@ class GraphqlScoreItemMastRepository implements IScoreItemMastRepository {
                 }
             )
         ).addScoreItem
+    }
+
+    async deleteScoreItem(scoreItemID: string): Promise<ScoreItemMast> {
+        return (
+            await callApi<DeleteScoreItemMutation, DeleteScoreItemMutationVariables>(
+                mutation.deleteScoreItem,{scoreItemID}
+            )
+        ).deleteScoreItem
     }
 
     async fetchScoreItemsByHotelID(scoreItemHotelID: string): Promise<ScoreItemMast[]> {
