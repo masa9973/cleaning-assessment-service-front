@@ -263,6 +263,22 @@ export type UpdateRecordMutation = {
   },
 };
 
+export type UpdateScoreMutationVariables = {
+  input: ScoreMastInput,
+};
+
+export type UpdateScoreMutation = {
+  updateScore:  {
+    __typename: "ScoreMast",
+    createdAt: number,
+    recordID: string,
+    score: number,
+    scoreID: string,
+    scoreItemID: string,
+    scorerUserID: string,
+  },
+};
+
 export type UpdateUserMastMutationVariables = {
   input: UserMastInput,
 };

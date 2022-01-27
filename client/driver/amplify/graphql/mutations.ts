@@ -104,6 +104,18 @@ export const updateRecord = /* GraphQL */ `
     }
   }
 `;
+export const updateScore = /* GraphQL */ `
+  mutation UpdateScore($input: ScoreMastInput!) {
+    updateScore(input: $input) {
+      createdAt
+      recordID
+      score
+      scoreID
+      scoreItemID
+      scorerUserID
+    }
+  }
+`;
 export const updateUserMast = /* GraphQL */ `
   mutation UpdateUserMast($input: UserMastInput!) {
     updateUserMast(input: $input) {
