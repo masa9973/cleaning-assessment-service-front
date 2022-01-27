@@ -1,16 +1,14 @@
 <template>
     <div>
         <div class="invite_cleaner_url_container">
-            <div>
+            <div id="inviteUrl">
                 https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
                     roomHotelID
                 }}
             </div>
-            <div id="inviteUrl">
-                localhost:3000/auth_cleaner/signin/{{ roomHotelID }}
-            </div>
+            <button @click="writeToClipboard">URLコピー</button>
+            <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div>
         </div>
-        <button @click="writeToClipboard">localhostのurlコピー</button>
         <div class="room_list_container">
             <div>登録済みの部屋一覧</div>
             <div
@@ -40,7 +38,9 @@
                 :key="item.scoreItemID"
                 class="item_icon_wrapper"
             >
-                {{ item.scoreItemName }}
+                <div class="score_item">
+                    {{ item.scoreItemName }}
+                </div>
             </div>
         </div>
         <button @click="openAddItemModal">評価項目を登録する</button>
@@ -96,6 +96,8 @@ export default class ManagerConfig extends Vue {
             this.roomHotelID
         )
     }
+
+    public deleteRoom() {}
 
     public openModal() {
         this.isShowModal = true
