@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div v-if="currentUser">
         <div class="invite_cleaner_url_container">
             <div id="inviteUrl">
                 https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
-                    roomHotelID
+                    currentUser.userHotelID
                 }}
             </div>
             <button @click="writeToClipboard">URLコピー</button>
-            <div>localhost:3000/auth_cleaner/signin/{{ roomHotelID }}</div>
+            <div>localhost:3000/auth_cleaner/signin/{{ currentUser.userHotelID }}</div>
         </div>
         <div class="room_list_container">
             <div>登録済みの部屋一覧</div>
@@ -19,8 +19,8 @@
                 {{ room.roomName }}
             </div>
         </div>
-        <button @click="openModal">部屋を登録する</button>
-        <app-modal v-model="isShowModal">
+        <button @click="openAddRoomModal">部屋を登録する</button>
+        <app-modal v-model="isShowAddRoomModal">
             <div class="modal_inner">
                 <div class="input_container">
                     <div>部屋名</div>
@@ -39,7 +39,7 @@
                 class="item_icon_wrapper"
             >
                 <div class="score_item">
-                    {{ item.scoreItemName }}
+                    {{ scoreItem.scoreItemName }}
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@ export default class ManagerConfig extends Vue {
     public rooms: RoomModel[] = []
     public blancRoom: RoomModel | null = null
     public roomNameValue: string = ''
-    public isShowModal: boolean = false
+    public isShowAddRoomModal: boolean = false
     public isShowAddItemModal: boolean = false
     public blancScoreItem: ScoreItemModel | null = null
     public scoreItemNameValue: string = ''
@@ -95,8 +95,8 @@ export default class ManagerConfig extends Vue {
 
     public deleteRoom() {}
 
-    public openModal() {
-        this.isShowModal = true
+    public openAddRoomModal() {
+        this.isShowAddRoomModal = true
     }
 
     public openAddItemModal() {
