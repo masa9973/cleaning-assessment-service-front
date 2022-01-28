@@ -31,14 +31,14 @@
         </div>
         <div>選んだ項目の平均スコア</div>
         <div v-if="!ifFiltering" class="user_all_records">
-            <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
+            <div>平均清掃時間{{ viewAverageCleaningTime }}</div>
             <div v-for="record in records" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
         </div>
         <div v-else class="user_filtered_records">
             <div>
-                この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}
+                この部屋の平均清掃時間{{ viewFilteredAverageCleaningTime }}
             </div>
             <div v-for="record in resultRecords" :key="record.recordID">
                 <record-card :record-model="record" />
@@ -78,14 +78,14 @@ export default class UserRecordList extends Vue {
     public hotelID: string = ''
     public resultRecords: RecordModel[] = []
     public ifFiltering: boolean = false
-    public avarageCleaningTime: number = 0
-    public viewAvarageCleaningTime: string = ''
-    public filteredAvarageCleaningTime: number = 0
-    public viewFilteredAvarageCleaningTime: string = ''
+    public averageCleaningTime: number = 0
+    public viewAverageCleaningTime: string = ''
+    public filteredAverageCleaningTime: number = 0
+    public viewFilteredAverageCleaningTime: string = ''
     public items: ScoreItemModel[] = []
     public selectedScoreItemID: string = ''
     public scores: ScoreModel[] = []
-    public avarageScore: number = 0
+    public averageScore: number = 0
 
     async created() {
         this.user = await userInteractor.fetchMyUserModel()
@@ -97,9 +97,7 @@ export default class UserRecordList extends Vue {
         )
         this.hotelID = this.user.userHotelID
         this.rooms = await userInteractor.fetchRoomsByHotelID(this.hotelID)
-        this.items = await userInteractor.fetchScoreItemsByHotelID(
-            this.hotelID
-        )
+        this.items = await userInteractor.fetchScoreItemsByHotelID(this.hotelID)
 
         // 平均時間の算出
         const cleaningTimeResults = []
@@ -107,13 +105,15 @@ export default class UserRecordList extends Vue {
             cleaningTimeResults[i] = this.records[i].cleaningTime
         }
         if (cleaningTimeResults.length === 0) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
         }
-        this.avarageCleaningTime =
+        this.averageCleaningTime =
             cleaningTimeResults.reduce((a, b) => a + b) /
             cleaningTimeResults.length
-        this.viewAvarageCleaningTime = millisecondToStringTime(
-            this.avarageCleaningTime
+        this.viewAverageCleaningTime = millisecondToStringTime(
+            this.averageCleaningTime
         )
 
         // 平均スコアの算出
@@ -140,9 +140,11 @@ export default class UserRecordList extends Vue {
             selectedScoresValues[i] = selectedScores[i].score
         }
         if (selectedScoresValues.length === 0) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
         }
-        this.avarageScore =
+        this.averageScore =
             selectedScoresValues.reduce((a, b) => a + b) /
             selectedScoresValues.length
     }
@@ -159,12 +161,15 @@ export default class UserRecordList extends Vue {
             cleaningTimeResults[i] = this.resultRecords[i].cleaningTime
         }
         if (cleaningTimeResults.length === 0) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
         }
-        this.filteredAvarageCleaningTime =
-            cleaningTimeResults.reduce((a, b) => a + b) / cleaningTimeResults.length
-        this.viewFilteredAvarageCleaningTime = millisecondToStringTime(
-            this.filteredAvarageCleaningTime
+        this.filteredAverageCleaningTime =
+            cleaningTimeResults.reduce((a, b) => a + b) /
+            cleaningTimeResults.length
+        this.viewFilteredAverageCleaningTime = millisecondToStringTime(
+            this.filteredAverageCleaningTime
         )
     }
 

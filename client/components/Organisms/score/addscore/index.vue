@@ -14,7 +14,6 @@
                         ref="addScoreValue"
                         :score-item-model="scoreItem"
                         :record-model="recordModel"
-                        @registered="registered"
                     />
                 </div>
             </div>
@@ -53,11 +52,6 @@ export default class AddScore extends Vue {
     public isShowModal: boolean = false
     public scores: ScoreModel[] = []
     // 使ってる変数
-    public blancScore: ScoreModel | null = null
-    public scoreValue: number = 0
-    public selectedScoreItemID: string = ''
-    public scoreValues: number[] = []
-    public blancScores: ScoreModel[] = []
 
     async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
@@ -76,7 +70,7 @@ export default class AddScore extends Vue {
 
     @AsyncLoadingAndErrorHandle()
     public async scored() {
-        window.confirm('全てのスコアを登録しましたか？')
+        if (window.confirm('全てのスコアを登録しましたか？'))
         await this.recordModel.switchIfScored()
         this.$emit('registered')
     }
