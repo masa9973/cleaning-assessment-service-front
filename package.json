@@ -26,7 +26,7 @@
         "nuxt-property-decorator": "^2.9.1",
         "stage3-abr": "git+ssh://git@github.com:masa9973/stage3-abr.git#dev",
         "vee-validate": "^3.4.11",
-        "chartjs":"^0.3.24"
+        "chart.js":"^3.7.0"
 
     },
     "devDependencies": {
