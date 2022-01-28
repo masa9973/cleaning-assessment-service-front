@@ -44,7 +44,7 @@
                 <record-card :record-model="record" />
             </div>
         </div>
-        <div v-else>選択された部屋の記録はありません</div>
+        <div v-else>選択された部屋の記録はまだありません</div>
         <div class="blanc"></div>
     </div>
 </template>

@@ -20,7 +20,7 @@
         <div class="score_list_container">
             <div v-for="score in scores" :key="score.scoreID">
                 <div class="score_item_container">
-                    <score-item-card :score-item="score" />
+                    <score-item-card :score="score" />
                 </div>
             </div>
         </div>

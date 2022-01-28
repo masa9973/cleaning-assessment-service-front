@@ -8,35 +8,17 @@
             <record-card :record-model="recordModel" />
         </div>
         <app-modal v-model="isShowModal">
-            <div class="modal_inner_score_list_container">
-                <div
-                    v-for="score in scores"
-                    :key="score.scoreID"
-                    class="score_item_container"
-                >
-                    <score-item-card :score-item="score" />
+            <div class="new_add_score_container">
+                <div v-for="scoreItem in scoreItems" :key="scoreItem.scoreItemID">
+                    <add-score-value
+                        ref="addScoreValue"
+                        :score-item-model="scoreItem"
+                        :record-model="recordModel"
+                        @registered="registered"
+                    />
                 </div>
             </div>
-            <div class="add_score_container">
-                <div>項目を選択</div>
-                <select v-model="selectedScoreItemID">
-                    <option
-                        v-for="item in items"
-                        :key="item.scoreItemID"
-                        :value="item.scoreItemID"
-                    >
-                        {{ item.scoreItemName }}
-                    </option>
-                </select>
-                <input v-model="scoreValue" />
-            </div>
-            <div class="score_list_container">
-                <div v-for="score in scores" :key="score.scoreID"></div>
-            </div>
             <div class="app_button_container">
-                <app-button class="app_button" @click="register"
-                    >スコアを追加</app-button
-                >
                 <app-button class="app_button" @click="scored"
                     >評価済みにする</app-button
                 >
@@ -48,11 +30,12 @@
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { RecordModel, ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
-import { scoreInteractorFactory, userInteractor } from '~/api'
+import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
 import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
+import AddScoreValue from '@/components/Organisms/score/addscore/addscore_value/index.vue'
 
 @Component({
     components: {
@@ -60,6 +43,7 @@ import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vu
         AppButton,
         RecordCard,
         ScoreItemCard,
+        AddScoreValue,
     },
 })
 export default class AddScore extends Vue {
@@ -85,19 +69,14 @@ export default class AddScore extends Vue {
         this.isShowModal = true
     }
 
-    @AsyncLoadingAndErrorHandle()
-    public async register() {
-        const scoreInteractor = scoreInteractorFactory(this.recordModel)
-        this.blancScore = await scoreInteractor.createNewScore()
-        this.blancScore.scoreItemID = this.selectedScoreItemID
-        this.blancScore.score = this.scoreValue
-        await this.blancScore.register()
-        // window.alert('清掃評価は正常に送信されました。')
-        this.scores = await this.recordModel.fetchScores()
-    }
+    // public registerScores() {
+    //     if (this.$refs.addScoreValue)
+    //     this.$refs.addScoreValue.register()
+    // }
 
     @AsyncLoadingAndErrorHandle()
     public async scored() {
+        window.confirm('全てのスコアを登録しましたか？')
         await this.recordModel.switchIfScored()
         this.$emit('registered')
     }

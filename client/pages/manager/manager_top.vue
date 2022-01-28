@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div v-else class="no_assigned_cleaning">
-                右下のボタンから清掃をアサインしましょう。
+                右下のボタンから清掃をアサインできます。
             </div>
         </div>
         <div class="plus_button_container">
@@ -34,7 +34,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div v-else>設定から部屋を追加しましょう。</div>
+                        <div v-else>設定から部屋を追加できます。</div>
                     </div>
                     <div class="user_selecter">
                         <div v-if="cleaners.length">
@@ -49,7 +49,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div v-else>設定から清掃者を登録しましょう。</div>
+                        <div v-else>設定から清掃者を登録できます。</div>
                     </div>
                 </div>
                 <app-button

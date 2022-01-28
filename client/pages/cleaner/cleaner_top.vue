@@ -1,24 +1,24 @@
 <template>
     <div>
-        <div v-if="user" class="user_icon_wrapper">
+        <div v-if="currentUser" class="user_icon_wrapper">
             <!-- icon -->
-            <user-icon :user-model="user" :show-edit="isMyPage" />
+            <user-icon :user-model="currentUser" :show-edit="isMyPage" />
         </div>
         <div class="user_assigned_record_list">
-            <div v-if="filteredassignedRecords.length">
+            <div v-if="assignedRecords.length">
                 <div
-                    v-for="userassignedRecord in filteredassignedRecords"
-                    :key="userassignedRecord.recordID"
+                    v-for="assignedRecord in assignedRecords"
+                    :key="assignedRecord.recordID"
                 >
                     <nuxt-link
                         tag="div"
                         :to="{
                             name: 'cleaner-add_record-recordID',
-                            params: { recordID: userassignedRecord.recordID },
+                            params: { recordID: assignedRecord.recordID },
                         }"
                     >
                         <room-card
-                            :room-i-d="userassignedRecord.cleaningRoomID"
+                            :room-i-d="assignedRecord.cleaningRoomID"
                         />
                     </nuxt-link>
                 </div>
@@ -43,9 +43,9 @@ import RoomCard from '@/components/Organisms/room/card/index.vue'
 })
 export default class CleanerTopPage extends Vue {
     public currentUser: UserModel | null = null
-    // 使ってる変数
     public assignedRecords: RecordModel[] = []
     public isMyPage = true
+    // 使ってる変数
 
     public async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
