@@ -11,36 +11,36 @@
                     {{ room.roomName }}
                 </option>
             </select>
-            <button :disabled="!selectedRoomID" @click="filterRecord">
+            <button :disabled="!selectedRoomID" @click="filterRoom">
                 選んだ部屋の記録をみる
             </button>
             <button @click="reset">リセット</button>
             <div>項目を選択</div>
-            <button :disabled="!selectedScoreItemID" @click="filterItem">
+            <button :disabled="!selectedScoreItemID" @click="filterScoreItem">
                 項目を選ぶ
             </button>
             <select v-model="selectedScoreItemID">
                 <option
-                    v-for="item in items"
-                    :key="item.scoreItemID"
-                    :value="item.scoreItemID"
+                    v-for="scoreItem in scoreItems"
+                    :key="scoreItem.scoreItemID"
+                    :value="scoreItem.scoreItemID"
                 >
-                    {{ item.scoreItemName }}
+                    {{ scoreItem.scoreItemName }}
                 </option>
             </select>
         </div>
         <div>選んだ項目の平均スコア</div>
         <div v-if="!ifFiltering" class="user_all_records">
-            <div>平均清掃時間{{ viewAvarageCleaningTime }}</div>
-            <div v-for="record in records" :key="record.recordID">
-                <record-card :record-model="record" />
+            <div>平均清掃時間{{ avarageTime }}</div>
+            <div v-for="scoredRecord in scoredRecords" :key="scoredRecord.recordID">
+                <record-card :record-model="scoredRecord" />
             </div>
         </div>
-        <div v-else-if="resultRecords.length" class="user_filtered_records">
+        <div v-else-if="roomFilteredRecords.length" class="user_filtered_records">
             <div>
-                この部屋の平均清掃時間{{ viewFilteredAvarageCleaningTime }}
+                この部屋の平均清掃時間{{ roomFilteredAvarageTime }}
             </div>
-            <div v-for="record in resultRecords" :key="record.recordID">
+            <div v-for="record in roomFilteredRecords" :key="record.recordID">
                 <record-card :record-model="record" />
             </div>
         </div>
@@ -51,13 +51,9 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import {
-    ChillnnTrainingError,
-    ErrorCode,
-    millisecondToStringTime,
     RecordModel,
     RoomModel,
     ScoreItemModel,
-    ScoreModel,
     UserModel,
 } from 'stage3-abr'
 import { userInteractor } from '~/api'
@@ -72,101 +68,42 @@ import RecordCard from '@/components/Organisms/record/card/index.vue'
     },
 })
 export default class UserRecordList extends Vue {
-    public user: UserModel | null = null
-    public records: RecordModel[] = []
-    public selectedRoomID: string = ''
+    public currentUser: UserModel | null = null
+    public scoredRecords: RecordModel[] = []
+    public scoreItems: ScoreItemModel[] = []
     public rooms: RoomModel[] = []
-    public hotelID: string = ''
-    public resultRecords: RecordModel[] = []
-    public ifFiltering: boolean = false
-    public avarageCleaningTime: number = 0
-    public viewAvarageCleaningTime: string = ''
-    public filteredAvarageCleaningTime: number = 0
-    public viewFilteredAvarageCleaningTime: string = ''
-    public items: ScoreItemModel[] = []
-    public selectedScoreItemID: string = ''
-    public scores: ScoreModel[] = []
+    public selectedRoomID: string = ''
+    public roomFilteredRecords: RecordModel[] = []
+    public roomFilteredAvarageTime: string = ''
     public avarageScore: number = 0
+    public ifFiltering: boolean = false
+    public avarageTime: string = ''
+    public selectedScoreItemID: string = ''
+    // 使ってる変数
 
     async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        const scoredRecords = await userInteractor.fetchRecordsByCleanerID(
-            this.user.userID
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.scoredRecords = await this.currentUser.fetchScoredRecords()
+        this.rooms = await this.currentUser.fetchSameHotelRooms()
+        this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
+        this.avarageTime = userInteractor.recordsToAvarageStringTime(
+            this.scoredRecords
         )
-        this.records = scoredRecords.filter(
-            (record) => record.ifScored === true
-        )
-        this.hotelID = this.user.userHotelID
-        this.rooms = await userInteractor.fetchRoomsByHotelID(this.hotelID)
-        this.items = await userInteractor.fetchScoreItemsByHotelID(
-            this.hotelID
-        )
-
-        // 平均時間の算出
-        const cleaningTimeResults = []
-        for (let i = 0; i < this.records.length; i++) {
-            cleaningTimeResults[i] = this.records[i].cleaningTime
-        }
-        if (cleaningTimeResults.length === 0) 
-        {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
-        }
-        this.avarageCleaningTime =
-            cleaningTimeResults.reduce((a, b) => a + b) /
-            cleaningTimeResults.length
-        this.viewAvarageCleaningTime = millisecondToStringTime(
-            this.avarageCleaningTime
-        )
-
-        // 平均スコアの算出
-        const recordIDs = []
-        for (let m = 0; m < this.records.length; m++) {
-            recordIDs[m] = this.records[m].recordID
-        }
-
-        const recordScores = []
-        for (let m = 0; m < this.records.length; m++) {
-            recordScores[m] = await userInteractor.fetchScoresByRecordID(
-                recordIDs[m]
-            )
-        }
-        this.scores = recordScores.reduce((a, b) => [...a, ...b], [])
     }
 
-    public filterItem() {
-        const selectedScores = this.scores.filter(
-            (score) => score.scoreItemID === this.selectedScoreItemID
+    public async filterScoreItem() {
+        this.avarageScore = await userInteractor.scoreItemIDAndUserIDToAvarageScore(
+            this.currentUser!.userID,
+            this.selectedScoreItemID
         )
-        const selectedScoresValues = []
-        for (let i = 0; i < selectedScores.length; i++) {
-            selectedScoresValues[i] = selectedScores[i].score
-        }
-        if (selectedScoresValues.length === 0) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
-        }
-        this.avarageScore =
-            selectedScoresValues.reduce((a, b) => a + b) /
-            selectedScoresValues.length
     }
 
-    public filterRecord() {
-        this.resultRecords = this.records.filter(
-            (record) => record.cleaningRoomID === this.selectedRoomID
+    public filterRoom() {
+        this.roomFilteredRecords = this.scoredRecords.filter(
+            (item) => item.cleaningRoomID === this.selectedRoomID
         )
-        this.ifFiltering = true
-
-        // 平均時間算出
-        const cleaningTimeResults = []
-        for (let i = 0; i < this.resultRecords.length; i++) {
-            cleaningTimeResults[i] = this.resultRecords[i].cleaningTime
-        }
-        if (cleaningTimeResults.length === 0) {
-            throw new ChillnnTrainingError(ErrorCode.chillnnTraining_404_resourceNotFound)
-        }
-        this.filteredAvarageCleaningTime =
-            cleaningTimeResults.reduce((a, b) => a + b) / cleaningTimeResults.length
-        this.viewFilteredAvarageCleaningTime = millisecondToStringTime(
-            this.filteredAvarageCleaningTime
+        this.roomFilteredAvarageTime = userInteractor.recordsToAvarageStringTime(
+            this.roomFilteredRecords
         )
     }
 

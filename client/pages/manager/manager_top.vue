@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="assigned_cleaning">
-            <div v-if="filteredAssignedRecords.length">
+            <div v-if="assignedRecords.length">
                 <div
-                    v-for="assignedRecord in filteredAssignedRecords"
+                    v-for="assignedRecord in assignedRecords"
                     :key="assignedRecord.recordID"
                 >
                     <div class="record_card_list">
@@ -11,7 +11,9 @@
                     </div>
                 </div>
             </div>
-            <div v-else>右下のボタンから清掃をアサインしましょう。</div>
+            <div v-else class="no_assigned_cleaning">
+                右下のボタンから清掃をアサインしましょう。
+            </div>
         </div>
         <div class="plus_button_container">
             <div class="plus_button" @click="openModal">＋</div>
@@ -77,32 +79,20 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
     },
 })
 export default class ManagerTopPage extends Vue {
+    public currentUser: UserModel | null = null
     public isShowModal: boolean = false
     public rooms: RoomModel[] = []
-    public currentUser: UserModel | null = null
-    public roomHotelID: string = ''
-    public users: UserModel[] = []
     public cleaners: UserModel[] = []
     public selectedRoomID: string = ''
     public selectedUserID: string = ''
     public blancRecord: RecordModel | null = null
     public assignedRecords: RecordModel[] = []
-    public filteredAssignedRecords: RecordModel[] = []
 
     public async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
-        this.roomHotelID = this.currentUser.userHotelID
-        this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
-        this.users = await userInteractor.fetchAllUserByHotelID(
-            this.roomHotelID
-        )
-        this.cleaners = this.users.filter((user) => user.role === 'cleaner')
-        this.assignedRecords = await userInteractor.fetchAllRecordsByHotelID(
-            this.roomHotelID
-        )
-        this.filteredAssignedRecords = this.assignedRecords.filter(
-            (record) => record.cleaningTime === 0
-        )
+        this.rooms = await this.currentUser.fetchSameHotelRooms()
+        this.cleaners = await this.currentUser.fetchSameHotelCleaner()
+        this.assignedRecords = await this.currentUser.fetchAssignedRecords()
     }
 
     public openModal() {
@@ -114,25 +104,22 @@ export default class ManagerTopPage extends Vue {
         this.blancRecord = await userInteractor.createNewRecord()
         this.blancRecord.cleanerID = this.selectedUserID
         this.blancRecord.cleaningRoomID = this.selectedRoomID
-        this.blancRecord.recordHotelID = this.roomHotelID
-        this.blancRecord.startAt = 0
-        this.blancRecord.finishedAt = 0
         await this.blancRecord.register()
         this.selectedRoomID = ''
         this.selectedUserID = ''
         this.isShowModal = false
-        this.assignedRecords = await userInteractor.fetchAllRecordsByHotelID(
-            this.roomHotelID
-        )
-        this.filteredAssignedRecords = this.assignedRecords.filter(
-            (record) => record.cleaningTime === 0
-        )
+        this.assignedRecords = await this.currentUser!.fetchAssignedRecords()
     }
 }
 </script>
 <style lang="stylus" scoped>
 .assigned_cleaning {
     .record_card_list {
+    }
+
+    .no_assigned_cleaning {
+        padding-top: 5px;
+        padding-left: 5px;
     }
 }
 

@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import { RecordModel, UserModel } from 'stage3-abr'
 import { userInteractor } from '~/api'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import RoomCard from '@/components/Organisms/room/card/index.vue'
@@ -42,21 +42,14 @@ import RoomCard from '@/components/Organisms/room/card/index.vue'
     },
 })
 export default class CleanerTopPage extends Vue {
-    public userassignedRecords: RecordModel[] = []
-    public filteredassignedRecords: RecordModel[] = []
-    public user: UserModel | null = null
+    public currentUser: UserModel | null = null
+    // 使ってる変数
+    public assignedRecords: RecordModel[] = []
     public isMyPage = true
-    public roomModel: RoomModel | null = null
 
     public async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        const myCleanerID = this.user.userID
-        this.userassignedRecords = await userInteractor.fetchRecordsByCleanerID(
-            myCleanerID
-        )
-        this.filteredassignedRecords = this.userassignedRecords.filter(
-            (record) => record.cleaningTime === 0
-        )
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.assignedRecords = await this.currentUser.fetchAssignedRecords()
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="room_card">
-            <div>{{ cleaningRoomName }}</div>
+        <div class="room_card_inner">{{ cleaningRoomName }}</div>
     </div>
 </template>
 <script lang="ts">
@@ -11,7 +11,7 @@ import { userInteractor } from '~/api'
 
 @Component({
     components: {
-    AppButton,
+        AppButton,
     },
 })
 export default class RoomCard extends Vue {
@@ -26,5 +26,20 @@ export default class RoomCard extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
+.room_card {
+    text-align: center;
+    width: 100%
+    display: flex
 
+    .room_card_inner {
+        border: 0;
+        border-radius: 5px;
+        font-size: 16px;
+        padding: 5px 30px;
+        cursor: pointer;
+        width: 300px;
+        height: 44px;
+        background-color: #EFEFEF
+    }
+}
 </style>

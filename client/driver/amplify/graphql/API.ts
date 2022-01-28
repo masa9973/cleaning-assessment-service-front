@@ -521,6 +521,22 @@ export type FetchScoresByRecordIDQuery = {
   } >,
 };
 
+export type FetchScoresByScoreItemIDQueryVariables = {
+  scoreItemID: string,
+};
+
+export type FetchScoresByScoreItemIDQuery = {
+  fetchScoresByScoreItemID:  Array< {
+    __typename: "ScoreMast",
+    createdAt: number,
+    recordID: string,
+    score: number,
+    scoreID: string,
+    scoreItemID: string,
+    scorerUserID: string,
+  } >,
+};
+
 export type FetchUserMastByUserIDQueryVariables = {
   userID: string,
 };

@@ -8,8 +8,10 @@
                     :key="record.recordID"
                     class="record_card_with_addscorebutton"
                 >
-                    <add-score :record-model="record"
-                    @registered="registered" />
+                    <add-score
+                        :record-model="record"
+                        @registered="registered"
+                    />
                 </div>
             </div>
             <div v-else>未評価の清掃はありません。</div>
@@ -34,29 +36,16 @@ import { userInteractor } from '~/api'
     },
 })
 export default class RecordListForManager extends Vue {
-    public user: UserModel | null = null
-    public recordsHotelID: string = ''
-    public records: RecordModel[] = []
+    public currentUser: UserModel | null = null
     public unScoredRecords: RecordModel[] = []
 
     public async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        this.recordsHotelID = this.user.userHotelID
-        this.records = await userInteractor.fetchAllRecordsByHotelID(
-            this.recordsHotelID
-        )
-        this.unScoredRecords = this.records.filter(
-            (record) => !record.ifScored && !!record.cleaningTime
-        )
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.unScoredRecords = await this.currentUser.fetchUnscoredRecords()
     }
 
     public async registered() {
-        this.records = await userInteractor.fetchAllRecordsByHotelID(
-            this.recordsHotelID
-        )
-        this.unScoredRecords = this.records.filter(
-            (record) => !record.ifScored && !!record.cleaningTime
-        )
+        this.unScoredRecords = await this.currentUser!.fetchUnscoredRecords()
     }
 }
 </script>

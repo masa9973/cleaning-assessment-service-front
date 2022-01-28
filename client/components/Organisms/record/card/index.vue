@@ -1,25 +1,26 @@
 <template>
     <div class="record_item_container">
         <div class="record_date">
-            <div>清掃日{{ getViewCleaningDate(createdAt) }}</div>
+            <div>{{ getViewCleaningDate(createdAt) }}</div>
         </div>
-        <div class="cleaner_name">
-            <div>清掃者{{ name }}</div>
-            <div class="cleaner_icon">
-                <img :src="userIconUrl" />
+        <div class="inportant_info">
+            <div class="record_room">
+                <div>部屋:{{ cleaningRoomName }}</div>
             </div>
-        </div>
-        <div class="record_room">
-            <div>部屋{{ cleaningRoomName }}</div>
-        </div>
-        <div class="cleaning_time">
-            <div>清掃時間{{ cleaningTime }}</div>
+            <div class="cleaning_time">
+                <div>{{ cleaningTime }}</div>
+            </div>
+            <div class="cleaner_info_container">
+                <div class="cleaner_icon">
+                    <img :src="userIconUrl" />
+                </div>
+                <div>{{ name }}さん</div>
+            </div>
         </div>
         <div class="score_list_container">
             <div v-for="score in scores" :key="score.scoreID">
                 <div class="score_item_container">
                     <score-item-card :score-item="score" />
-                    <div>{{ score.score }}</div>
                 </div>
             </div>
         </div>
@@ -60,9 +61,7 @@ export default class RecordCard extends Vue {
         this.recordUser = await userInteractor.fetchUserModelByUserID(
             this.recordModel.cleanerID
         )
-        this.scores = await this.recordModel.fetchScoresByRecordID(
-            this.recordModel.recordID
-        )
+        this.scores = await this.recordModel.fetchScores()
         this.room = await userInteractor.fetchRoomByRoomID(
             this.recordModel.cleaningRoomID
         )
@@ -122,15 +121,24 @@ export default class RecordCard extends Vue {
     border-radius: 8px;
     width: 90%;
     background-color: #F9F9FA;
-    .score_item_container {
-        display: flex;
-    }
 
-    img {
-        object-fit: cover;
-        border-radius: 10000px;
-        width: 50px;
-        height: 50px;
-    }
+    // .record_room {
+    //     font-size: 20px;
+    // }
+
+    // .cleaning_time {
+    //     font-size: 20px;
+    // }
+
+    // .cleaner_info_container {
+    //     display: flex;
+
+        img {
+            object-fit: cover;
+            border-radius: 10000px;
+            width: 50px;
+            height: 50px;
+        }
+    // }
 }
 </style>

@@ -34,8 +34,8 @@
         <div class="item_list_container">
             <div>登録済みの評価項目</div>
             <div
-                v-for="item in items"
-                :key="item.scoreItemID"
+                v-for="scoreItem in scoreItems"
+                :key="scoreItem.scoreItemID"
                 class="item_icon_wrapper"
             >
                 <div class="score_item">
@@ -77,8 +77,7 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
     },
 })
 export default class ManagerConfig extends Vue {
-    public user: UserModel | null = null
-    public roomHotelID: string = ''
+    public currentUser: UserModel | null = null
     public rooms: RoomModel[] = []
     public blancRoom: RoomModel | null = null
     public roomNameValue: string = ''
@@ -86,15 +85,12 @@ export default class ManagerConfig extends Vue {
     public isShowAddItemModal: boolean = false
     public blancScoreItem: ScoreItemModel | null = null
     public scoreItemNameValue: string = ''
-    public items: ScoreItemModel[] = []
+    public scoreItems: ScoreItemModel[] = []
 
     public async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        this.roomHotelID = this.user.userHotelID
-        this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
-        this.items = await userInteractor.fetchScoreItemsByHotelID(
-            this.roomHotelID
-        )
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.rooms = await this.currentUser.fetchSameHotelRooms()
+        this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
     }
 
     public deleteRoom() {}
@@ -125,7 +121,7 @@ export default class ManagerConfig extends Vue {
         await this.blancRoom.register()
         window.alert('部屋登録完了。続けて別の部屋を登録できます')
         this.roomNameValue = ''
-        this.rooms = await userInteractor.fetchRoomsByHotelID(this.roomHotelID)
+        this.rooms = await this.currentUser!.fetchSameHotelRooms()
     }
 
     @AsyncLoadingAndErrorHandle()
@@ -135,9 +131,7 @@ export default class ManagerConfig extends Vue {
         )
         await this.blancScoreItem.register()
         this.scoreItemNameValue = ''
-        this.items = await userInteractor.fetchScoreItemsByHotelID(
-            this.roomHotelID
-        )
+        this.scoreItems = await this.currentUser!.fetchSameHotelScoreItems()
     }
 }
 </script>

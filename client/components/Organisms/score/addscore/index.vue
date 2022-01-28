@@ -14,11 +14,10 @@
                     :key="score.scoreID"
                     class="score_item_container"
                 >
-                    <div id="form_area"></div>
                     <score-item-card :score-item="score" />
                 </div>
             </div>
-            <!-- <div class="add_score_container">
+            <div class="add_score_container">
                 <div>項目を選択</div>
                 <select v-model="selectedScoreItemID">
                     <option
@@ -30,7 +29,7 @@
                     </option>
                 </select>
                 <input v-model="scoreValue" />
-            </div> -->
+            </div>
             <div class="score_list_container">
                 <div v-for="score in scores" :key="score.scoreID"></div>
             </div>
@@ -65,11 +64,11 @@ import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vu
 })
 export default class AddScore extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
-    public user: UserModel | null = null
-    public hotelID: string = ''
-    public items: ScoreItemModel[] = []
-    public scores: ScoreModel[] = []
+    public currentUser: UserModel | null = null
+    public scoreItems: ScoreItemModel[] = []
     public isShowModal: boolean = false
+    public scores: ScoreModel[] = []
+    // 使ってる変数
     public blancScore: ScoreModel | null = null
     public scoreValue: number = 0
     public selectedScoreItemID: string = ''
@@ -77,31 +76,9 @@ export default class AddScore extends Vue {
     public blancScores: ScoreModel[] = []
 
     async created() {
-        this.user = await userInteractor.fetchMyUserModel()
-        this.hotelID = this.user.userHotelID
-        this.items = await userInteractor.fetchScoreItemsByHotelID(this.hotelID)
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
         this.scores = await this.recordModel.fetchScores()
-        // const scoreInteractor = scoreInteractorFactory(this.recordModel)
-        // this.scoreValues = [10, 10]
-        // for (let m = 0; m < this.items.length; m++) {
-        //     this.blancScores[m] = await scoreInteractor.createNewScore()
-        //     this.blancScores[m].scoreItemID = this.items[m].scoreItemID
-        //     this.blancScores[m].score = this.scoreValues[m]
-        //     await this.blancScores[m].register()
-        // }
-        for (let m = 0; m < this.items.length; m++) {
-            this.addForm()
-        }
-        console.log(this.items.length)
-    }
-
-    public addForm() {
-        const i = 0
-        const inputData = document.createElement('input')
-        inputData.type = 'text'
-        inputData.id = 'inputform_' + i
-        const parent = document.getElementById('form_area')
-        parent?.appendChild(inputData)
     }
 
     public openModal() {

@@ -59,6 +59,7 @@ import { userInteractor } from '~/api'
     },
 })
 export default class AddRecord extends Vue {
+    // 使ってる変数
     public ifPushStartButton: boolean = false
     public ifPushFinishButton: boolean = true
     public blancRecord: RecordModel | null = null

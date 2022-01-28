@@ -47,18 +47,12 @@ import { userInteractor } from '~/api'
     },
 })
 export default class Top extends Vue {
-    public userModel: UserModel | null = null
-    public registeredUsers: UserModel[] = []
+    public currentUser: UserModel | null = null
     public cleaners: UserModel[] = []
 
     public async created() {
-        this.userModel = await userInteractor.fetchMyUserModel()
-        this.registeredUsers = await userInteractor.fetchAllUserByHotelID(
-            this.userModel.userHotelID
-        )
-        this.cleaners = this.registeredUsers.filter(
-            (user) => user.role === 'cleaner'
-        )
+        this.currentUser = await userInteractor.fetchMyUserModel()
+        this.cleaners = await this.currentUser.fetchSameHotelCleaner()
     }
 }
 </script>

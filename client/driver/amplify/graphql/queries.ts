@@ -172,6 +172,18 @@ export const fetchScoresByRecordID = /* GraphQL */ `
     }
   }
 `;
+export const fetchScoresByScoreItemID = /* GraphQL */ `
+  query FetchScoresByScoreItemID($scoreItemID: ID!) {
+    fetchScoresByScoreItemID(scoreItemID: $scoreItemID) {
+      createdAt
+      recordID
+      score
+      scoreID
+      scoreItemID
+      scorerUserID
+    }
+  }
+`;
 export const fetchUserMastByUserID = /* GraphQL */ `
   query FetchUserMastByUserID($userID: ID!) {
     fetchUserMastByUserID(userID: $userID) {

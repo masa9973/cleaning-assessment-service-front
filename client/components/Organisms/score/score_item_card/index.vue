@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>{{ scoreItemName }}:</div>
+        <div>{{ scoreItemName }}:{{ scoreValue }}</div>
+        <input v-model="scoreValue">
     </div>
 </template>
 <script lang="ts">
@@ -13,6 +14,7 @@ export default class ScoreItemCard extends Vue {
     public viewScoreItemID: string = ''
     public scoreCategory: ScoreItemModel | null = null
     public scoreItemName: string = ''
+    public scoreValue: number = 0
 
     public async created() {
         this.viewScoreItemID = this.scoreItem.scoreItemID
