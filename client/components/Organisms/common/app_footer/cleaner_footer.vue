@@ -3,6 +3,7 @@
         <div class="footer_button">
             <nuxt-link
                 tag="div"
+                active-class="link_active_class"
                 :to="{
                     name: 'cleaner-cleaner_top',
                 }"
@@ -16,7 +17,7 @@
         <div class="footer_button">
             <nuxt-link
                 tag="div"
-                active-class=""
+                active-class="link_active_class"
                 :to="{
                     name: 'cleaner-record_list-user',
                 }"
@@ -45,13 +46,17 @@ export default class AppCleanerFooter extends Vue {}
     bottom: 0px;
 
     .footer_button {
-        width: 30%;
+        width: 100%;
         text-align: center;
         align-items: center;
-    .image_container {
-        
-        height: 36px;
+
+        .image_container {
+            height: 36px;
+        }
     }
+
+    .link_active_class {
+        background-color: #efefef
     }
 }
 </style>

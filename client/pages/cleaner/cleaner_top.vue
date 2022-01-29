@@ -17,9 +17,7 @@
                             params: { recordID: assignedRecord.recordID },
                         }"
                     >
-                        <room-card
-                            :room-i-d="assignedRecord.cleaningRoomID"
-                        />
+                        <room-card :room-i-d="assignedRecord.cleaningRoomID" />
                     </nuxt-link>
                 </div>
             </div>
@@ -58,7 +56,8 @@ export default class CleanerTopPage extends Vue {
     padding-top: 50px;
     padding-bottom: 30px;
 }
+
 .blanc {
-    height: 60px
+    height: 60px;
 }
 </style>

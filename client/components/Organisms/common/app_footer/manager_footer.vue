@@ -4,6 +4,7 @@
             <div class="footer_button">
                 <nuxt-link
                     tag="div"
+                    active-class="link_active_class"
                     :to="{
                         name: 'manager-manager_top',
                     }"
@@ -11,12 +12,13 @@
                     <div class="image_container">
                         <img src="~/assets/img/account_circle.png" />
                     </div>
-                    <div class="text_container">ホーム</div>
+                    <div class="text_container">アサイン</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
                 <nuxt-link
                     tag="div"
+                    active-class="link_active_class"
                     :to="{
                         name: 'manager-unscored_record_list',
                     }"
@@ -24,12 +26,13 @@
                     <div class="image_container">
                         <img src="~/assets/img/check_circle_outline.png" />
                     </div>
-                    <div class="text_container">スコア</div>
+                    <div class="text_container">評価</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
                 <nuxt-link
                     tag="div"
+                    active-class="link_active_class"
                     :to="{
                         name: 'manager-user_list',
                     }"
@@ -37,12 +40,13 @@
                     <div class="image_container">
                         <img src="~/assets/img/schedule.png" />
                     </div>
-                    <div class="text_container">記録</div>
+                    <div class="text_container">ユーザー一覧</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
                 <nuxt-link
                     tag="div"
+                    active-class="link_active_class"
                     :to="{
                         name: 'manager-setting',
                     }"
@@ -78,6 +82,10 @@ export default class AppManagerFooter extends Vue {}
     .image_container {
         height: 36px;
     }
+    }
+
+    .link_active_class {
+        background-color: #efefef
     }
 }
 </style>

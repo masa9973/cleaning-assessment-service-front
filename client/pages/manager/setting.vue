@@ -1,25 +1,44 @@
 <template>
-    <div v-if="currentUser">
-        <div class="invite_cleaner_url_container">
-            <div id="inviteUrl">
-                https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
-                    currentUser.userHotelID
-                }}
+    <div v-if="currentUser" class="setting_page">
+        <div class="settings_container">
+            <div class="invite_cleaner_url_container">
+                <div id="inviteUrl">
+                    https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
+                        currentUser.userHotelID
+                    }}
+                </div>
+                <button @click="writeToClipboard">URLコピー</button>
+                <div>
+                    localhost:3000/auth_cleaner/signin/{{
+                        currentUser.userHotelID
+                    }}
+                </div>
             </div>
-            <button @click="writeToClipboard">URLコピー</button>
-            <div>localhost:3000/auth_cleaner/signin/{{ currentUser.userHotelID }}</div>
-        </div>
-        <div class="room_list_container">
-            <div>登録済みの部屋一覧</div>
-            <div
-                v-for="room in rooms"
-                :key="room.roomID"
-                class="room_icon_wrapper"
-            >
-                {{ room.roomName }}
+            <div class="room_list_container">
+                <div>登録済みの部屋一覧</div>
+                <div
+                    v-for="room in rooms"
+                    :key="room.roomID"
+                    class="room_icon_wrapper"
+                >
+                    {{ room.roomName }}
+                </div>
             </div>
+            <app-button @click="openAddRoomModal">部屋を登録する</app-button>
+            <div class="item_list_container">
+                <div>登録済みの評価項目</div>
+                <div
+                    v-for="scoreItem in scoreItems"
+                    :key="scoreItem.scoreItemID"
+                    class="item_icon_wrapper"
+                >
+                    <div class="score_item">
+                        {{ scoreItem.scoreItemName }}
+                    </div>
+                </div>
+            </div>
+            <app-button @click="openAddItemModal">評価項目を登録する</app-button>
         </div>
-        <button @click="openAddRoomModal">部屋を登録する</button>
         <app-modal v-model="isShowAddRoomModal">
             <div class="modal_inner">
                 <div class="input_container">
@@ -31,19 +50,6 @@
                 >
             </div>
         </app-modal>
-        <div class="item_list_container">
-            <div>登録済みの評価項目</div>
-            <div
-                v-for="scoreItem in scoreItems"
-                :key="scoreItem.scoreItemID"
-                class="item_icon_wrapper"
-            >
-                <div class="score_item">
-                    {{ scoreItem.scoreItemName }}
-                </div>
-            </div>
-        </div>
-        <button @click="openAddItemModal">評価項目を登録する</button>
         <app-modal v-model="isShowAddItemModal">
             <div class="modal_inner">
                 <div class="input_container">
@@ -130,12 +136,18 @@ export default class ManagerConfig extends Vue {
             this.scoreItemNameValue
         )
         await this.blancScoreItem.register()
+        window.alert('項目登録完了。続けて別の項目を登録できます')
         this.scoreItemNameValue = ''
         this.scoreItems = await this.currentUser!.fetchSameHotelScoreItems()
     }
 }
 </script>
 <style lang="stylus" scoped>
+.settings_container {
+    width: 90%
+    margin: auto
+}
+
 .invite_cleaner_url_container {
     word-break: break-all;
 }

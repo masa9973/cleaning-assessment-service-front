@@ -27,19 +27,22 @@ export default class RoomCard extends Vue {
 </script>
 <style lang="stylus" scoped>
 .room_card {
-    text-align: center;
-    width: 100%
-    display: flex
+    width: 100%;
+    display: flex;
+    padding-bottom: 20px
+    justify-content: center;
 
     .room_card_inner {
         border: 0;
         border-radius: 5px;
         font-size: 16px;
-        padding: 5px 30px;
         cursor: pointer;
         width: 300px;
         height: 44px;
-        background-color: #EFEFEF
+        background-color: #EFEFEF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 </style>

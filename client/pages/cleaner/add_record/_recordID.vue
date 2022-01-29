@@ -31,7 +31,7 @@
                     >送信する</app-button
                 >
                 <app-button
-                class="app_button"
+                    class="app_button"
                     :disabled="!ifPushFinishButton"
                     @click="resetFinishButton"
                     >まだ終わっていない</app-button
@@ -41,7 +41,11 @@
     </div>
 </template>
 <script lang="ts">
-import { millisecondToStringTime, RecordModel, timeStampToStringTime } from 'stage3-abr'
+import {
+    millisecondToStringTime,
+    RecordModel,
+    timeStampToStringTime,
+} from 'stage3-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
@@ -78,7 +82,9 @@ export default class AddRecord extends Vue {
 
     public openModal() {
         this.isShowModal = true
-        this.viewTime = millisecondToStringTime(this.finishedTime - this.startTime)
+        this.viewTime = millisecondToStringTime(
+            this.finishedTime - this.startTime
+        )
     }
 
     public getStartTime() {
@@ -116,6 +122,7 @@ export default class AddRecord extends Vue {
 <style lang="stylus">
 .record_add_container {
     text-align: center;
+    padding-top: 50%;
 
     .start_time {
         margin-bottom: 40px;
@@ -127,9 +134,11 @@ export default class AddRecord extends Vue {
 
     .cleaning_result {
         text-align: center;
+
         .view_time {
             font-size: 24px;
         }
+
         .app_button {
             padding-bottom: 5px;
         }

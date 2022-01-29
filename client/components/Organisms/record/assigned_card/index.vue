@@ -51,6 +51,7 @@ export default class assignedRecordCard extends Vue {
         display: flex;
         justify-content: center;
         align-items: center;
+        width 30%
     }
 }
 </style>
