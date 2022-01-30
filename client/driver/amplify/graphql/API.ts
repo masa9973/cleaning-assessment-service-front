@@ -566,6 +566,29 @@ export type FetchScoresByScoreItemIDQuery = {
   } >,
 };
 
+export type FetchTermRecordsByCleanerIDAndRoomIDQueryVariables = {
+  cleanerID: string,
+  cleaningRoomID: string,
+  from: number,
+  to: number,
+};
+
+export type FetchTermRecordsByCleanerIDAndRoomIDQuery = {
+  fetchTermRecordsByCleanerIDAndRoomID:  Array< {
+    __typename: "RecordMast",
+    cleanerID: string,
+    cleaningRoomID: string,
+    cleaningTime: number,
+    createdAt: number,
+    finishedAt: number,
+    ifScored: boolean,
+    recordDate: string,
+    recordHotelID: string,
+    recordID: string,
+    startAt: number,
+  } >,
+};
+
 export type FetchUserMastByUserIDQueryVariables = {
   userID: string,
 };

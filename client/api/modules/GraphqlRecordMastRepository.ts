@@ -1,7 +1,4 @@
-import {
-    IRecordMastRepository,
-    RecordMast,
-} from 'stage3-abr'
+import { IRecordMastRepository, RecordMast } from 'stage3-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
@@ -18,6 +15,8 @@ import {
     FetchRecordsByDateQueryVariables,
     FetchRecordsByRoomIDQuery,
     FetchRecordsByRoomIDQueryVariables,
+    FetchTermRecordsByCleanerIDAndRoomIDQuery,
+    FetchTermRecordsByCleanerIDAndRoomIDQueryVariables,
     UpdateRecordMutation,
     UpdateRecordMutationVariables,
 } from '~/driver/amplify/graphql/API'
@@ -45,13 +44,18 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
         ).updateRecord
     }
 
-    async fetchRecordsByDate(recordHotelID: string, recordDate: string): Promise<RecordMast[]> {
+    async fetchRecordsByDate(
+        recordHotelID: string,
+        recordDate: string
+    ): Promise<RecordMast[]> {
         return (
-            await callApi<FetchRecordsByDateQuery, FetchRecordsByDateQueryVariables>(
-                query.fetchRecordsByDate, {
-                    recordHotelID, recordDate
-                }
-            )
+            await callApi<
+                FetchRecordsByDateQuery,
+                FetchRecordsByDateQueryVariables
+            >(query.fetchRecordsByDate, {
+                recordHotelID,
+                recordDate,
+            })
         ).fetchRecordsByDate
     }
 
@@ -77,6 +81,25 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
         ).fetchRecordsByRoomID
     }
 
+    async fetchTermRecordsByCleanerIDAndRoomID(
+        cleanerID: string,
+        cleaningRoomID: string,
+        from: number,
+        to: number
+    ): Promise<RecordMast[]> {
+        return (
+            await callApi<
+                FetchTermRecordsByCleanerIDAndRoomIDQuery,
+                FetchTermRecordsByCleanerIDAndRoomIDQueryVariables
+            >(query.fetchTermRecordsByCleanerIDAndRoomID, {
+                cleanerID,
+                cleaningRoomID,
+                from,
+                to,
+            })
+        ).fetchTermRecordsByCleanerIDAndRoomID
+    }
+
     async fetchAllRecordsByHotelID(
         recordHotelID: string
     ): Promise<RecordMast[]> {
@@ -90,12 +113,14 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
 
     async fetchRecordByRecordID(recordID: string): Promise<RecordMast | null> {
         return (
-            await callApi<
-            FetchRecordByRecordIDQuery, FetchRecordByRecordIDQueryVariables>
-            (query.fetchRecordByRecordID, {recordID})
-        ).fetchRecordByRecordID || null
+            (
+                await callApi<
+                    FetchRecordByRecordIDQuery,
+                    FetchRecordByRecordIDQueryVariables
+                >(query.fetchRecordByRecordID, { recordID })
+            ).fetchRecordByRecordID || null
+        )
     }
 }
 
 export const recordMastRepository = new GraphqlRecordMastRepository()
-

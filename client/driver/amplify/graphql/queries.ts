@@ -204,6 +204,32 @@ export const fetchScoresByScoreItemID = /* GraphQL */ `
     }
   }
 `;
+export const fetchTermRecordsByCleanerIDAndRoomID = /* GraphQL */ `
+  query FetchTermRecordsByCleanerIDAndRoomID(
+    $cleanerID: ID!
+    $cleaningRoomID: ID!
+    $from: Int!
+    $to: Int!
+  ) {
+    fetchTermRecordsByCleanerIDAndRoomID(
+      cleanerID: $cleanerID
+      cleaningRoomID: $cleaningRoomID
+      from: $from
+      to: $to
+    ) {
+      cleanerID
+      cleaningRoomID
+      cleaningTime
+      createdAt
+      finishedAt
+      ifScored
+      recordDate
+      recordHotelID
+      recordID
+      startAt
+    }
+  }
+`;
 export const fetchUserMastByUserID = /* GraphQL */ `
   query FetchUserMastByUserID($userID: ID!) {
     fetchUserMastByUserID(userID: $userID) {
