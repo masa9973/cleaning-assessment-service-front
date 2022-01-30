@@ -1,6 +1,18 @@
 <template>
     <div>
+        <!-- <div id="app">
+            <PieChart :chart-data="pieData" />
+            <LineChart :chart-data="lineData" />
+        </div> -->
         <div class="assigned_cleaning">
+            <div class="left_room_item_container">
+                <div>未清掃の部屋一覧</div>
+                <div class="left_room_container">
+                    <div v-for="(roomID, index) in leftRoomIDs" :key="index">
+                        <left-room-card :room-i-d="roomID" />
+                    </div>
+                </div>
+            </div>
             <div v-if="assignedRecords.length">
                 <div
                     v-for="assignedRecord in assignedRecords"
@@ -28,12 +40,17 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+// import { Chart, registerables } from 'chart.js'
+// import { PieChart, LineChart } from 'vue-chart-3'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import assignedRecordCard from '@/components/Organisms/record/assigned_card/index.vue'
 import { userInteractor } from '~/api'
 import AssignRecord from '@/components/Organisms/record/assign_record/index.vue'
+import LeftRoomCard from '@/components/Organisms/room/left_room_card/index.vue'
+
+// Chart.register(...registerables)
 @Component({
     layout: 'manager',
     components: {
@@ -41,16 +58,22 @@ import AssignRecord from '@/components/Organisms/record/assign_record/index.vue'
         AppButton,
         assignedRecordCard,
         AssignRecord,
+        LeftRoomCard,
+        // PieChart,
+        // LineChart,
     },
 })
 export default class ManagerTopPage extends Vue {
     public currentUser: UserModel | null = null
     public isShowModal: boolean = false
     public assignedRecords: RecordModel[] = []
+    public leftRoomIDs: string[] = []
+    public leftRoom: RoomModel[] = []
 
     public async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
         this.assignedRecords = await this.currentUser.fetchAssignedRecords()
+        this.leftRoomIDs = await this.currentUser.fetchYetAssignRoom()
     }
 
     public openModal() {
@@ -74,6 +97,17 @@ export default class ManagerTopPage extends Vue {
     }
 }
 
+.left_room_item_container {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 100%;
+
+    .left_room_container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
 .plus_button_container {
     position: fixed;
     right: 10%;
@@ -90,11 +124,6 @@ export default class ManagerTopPage extends Vue {
         background-color: white;
         font-size: 24px;
     }
-}
-
-.this_will_be_footer {
-    position: fixed;
-    bottom: 0px;
 }
 
 .blanc {

@@ -19,6 +19,7 @@ export const addRecord = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
       recordHotelID
       recordID
       startAt
@@ -98,6 +99,7 @@ export const updateRecord = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
       recordHotelID
       recordID
       startAt

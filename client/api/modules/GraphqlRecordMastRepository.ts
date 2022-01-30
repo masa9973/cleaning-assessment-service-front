@@ -14,6 +14,8 @@ import {
     FetchRecordByRecordIDQueryVariables,
     FetchRecordsByCleanerIDQuery,
     FetchRecordsByCleanerIDQueryVariables,
+    FetchRecordsByDateQuery,
+    FetchRecordsByDateQueryVariables,
     FetchRecordsByRoomIDQuery,
     FetchRecordsByRoomIDQueryVariables,
     UpdateRecordMutation,
@@ -41,6 +43,16 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
                 }
             )
         ).updateRecord
+    }
+
+    async fetchRecordsByDate(recordHotelID: string, recordDate: string): Promise<RecordMast[]> {
+        return (
+            await callApi<FetchRecordsByDateQuery, FetchRecordsByDateQueryVariables>(
+                query.fetchRecordsByDate, {
+                    recordHotelID, recordDate
+                }
+            )
+        ).fetchRecordsByDate
     }
 
     async fetchRecordsByCleanerID(cleanerID: string): Promise<RecordMast[]> {

@@ -11,6 +11,7 @@ export const fetchAllRecordsByHotelID = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
       recordHotelID
       recordID
       startAt
@@ -72,6 +73,7 @@ export const fetchRecordByRecordID = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
       recordHotelID
       recordID
       startAt
@@ -87,6 +89,23 @@ export const fetchRecordsByCleanerID = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
+      recordHotelID
+      recordID
+      startAt
+    }
+  }
+`;
+export const fetchRecordsByDate = /* GraphQL */ `
+  query FetchRecordsByDate($recordDate: String!, $recordHotelID: ID!) {
+    fetchRecordsByDate(recordDate: $recordDate, recordHotelID: $recordHotelID) {
+      cleanerID
+      cleaningRoomID
+      cleaningTime
+      createdAt
+      finishedAt
+      ifScored
+      recordDate
       recordHotelID
       recordID
       startAt
@@ -102,6 +121,7 @@ export const fetchRecordsByRoomID = /* GraphQL */ `
       createdAt
       finishedAt
       ifScored
+      recordDate
       recordHotelID
       recordID
       startAt
