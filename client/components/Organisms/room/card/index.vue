@@ -6,12 +6,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { RoomModel } from 'stage3-abr'
-import AppButton from '@/components/Atom/AppButton.vue'
 import { userInteractor } from '~/api'
 
 @Component({
     components: {
-        AppButton,
     },
 })
 export default class RoomCard extends Vue {
