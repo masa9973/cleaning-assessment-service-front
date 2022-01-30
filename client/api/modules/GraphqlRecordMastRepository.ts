@@ -84,8 +84,8 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
     async fetchTermRecordsByCleanerIDAndRoomID(
         cleanerID: string,
         cleaningRoomID: string,
-        from: number,
-        to: number
+        from: string,
+        to: string
     ): Promise<RecordMast[]> {
         return (
             await callApi<

@@ -208,8 +208,8 @@ export const fetchTermRecordsByCleanerIDAndRoomID = /* GraphQL */ `
   query FetchTermRecordsByCleanerIDAndRoomID(
     $cleanerID: ID!
     $cleaningRoomID: ID!
-    $from: Int!
-    $to: Int!
+    $from: String!
+    $to: String!
   ) {
     fetchTermRecordsByCleanerIDAndRoomID(
       cleanerID: $cleanerID

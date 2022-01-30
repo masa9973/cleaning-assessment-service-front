@@ -569,8 +569,8 @@ export type FetchScoresByScoreItemIDQuery = {
 export type FetchTermRecordsByCleanerIDAndRoomIDQueryVariables = {
   cleanerID: string,
   cleaningRoomID: string,
-  from: number,
-  to: number,
+  from: string,
+  to: string,
 };
 
 export type FetchTermRecordsByCleanerIDAndRoomIDQuery = {
