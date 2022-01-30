@@ -1,9 +1,5 @@
 <template>
     <div>
-        <!-- <div id="app">
-            <PieChart :chart-data="pieData" />
-            <LineChart :chart-data="lineData" />
-        </div> -->
         <div class="assigned_cleaning">
             <div class="left_room_item_container">
                 <div>未清掃の部屋一覧</div>
@@ -24,7 +20,7 @@
                 </div>
             </div>
             <div v-else class="no_assigned_cleaning_message">
-                右下のボタンから清掃をアサインできます。
+                部屋を押して清掃をアサインできます。
             </div>
         </div>
         <div class="plus_button_container">
@@ -41,8 +37,6 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
-// import { Chart, registerables } from 'chart.js'
-// import { PieChart, LineChart } from 'vue-chart-3'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import assignedRecordCard from '@/components/Organisms/record/assigned_card/index.vue'
@@ -50,7 +44,6 @@ import { userInteractor } from '~/api'
 import AssignRecord from '@/components/Organisms/record/assign_record/index.vue'
 import LeftRoomCard from '@/components/Organisms/room/left_room_card/index.vue'
 
-// Chart.register(...registerables)
 @Component({
     layout: 'manager',
     components: {
@@ -59,8 +52,6 @@ import LeftRoomCard from '@/components/Organisms/room/left_room_card/index.vue'
         assignedRecordCard,
         AssignRecord,
         LeftRoomCard,
-        // PieChart,
-        // LineChart,
     },
 })
 export default class ManagerTopPage extends Vue {
