@@ -11,7 +11,6 @@
             <div class="new_add_score_container">
                 <div v-for="scoreItem in scoreItems" :key="scoreItem.scoreItemID">
                     <add-score-value
-                        ref="addScoreValue"
                         :score-item-model="scoreItem"
                         :record-model="recordModel"
                     />
@@ -53,6 +52,8 @@ export default class AddScore extends Vue {
     public scores: ScoreModel[] = []
     // 使ってる変数
 
+    // ここでブランクスコア配列作るのはどう？
+
     async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
         this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
@@ -62,11 +63,6 @@ export default class AddScore extends Vue {
     public openModal() {
         this.isShowModal = true
     }
-
-    // public registerScores() {
-    //     if (this.$refs.addScoreValue)
-    //     this.$refs.addScoreValue.register()
-    // }
 
     @AsyncLoadingAndErrorHandle()
     public async scored() {
