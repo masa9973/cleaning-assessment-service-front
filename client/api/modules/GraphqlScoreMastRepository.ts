@@ -9,6 +9,8 @@ import {
     FetchScoresByRecordIDQueryVariables,
     FetchScoresByScoreItemIDQuery,
     FetchScoresByScoreItemIDQueryVariables,
+    FetchTermScoresByCleanerIDAndRoomIDQuery,
+    FetchTermScoresByCleanerIDAndRoomIDQueryVariables,
     UpdateScoreMutation,
     UpdateScoreMutationVariables,
 } from '~/driver/amplify/graphql/API'
@@ -43,6 +45,14 @@ class GraphqlScoreMastRepository implements IScoreMastRepository {
                 recordID,
             })
         ).fetchScoresByRecordID
+    }
+
+    async fetchTermScoresByCleanerIDAndRoomID(scoreCleanerID: string, scoreRoomID: string, from: string, to: string): Promise<ScoreMast[]> {
+        return ( await callApi<FetchTermScoresByCleanerIDAndRoomIDQuery, FetchTermScoresByCleanerIDAndRoomIDQueryVariables>(
+            query.fetchTermScoresByCleanerIDAndRoomID, {
+                scoreCleanerID, scoreRoomID, from, to
+            }
+        )).fetchTermScoresByCleanerIDAndRoomID
     }
 
     async fetchScoresByScoreItemID(scoreItemID: string): Promise<ScoreMast[]> {

@@ -186,8 +186,10 @@ export const fetchScoresByRecordID = /* GraphQL */ `
       createdAt
       recordID
       score
+      scoreCleanerID
       scoreID
       scoreItemID
+      scoreRoomID
       scorerUserID
     }
   }
@@ -198,8 +200,10 @@ export const fetchScoresByScoreItemID = /* GraphQL */ `
       createdAt
       recordID
       score
+      scoreCleanerID
       scoreID
       scoreItemID
+      scoreRoomID
       scorerUserID
     }
   }
@@ -227,6 +231,30 @@ export const fetchTermRecordsByCleanerIDAndRoomID = /* GraphQL */ `
       recordHotelID
       recordID
       startAt
+    }
+  }
+`;
+export const fetchTermScoresByCleanerIDAndRoomID = /* GraphQL */ `
+  query FetchTermScoresByCleanerIDAndRoomID(
+    $from: String!
+    $scoreCleanerID: ID!
+    $scoreRoomID: ID!
+    $to: String!
+  ) {
+    fetchTermScoresByCleanerIDAndRoomID(
+      from: $from
+      scoreCleanerID: $scoreCleanerID
+      scoreRoomID: $scoreRoomID
+      to: $to
+    ) {
+      createdAt
+      recordID
+      score
+      scoreCleanerID
+      scoreID
+      scoreItemID
+      scoreRoomID
+      scorerUserID
     }
   }
 `;

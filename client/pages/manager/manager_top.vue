@@ -2,10 +2,26 @@
     <div>
         <div class="assigned_cleaning">
             <div class="left_room_item_container">
-                <div>未清掃の部屋一覧</div>
+                <div v-if="leftRoomIDs.length" class="left_room_message">
+                    未清掃の部屋一覧
+                </div>
+                <div v-else>
+                    <nuxt-link
+                        tag="div"
+                        :to="{
+                            name: 'manager-setting',
+                        }"
+                    >
+                        <div>清掃可能な部屋はありません</div>
+                        <div>ここを押して部屋を追加できます</div>
+                    </nuxt-link>
+                </div>
                 <div class="left_room_container">
-                    <div v-for="(roomID, index) in leftRoomIDs" :key="index">
-                        <left-room-card :room-i-d="roomID" />
+                    <div v-for="roomID in leftRoomIDs" :key="roomID">
+                        <left-room-card
+                            :room-i-d="roomID"
+                            @registered="registered"
+                        />
                     </div>
                 </div>
             </div>
@@ -23,14 +39,6 @@
                 部屋を押して清掃をアサインできます。
             </div>
         </div>
-        <div class="plus_button_container">
-            <div class="plus_button" @click="openModal">＋</div>
-        </div>
-        <app-modal v-model="isShowModal">
-            <div class="modal_inner">
-                <assign-record @registered="registered" />
-            </div>
-        </app-modal>
         <div class="blanc"></div>
     </div>
 </template>
@@ -43,6 +51,7 @@ import assignedRecordCard from '@/components/Organisms/record/assigned_card/inde
 import { userInteractor } from '~/api'
 import AssignRecord from '@/components/Organisms/record/assign_record/index.vue'
 import LeftRoomCard from '@/components/Organisms/room/left_room_card/index.vue'
+import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 
 @Component({
     layout: 'manager',
@@ -71,49 +80,36 @@ export default class ManagerTopPage extends Vue {
         this.isShowModal = true
     }
 
+    @AsyncLoadingAndErrorHandle()
     public async registered() {
         this.assignedRecords = await this.currentUser!.fetchAssignedRecords()
+        this.leftRoomIDs = await this.currentUser!.fetchYetAssignRoom()
         this.isShowModal = false
     }
 }
 </script>
 <style lang="stylus" scoped>
 .assigned_cleaning {
-    .record_card_list {
-    }
-
     .no_assigned_cleaning_message {
         padding-top: 5px;
         padding-left: 5px;
     }
 }
 
+.left_room_message {
+    font-weight: bold;
+}
+
 .left_room_item_container {
     border: 1px solid #ccc;
+    padding: 5px;
     background-color: #fff;
-    width: 100%;
+    border-radius: 8px;
+    margin: 5px;
 
     .left_room_container {
         display: flex;
         flex-wrap: wrap;
-    }
-}
-
-.plus_button_container {
-    position: fixed;
-    right: 10%;
-    bottom: 15%;
-
-    .plus_button {
-        width: 50px;
-        height: 50px;
-        border-radius: 30px;
-        box-shadow: 0 0 10px 0 $shadowColor;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: white;
-        font-size: 24px;
     }
 }
 

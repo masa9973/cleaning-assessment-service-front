@@ -6,6 +6,7 @@
         </div>
         <div class="user_assigned_record_list">
             <div v-if="assignedRecords.length">
+                <div class="title">アサインされた清掃一覧</div>
                 <div
                     v-for="assignedRecord in assignedRecords"
                     :key="assignedRecord.recordID"
@@ -52,9 +53,22 @@ export default class CleanerTopPage extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
+.title {
+    font-weight: bold
+    margin-bottom: 20px
+}
+
 .user_icon_wrapper {
     padding-top: 50px;
     padding-bottom: 30px;
+}
+
+.user_assigned_record_list {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
 }
 
 .blanc {

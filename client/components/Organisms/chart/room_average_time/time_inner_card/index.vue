@@ -1,25 +1,25 @@
 <template>
-    <div class="room_inner_score_card">
-        <div :style="barScoreClass"></div>
+    <div class="room_inner_time_card">
+        <div :style="barTimeClass"></div>
         <div class="date_string">{{ date }}</div>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { dateFormatter, ScoreModel } from 'stage3-abr'
+import { dateFormatter, RecordModel } from 'stage3-abr'
 @Component({})
-export default class RoomInnerScoreCard extends Vue {
-    @Prop({ required: true }) scoreModel!: ScoreModel
+export default class RoomInnerTimeCard extends Vue {
+    @Prop({ required: true }) recordModel!: RecordModel
     public date: string = ''
 
     public created() {
-        this.date = dateFormatter(this.scoreModel.createdAt)
+        this.date = dateFormatter(this.recordModel.createdAt)
     }
 
-    get barScoreClass() {
+    get barTimeClass() {
         return {
             width: `10px`,
-            height: `${this.scoreModel.score * 10 + "px"}`,
+            height: `${(this.recordModel.cleaningTime/3600000) * 100 + "px"}`,
             margin: `0 auto`,
             backgroundColor: `#000`,
         }

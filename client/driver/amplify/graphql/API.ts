@@ -76,8 +76,10 @@ export type ScoreMastInput = {
   createdAt: number,
   recordID: string,
   score: number,
+  scoreCleanerID: string,
   scoreID: string,
   scoreItemID: string,
+  scoreRoomID: string,
   scorerUserID: string,
 };
 
@@ -86,8 +88,10 @@ export type ScoreMast = {
   createdAt: number,
   recordID: string,
   score: number,
+  scoreCleanerID: string,
   scoreID: string,
   scoreItemID: string,
+  scoreRoomID: string,
   scorerUserID: string,
 };
 
@@ -192,8 +196,10 @@ export type AddScoreMutation = {
     createdAt: number,
     recordID: string,
     score: number,
+    scoreCleanerID: string,
     scoreID: string,
     scoreItemID: string,
+    scoreRoomID: string,
     scorerUserID: string,
   },
 };
@@ -277,8 +283,10 @@ export type UpdateScoreMutation = {
     createdAt: number,
     recordID: string,
     score: number,
+    scoreCleanerID: string,
     scoreID: string,
     scoreItemID: string,
+    scoreRoomID: string,
     scorerUserID: string,
   },
 };
@@ -544,8 +552,10 @@ export type FetchScoresByRecordIDQuery = {
     createdAt: number,
     recordID: string,
     score: number,
+    scoreCleanerID: string,
     scoreID: string,
     scoreItemID: string,
+    scoreRoomID: string,
     scorerUserID: string,
   } >,
 };
@@ -560,8 +570,10 @@ export type FetchScoresByScoreItemIDQuery = {
     createdAt: number,
     recordID: string,
     score: number,
+    scoreCleanerID: string,
     scoreID: string,
     scoreItemID: string,
+    scoreRoomID: string,
     scorerUserID: string,
   } >,
 };
@@ -586,6 +598,27 @@ export type FetchTermRecordsByCleanerIDAndRoomIDQuery = {
     recordHotelID: string,
     recordID: string,
     startAt: number,
+  } >,
+};
+
+export type FetchTermScoresByCleanerIDAndRoomIDQueryVariables = {
+  from: string,
+  scoreCleanerID: string,
+  scoreRoomID: string,
+  to: string,
+};
+
+export type FetchTermScoresByCleanerIDAndRoomIDQuery = {
+  fetchTermScoresByCleanerIDAndRoomID:  Array< {
+    __typename: "ScoreMast",
+    createdAt: number,
+    recordID: string,
+    score: number,
+    scoreCleanerID: string,
+    scoreID: string,
+    scoreItemID: string,
+    scoreRoomID: string,
+    scorerUserID: string,
   } >,
 };
 

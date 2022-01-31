@@ -1,28 +1,26 @@
 <template>
     <div class="record_item_container">
         <div class="record_date">
-            <div>{{ getViewCleaningDate(createdAt) }}</div>
+            <div class="info_date">{{ getViewCleaningDate(createdAt) }}</div>
         </div>
         <div class="inportant_info">
-            <div class="record_room">
-                <div>部屋:{{ cleaningRoomName }}</div>
-            </div>
-            <div class="cleaning_time">
-                <div>{{ cleaningTime }}</div>
-            </div>
             <div class="cleaner_info_container">
                 <div class="cleaner_icon">
                     <img :src="userIconUrl" />
                 </div>
                 <div>{{ name }}さん</div>
             </div>
-        </div>
-        <div class="score_list_container">
-            <div v-for="score in scores" :key="score.scoreID">
-                <div class="score_item_container">
-                    <score-item-card :score="score" />
+            <div class="room_and_time_container">
+                <div class="texts">
+                    <div class="record_room">
+                        <div class="info_text">部屋:{{ cleaningRoomName }}</div>
+                    </div>
+                    <div class="cleaning_time">
+                        <div class="info_text">{{ cleaningTime }}</div>
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </template>
@@ -53,8 +51,6 @@ export default class RecordCard extends Vue {
     public scores: ScoreModel[] = []
     public viewCleaningDate: string = ''
     public room: RoomModel | null = null
-    public user: UserModel | null = null
-    public roomHotelID: string = ''
     public cleaningRoomName: string = ''
 
     async created() {
@@ -111,9 +107,33 @@ export default class RecordCard extends Vue {
     get cleaningTime() {
         return millisecondToStringTime(this.recordModel.cleaningTime)
     }
+
+    get roomName() {
+        return this.room?.roomName
+    }
 }
 </script>
 <style lang="stylus" scoped>
+.inportant_info {
+    display: flex;
+}
+
+.room_and_time_container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_text {
+    font-size: 20px;
+}
+
+.info_date {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
 .record_item_container {
     box-shadow: 0 0 5px 0 $shadowColor;
     padding: 5px;
@@ -122,23 +142,15 @@ export default class RecordCard extends Vue {
     width: 90%;
     background-color: #F9F9FA;
 
-    // .record_room {
-    //     font-size: 20px;
-    // }
+    .cleaner_icon {
+        text-align: center
+    }
 
-    // .cleaning_time {
-    //     font-size: 20px;
-    // }
-
-    // .cleaner_info_container {
-    //     display: flex;
-
-        img {
-            object-fit: cover;
-            border-radius: 10000px;
-            width: 50px;
-            height: 50px;
-        }
-    // }
+    img {
+        object-fit: cover;
+        border-radius: 10000px;
+        width: 50px;
+        height: 50px;
+    }
 }
 </style>

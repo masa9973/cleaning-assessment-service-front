@@ -4,7 +4,7 @@
             <div class="left_room_card_inner">{{ cleaningRoomName }}</div>
         </div>
         <app-modal v-model="isShowModal">
-            <div v-if="cleaners.length">
+            <div v-if="cleaners.length" class="choice_cleaner_container">
                 <div>清掃者を選択</div>
                 <select v-model="selectedUserID">
                     <option
@@ -17,9 +17,11 @@
                 </select>
             </div>
             <div v-else>設定から清掃者を登録できます。</div>
-            <app-button :disabled="!selectedUserID" @click="assigned"
-                >アサインする</app-button
-            >
+            <div class="button_container">
+                <app-button :disabled="!selectedUserID" @click="assigned"
+                    >アサインする</app-button
+                >
+            </div>
         </app-modal>
     </div>
 </template>
@@ -64,7 +66,6 @@ export default class LeftRoomCard extends Vue {
         this.blancRecord.cleanerID = this.selectedUserID
         await this.blancRecord.register()
         this.isShowModal = false
-        // emitで親更新
         this.$emit('registered')
     }
 }
@@ -74,6 +75,16 @@ export default class LeftRoomCard extends Vue {
     box-shadow: 0 0 5px 0 #c4c4c4;
     padding: 5px;
     margin: 10px 10px;
-    border-radius: 8px
+    border-radius: 8px;
+}
+
+.button_container {
+    text-align: center
+}
+
+.choice_cleaner_container {
+    display: flex
+    justify-content: space-evenly
+    padding-bottom: 5px
 }
 </style>

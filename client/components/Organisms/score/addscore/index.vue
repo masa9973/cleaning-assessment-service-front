@@ -9,11 +9,28 @@
         </div>
         <app-modal v-model="isShowModal">
             <div class="new_add_score_container">
-                <div v-for="scoreItem in scoreItems" :key="scoreItem.scoreItemID">
-                    <add-score-value
-                        :score-item-model="scoreItem"
-                        :record-model="recordModel"
-                    />
+                <div v-if="scoreItems.length">
+                    <div
+                        v-for="scoreItem in scoreItems"
+                        :key="scoreItem.scoreItemID"
+                    >
+                        <add-score-value
+                            :score-item-model="scoreItem"
+                            :record-model="recordModel"
+                            @changeScoreValue="changeScoreValue"
+                        />
+                    </div>
+                </div>
+                <div v-else class="no_item_message">
+                    <nuxt-link
+                        tag="div"
+                        :to="{
+                            name: 'manager-setting',
+                        }"
+                    >
+                        <div>まだ評価項目が登録されていません</div>
+                        <div>ここを押して評価項目を追加できます</div>
+                    </nuxt-link>
                 </div>
             </div>
             <div class="app_button_container">
@@ -49,7 +66,9 @@ export default class AddScore extends Vue {
     public currentUser: UserModel | null = null
     public scoreItems: ScoreItemModel[] = []
     public isShowModal: boolean = false
-    public scores: ScoreModel[] = []
+    public blancScores: ScoreModel[] = []
+    public scoreValues: number[] = []
+    public cleanerID: string = ''
     // 使ってる変数
 
     // ここでブランクスコア配列作るのはどう？
@@ -57,22 +76,39 @@ export default class AddScore extends Vue {
     async created() {
         this.currentUser = await userInteractor.fetchMyUserModel()
         this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
-        this.scores = await this.recordModel.fetchScores()
+        for (let i=0; i<this.scoreItems.length; i++) {
+            this.blancScores[i] = await this.scoreItems[i].createNewScore(this.recordModel.recordID)
+        }
     }
 
     public openModal() {
         this.isShowModal = true
+        this.scoreValues = []
+    }
+
+    public changeScoreValue(scoreValue:number) {
+        this.scoreValues.push(scoreValue)
     }
 
     @AsyncLoadingAndErrorHandle()
     public async scored() {
-        if (window.confirm('全てのスコアを登録しましたか？'))
+        for (let i=0; i<this.scoreItems.length; i++) {
+            this.blancScores[i].scoreCleanerID = this.recordModel.cleanerID
+            this.blancScores[i].scoreRoomID = this.recordModel.cleaningRoomID
+            this.blancScores[i].score = this.scoreValues[i] 
+            await this.blancScores[i].register()
+        }
         await this.recordModel.switchIfScored()
         this.$emit('registered')
     }
 }
 </script>
 <style lang="stylus" scoped>
+.no_item_message {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 .add_score_container {
     padding-bottom: 5px;
 }

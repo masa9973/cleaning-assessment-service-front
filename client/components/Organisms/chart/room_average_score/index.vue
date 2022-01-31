@@ -1,20 +1,26 @@
 <template>
     <div>
-        <div>レコードの数だけ棒を作成</div>
-        <div class="chart_item_container">
-            <div v-for="scoreModel in scoreModels"
-            :key="scoreModel.scoreID">
-                <room-inner-score-card
-                    :score-model="scoreModel"
-                />
+        <div class="chart_title">{{ scoreItemModel.scoreItemName }}</div>
+        <div class="scale_and_chart">
+            <div class="scale">
+                <div class="scale_top">10</div>
+                <div class="scale_bottom">0</div>
+            </div>
+            <div class="chart_item_container">
+                <div
+                    v-for="scoreModel in scores"
+                    :key="scoreModel.scoreID"
+                    class="room_inner_score_card_container"
+                >
+                    <room-inner-score-card :score-model="scoreModel" />
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
-import { userInteractor } from '~/api'
+import { RoomModel, ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
 import RoomInnerScoreCard from '@/components/Organisms/chart/room_average_score/room_inner_card/index.vue'
 @Component({
     components: {
@@ -22,53 +28,60 @@ import RoomInnerScoreCard from '@/components/Organisms/chart/room_average_score/
     },
 })
 export default class ScoreChart extends Vue {
-    @Prop({ required: true }) scoreItemID!: string
+    @Prop({ required: true }) scoreItemModel!: ScoreItemModel
     @Prop({ required: true }) currentUser!: UserModel
-    public scoreItemModel: ScoreItemModel | null = null
+    @Prop({ required: true }) roomModel!: RoomModel
     public scoreModels: ScoreModel[] = []
+    public scores: ScoreModel[] = []
 
     public async created() {
-        this.scoreItemModel = await userInteractor.fetchScoreItemByScoreItemID(
-            this.scoreItemID
-        )
-        this.scoreModels = await this.scoreItemModel!.fetchScores()
-        // このユーザーのって情報がない
-        console.log(this.scoreModels)
-
-        // itemでスコア取得、propで渡す
+    this.scoreModels = await this.scoreItemModel.fetchUserMonthScoresByRoomID(this.currentUser.userID, this.roomModel.roomID)
+    this.scores = this.scoreModels.filter((item) => item.scoreItemID === this.scoreItemModel.scoreItemID)
     }
 }
 </script>
 <style lang="stylus" scoped>
-.chart_item_container {
+.chart_title {
+    font-weight: bold
+}
+
+.scale_and_chart {
     display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: nowrap;
-    align-items: flex-end;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
+
+    .scale {
+        height: 117px;
+        font-size: 10px;
+        width 30px
+        position: relative
+        .scale_top {
+            position: absolute
+            left: 15px
+        }
+        .scale_bottom {
+            position: absolute
+            bottom: 7px
+            left: 15px
+        }
+    }
+
+    .chart_item_container {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        align-items: flex-end;
+        height: 115px;
+        justify-content: space-evenly;
+        flex-grow: 1;
+    }
 }
 
-.date {
-    margin: 0 auto;
-}
-
-.bar {
-    width: 20px;
-    height: 100px;
-    margin: 0 auto;
-    background-color: #000;
-}
-
-.one {
-    width: 20px;
-    height: 10px;
-    margin: 0 auto;
-    background-color: #000;
-}
-
-.two {
-    width: 20px;
-    height: 20px;
-    margin: 0 auto;
-    background-color: #000;
+.room_inner_score_card_container {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 </style>

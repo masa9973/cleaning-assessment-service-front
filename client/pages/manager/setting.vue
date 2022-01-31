@@ -2,6 +2,7 @@
     <div v-if="currentUser" class="setting_page">
         <div class="settings_container">
             <div class="invite_cleaner_url_container">
+                <div class="title">清掃者登録URL</div>
                 <div id="inviteUrl">
                     https://dev.stage3.ishikawam.com/auth_cleaner/signin/{{
                         currentUser.userHotelID
@@ -15,29 +16,39 @@
                 </div>
             </div>
             <div class="room_list_container">
-                <div>登録済みの部屋一覧</div>
-                <div
-                    v-for="room in rooms"
-                    :key="room.roomID"
-                    class="room_icon_wrapper"
-                >
-                    {{ room.roomName }}
+                <div class="title">登録済みの部屋一覧</div>
+                <div class="room_and_item_container">
+                    <div
+                        v-for="room in rooms"
+                        :key="room.roomID"
+                        class="room_and_item_icon"
+                    >
+                        {{ room.roomName }}
+                    </div>
+                </div>
+                <div class="register_button">
+                    <app-button @click="openAddRoomModal"
+                        >部屋を登録する</app-button
+                    >
                 </div>
             </div>
-            <app-button @click="openAddRoomModal">部屋を登録する</app-button>
-            <div class="item_list_container">
-                <div>登録済みの評価項目</div>
-                <div
-                    v-for="scoreItem in scoreItems"
-                    :key="scoreItem.scoreItemID"
-                    class="item_icon_wrapper"
-                >
-                    <div class="score_item">
+            <div class="room_list_container">
+                <div class="title">登録済みの評価項目</div>
+                <div class="room_and_item_container">
+                    <div
+                        v-for="scoreItem in scoreItems"
+                        :key="scoreItem.scoreItemID"
+                        class="room_and_item_icon"
+                    >
                         {{ scoreItem.scoreItemName }}
                     </div>
                 </div>
+                <div class="register_button">
+                    <app-button @click="openAddItemModal"
+                        >評価項目を登録する</app-button
+                    >
+                </div>
             </div>
-            <app-button @click="openAddItemModal">評価項目を登録する</app-button>
         </div>
         <app-modal v-model="isShowAddRoomModal">
             <div class="modal_inner">
@@ -99,8 +110,6 @@ export default class ManagerConfig extends Vue {
         this.scoreItems = await this.currentUser.fetchSameHotelScoreItems()
     }
 
-    public deleteRoom() {}
-
     public openAddRoomModal() {
         this.isShowAddRoomModal = true
     }
@@ -125,7 +134,7 @@ export default class ManagerConfig extends Vue {
     public async register() {
         this.blancRoom = await userInteractor.createNewRoom(this.roomNameValue)
         await this.blancRoom.register()
-        window.alert('部屋登録完了。続けて別の部屋を登録できます')
+        // window.alert('部屋登録完了。続けて別の部屋を登録できます')
         this.roomNameValue = ''
         this.rooms = await this.currentUser!.fetchSameHotelRooms()
     }
@@ -136,20 +145,51 @@ export default class ManagerConfig extends Vue {
             this.scoreItemNameValue
         )
         await this.blancScoreItem.register()
-        window.alert('項目登録完了。続けて別の項目を登録できます')
+        // window.alert('項目登録完了。続けて別の項目を登録できます')
         this.scoreItemNameValue = ''
         this.scoreItems = await this.currentUser!.fetchSameHotelScoreItems()
     }
 }
 </script>
 <style lang="stylus" scoped>
-.settings_container {
-    width: 90%
-    margin: auto
+.title {
+    font-weight: bold;
+}
+
+.register_button {
+    text-align: center;
+}
+
+.room_and_item_container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .room_and_item_icon {
+        box-shadow: 0 0 5px 0 #c4c4c4;
+        padding: 5px;
+        margin: 10px 10px;
+        border-radius: 8px;
+        text-align: center;
+    }
 }
 
 .invite_cleaner_url_container {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
+    padding: 5px;
     word-break: break-all;
+}
+
+.room_list_container {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
+    padding: 5px;
 }
 
 .modal_inner {

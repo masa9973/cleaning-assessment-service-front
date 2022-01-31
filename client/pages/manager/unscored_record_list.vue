@@ -1,20 +1,22 @@
 <template>
-    <div class="records_list_container">
-        <div>未評価清掃リスト</div>
-        <div class="record_card_container">
-            <div v-if="unScoredRecords.length">
-                <div
-                    v-for="record in unScoredRecords"
-                    :key="record.recordID"
-                    class="record_card_with_addscorebutton"
-                >
-                    <add-score
-                        :record-model="record"
-                        @registered="registered"
-                    />
+    <div>
+        <div class="records_list_container">
+            <div class="title">未評価の清掃一覧</div>
+            <div class="record_card_container">
+                <div v-if="unScoredRecords.length">
+                    <div
+                        v-for="record in unScoredRecords"
+                        :key="record.recordID"
+                        class="record_card_with_addscorebutton"
+                    >
+                        <add-score
+                            :record-model="record"
+                            @registered="registered"
+                        />
+                    </div>
                 </div>
+                <div v-else>未評価の清掃はありません。</div>
             </div>
-            <div v-else>未評価の清掃はありません。</div>
         </div>
         <div class="blanc"></div>
     </div>
@@ -49,8 +51,17 @@ export default class RecordListForManager extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
-.record_list_container {
-    text-align: center;
+.title {
+    font-weight: bold
+    margin-bottom: 25px
+}
+
+.records_list_container {
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
 
     .record_card_container {
         .record_card_with_addscorebutton {

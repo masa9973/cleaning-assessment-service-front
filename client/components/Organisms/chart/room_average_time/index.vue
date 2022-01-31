@@ -1,101 +1,89 @@
 <template>
     <div>
-        <div>レコードの数だけ棒を作成</div>
-        <div class="chart_item_container">
-            <div class="date">
-                <div class="bar"></div>
-                <div>{{ today }}</div>
+        <div class="chart_title">清掃時間グラフ</div>
+        <div class="scale_and_chart">
+            <div class="scale">
+                <div class="scale_top">1時間</div>
+                <div class="scale_bottom">0分</div>
             </div>
-            <div class="date">
-                <div class="bar"></div>
-                <div>{{ yesterday }}</div>
-            </div>
-            <div class="date">
-                <div class="bar"></div>
-                <div>{{ twoDaysAgo }}</div>
-            </div>
-            <div>
-                <div :style="styleObject">あああ</div>
+            <div class="chart_item_container">
+                <div
+                    v-for="recordModel in recordModels"
+                    :key="recordModel.recordID"
+                >
+                    <div class="room_inner_time_card_container">
+                        <room-inner-time-card :record-model="recordModel" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
 // recordをpropとして受け取って、cleaningTimeの値によってdivの大きさを変えられるようにする
-import { Component, Vue } from 'nuxt-property-decorator'
-import { dateFormatter, RecordModel, UserModel } from 'stage3-abr'
-import { userInteractor } from '~/api'
-@Component({})
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import RoomInnerTimeCard from '@/components/Organisms/chart/room_average_time/time_inner_card/index.vue'
+@Component({
+    components: {
+        RoomInnerTimeCard,
+    },
+})
 export default class TimeChart extends Vue {
-    public currentUser: UserModel | null = null
-    public records: RecordModel[] = []
-    public today: string = ''
-    public yesterday: string = ''
-    public twoDaysAgo: string = ''
-    public score: number = 5
+    @Prop({ required: true }) currentUser!: UserModel
+    @Prop({ required: true }) roomModel!: RoomModel
+    public recordModels: RecordModel[] = []
 
     public async created() {
-        this.currentUser = await userInteractor.fetchMyUserModel()
-        this.records = await this.currentUser!.fetchScoredRecords()
-
-        // グラフを動的に動かしたい
-        const bar = document.getElementsByClassName(
-            'bar'
-        ) as HTMLCollectionOf<HTMLElement>
-        // ここスコアの配列
-        const data = [100]
-        console.log(bar)
-        for (let i = 0; i < bar.length; i++) {
-            bar[i].style.height = data[i] + 'px'
-        }
-
-        // 下の軸を取得、日付の配列を渡せばいい。
-        const day = 86400000
-        this.today = dateFormatter(new Date().getTime())
-        this.yesterday = dateFormatter(new Date().getTime() - day * 1)
-        this.twoDaysAgo = dateFormatter(new Date().getTime() - day * 2)
-    }
-    
-    get styleObject() {
-        return {
-            color: 'red',
-            fontSize: '13px',
-            height: `100px`,
-            width: `${this.score * 10 + 'px'}`,
-        }
+        // この部屋の1ヶ月分の清掃記録
+        this.recordModels =
+            await this.currentUser!.fetchUserMonthRecordsByRoomID(
+                this.roomModel.roomID
+            )
     }
 }
 </script>
 <style lang="stylus" scoped>
-.chart_item_container {
+.chart_title {
+    font-weight: bold;
+}
+
+.scale_and_chart {
     display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: nowrap;
-    align-items: flex-end;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 5px;
+
+    .scale {
+        height: 117px;
+        font-size: 10px;
+        width: 30px
+        position: relative
+        .scale_top {
+            position: absolute
+            left: 3px
+        }
+        .scale_bottom {
+            position: absolute
+            bottom: 0px
+            left: 6px
+        }
+    }
+
+    .chart_item_container {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        align-items: flex-end;
+        height: 115px;
+        justify-content: space-evenly;
+    }
 }
 
-.date {
-    margin: 0 auto;
-}
-
-.bar {
-    width: 20px;
-    height: 100px;
-    margin: 0 auto;
-    background-color: #000;
-}
-
-.one {
-    width: 20px;
-    height: 10px;
-    margin: 0 auto;
-    background-color: #000;
-}
-
-.two {
-    width: 20px;
-    height: 20px;
-    margin: 0 auto;
-    background-color: #000;
+.room_inner_time_card_container {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 </style>

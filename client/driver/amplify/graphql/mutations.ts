@@ -48,8 +48,10 @@ export const addScore = /* GraphQL */ `
       createdAt
       recordID
       score
+      scoreCleanerID
       scoreID
       scoreItemID
+      scoreRoomID
       scorerUserID
     }
   }
@@ -112,8 +114,10 @@ export const updateScore = /* GraphQL */ `
       createdAt
       recordID
       score
+      scoreCleanerID
       scoreID
       scoreItemID
+      scoreRoomID
       scorerUserID
     }
   }
