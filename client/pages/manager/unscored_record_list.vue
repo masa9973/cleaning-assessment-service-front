@@ -25,7 +25,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
 import AddScore from '@/components/Organisms/score/addscore/index.vue'
 import { userInteractor } from '~/api'
-
 // component
 
 @Component({

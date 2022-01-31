@@ -1,5 +1,15 @@
 <template>
     <div class="record_list_associated_with_user">
+        <div v-for="roomModel in roomModels" class="chart">
+            <time-chart></time-chart>
+            <div v-if="selectedScoreItemID">
+                <score-chart
+                    :current-user="currentUser"
+                    :score-item-i-d="selectedScoreItemID"
+                />
+            </div>
+            <div v-else>部屋を選択してください</div>
+        </div>
         <div class="user_cleaning_data">
             あなたの記録
             <div class="average_cleaning_time">
@@ -27,7 +37,7 @@
                     </option>
                 </select>
                 <button :disabled="!selectedRoomID" @click="filterRoom">
-                    選んだ部屋の記録をみる
+                    選んだ部屋の直近1ヶ月の記録をみる
                 </button>
                 <button @click="reset">リセット</button>
             </div>
@@ -76,12 +86,15 @@ import { RecordModel, RoomModel, ScoreItemModel, UserModel } from 'stage3-abr'
 import { userInteractor } from '~/api'
 import LinkButton from '@/components/Atom/LinkButton.vue'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
-
+import TimeChart from '@/components/Organisms/chart/room_average_time/index.vue'
+import ScoreChart from '@/components/Organisms/chart/room_average_score/index.vue'
 @Component({
     layout: 'manager',
     components: {
         LinkButton,
         RecordCard,
+        TimeChart,
+        ScoreChart,
     },
 })
 export default class UserRecordList extends Vue {
@@ -95,7 +108,7 @@ export default class UserRecordList extends Vue {
     public averageScore: number = 0
     public ifFiltering: boolean = false
     public averageTime: string = ''
-    public selectedScoreItemID: string = ''
+    public selectedScoreItemID: string = '03e74186-1b18-4ad0-845e-1fd496411150'
     // 使ってる変数
 
     async created() {
@@ -108,6 +121,7 @@ export default class UserRecordList extends Vue {
         this.averageTime = userInteractor.recordsToAverageStringTime(
             this.scoredRecords
         )
+
     }
 
     public async filterScoreItem() {
@@ -118,12 +132,12 @@ export default class UserRecordList extends Vue {
             )
     }
 
-    public filterRoom() {
-        this.roomFilteredRecords = this.scoredRecords.filter(
-            (item) => item.cleaningRoomID === this.selectedRoomID
-        )
-        this.roomFilteredAverageTime =
-            userInteractor.recordsToAverageStringTime(this.roomFilteredRecords)
+    public async filterRoom() {
+        this.ifFiltering = true
+        this.roomFilteredRecords =
+            await this.currentUser!.fetchUserMonthRecordsByRoomID(
+                this.selectedRoomID
+            )
     }
 
     public reset() {
@@ -133,6 +147,10 @@ export default class UserRecordList extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
+.chart {
+    border: 1px solid #ccc;
+}
+
 .blanc {
     height: 60px;
 }
