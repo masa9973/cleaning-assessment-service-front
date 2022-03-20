@@ -23,12 +23,12 @@ export default {
                 hid: 'description',
                 name: 'description',
                 content:
-                    'CHILLNNで用いている基本的な機能を全て盛り込んだサービスです',
+                    '清掃評価サービスです！',
             },
             {
                 hid: 'og:site_name',
                 property: 'og:site_name',
-                content: 'CHILLNN',
+                content: 'CAS',
             },
             {
                 hid: 'og:type',
@@ -38,13 +38,13 @@ export default {
             {
                 hid: 'og:title',
                 name: 'og:title',
-                content: 'CHILLSTAGRAM',
+                content: 'CAS',
             },
             {
                 hid: 'og:description',
                 name: 'og:description',
                 content:
-                    'CHILLNNの基本的な技術スタックを利用したサンプルアプリケーション',
+                    '清掃評価サービス',
             },
             {
                 hid: 'og:image',
