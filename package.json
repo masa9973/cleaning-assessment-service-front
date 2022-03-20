@@ -22,10 +22,10 @@
         "@nuxtjs/pwa": "^3.3.5",
         "@nuxtjs/style-resources": "^1.2.1",
         "chart.js": "^3.7.0",
+        "cleaning-assessment-service-abr": "git+ssh://git@github.com:masa9973/cleaning-assessment-service-abr.git#dev",
         "core-js": "^3.16.3",
         "nuxt": "^2.15.8",
         "nuxt-property-decorator": "^2.9.1",
-        "cleaning-assessment-service-abr": "git+ssh://git@github.com:masa9973/cleaning-assessment-service-abr.git#dev",
         "vee-validate": "^3.4.11"
     },
     "devDependencies": {
