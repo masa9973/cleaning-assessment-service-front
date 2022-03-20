@@ -1,4 +1,4 @@
-import { IRecordMastRepository, RecordMast } from 'stage3-abr'
+import { IRecordMastRepository, RecordMast } from 'cleaning-assessment-service-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'

@@ -1,5 +1,5 @@
 import { Auth } from '@aws-amplify/auth'
-import { Scalars } from 'stage3-abr'
+import { Scalars } from 'cleaning-assessment-service-abr'
 
 class AuthInteractor {
     public async isSignIn(): Promise<boolean> {

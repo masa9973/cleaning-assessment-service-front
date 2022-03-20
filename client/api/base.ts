@@ -1,7 +1,7 @@
 // driverの接続部分を記述
 import { API, graphqlOperation } from '@aws-amplify/api'
 import { GraphQLResult } from '@aws-amplify/api/lib/types'
-import { ChillnnTrainingError, ErrorCode } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode } from 'cleaning-assessment-service-abr'
 /**
  * 型付きのresponseを返す
  * QueryとMutationに用いる

@@ -1,4 +1,4 @@
-import { ErrorCode } from 'stage3-abr'
+import { ErrorCode } from 'cleaning-assessment-service-abr'
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
 export interface IInfoObject {

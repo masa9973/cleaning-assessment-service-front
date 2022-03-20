@@ -1,5 +1,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
-import { ChillnnTrainingError, generateUUID } from 'stage3-abr'
+import { ChillnnTrainingError, generateUUID } from 'cleaning-assessment-service-abr'
 import { infoStore } from '@/store'
 import { errorHandle } from '~/util/errorHandleUtil'
 

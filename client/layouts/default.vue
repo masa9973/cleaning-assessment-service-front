@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { ChillnnTrainingError, ErrorCode, UserModel } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode, UserModel } from 'cleaning-assessment-service-abr'
 import { authInteractor } from '~/driver/amplify/auth'
 import { userInteractor } from '~/api'
 @Component({

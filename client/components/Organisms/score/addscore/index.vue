@@ -43,7 +43,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
+import { RecordModel, ScoreItemModel, ScoreModel, UserModel } from 'cleaning-assessment-service-abr'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'

@@ -1,4 +1,4 @@
-import { IScoreItemMastRepository, ScoreItemMast } from 'stage3-abr';
+import { IScoreItemMastRepository, ScoreItemMast } from 'cleaning-assessment-service-abr';
 import { callApi } from '../base';
 import { AddScoreItemMutation, AddScoreItemMutationVariables, DeleteScoreItemMutation, DeleteScoreItemMutationVariables, FetchScoreItemByScoreItemIDQuery, FetchScoreItemByScoreItemIDQueryVariables, FetchScoreItemsByHotelIDQuery, FetchScoreItemsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as query from '@/driver/amplify/graphql/queries'

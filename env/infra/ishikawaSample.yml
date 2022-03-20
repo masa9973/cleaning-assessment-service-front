@@ -11,13 +11,13 @@ AWS_CLI_PROFILE: 'ishikawa_admin' # ← !!! 自分の開発環境のAWS CLIのPr
 #######################################
 # cloud front
 #######################################
-CLOUDFRONT_DYNAMIC_CACHE_POLICY_NAME: stage3-front-dynamic-cache-policy-${self:provider.stage}
-CLOUDFRONT_STATIC_CACHE_POLICY_NAME: stage3-front-static-cache-policy-${self:provider.stage}
+CLOUDFRONT_DYNAMIC_CACHE_POLICY_NAME: cleaning-assessment-service-front-dynamic-cache-policy-${self:provider.stage}
+CLOUDFRONT_STATIC_CACHE_POLICY_NAME: cleaning-assessment-service-front-static-cache-policy-${self:provider.stage}
 CLOUDFRONT_ALIASES:
-    - 'dev.stage3.ishikawam.com' # ← !!! 自分でドメインを取る必要がある
+    - 'dev.cleaning-assessment-service.ishikawam.com' # ← !!! 自分でドメインを取る必要がある
 CLOUDFRONT_ALIAS_ACM_ARN: 'arn:aws:acm:us-east-1:854688019189:certificate/4d8f186e-45fc-454d-8cd4-744abb996abe' # ← !!! 自分でACMから証明書を発行する必要がある
 #######################################
 # s3
 #######################################
-S3_BUCKET_NAME: 'stage3-front-nuxt-ishikawam-${self:provider.stage}' # ← !!! バケット名は世界でユニークである必要がある。自分で名前をつけてみましょう
-# ex) S3_BUCKET_NAME: 'stage3-front-nuxt-${self:provider.stage}' <- suffixとして、${-stage名}をつけるようにしてください。
+S3_BUCKET_NAME: 'cleaning-assessment-service-front-nuxt-ishikawam-${self:provider.stage}' # ← !!! バケット名は世界でユニークである必要がある。自分で名前をつけてみましょう
+# ex) S3_BUCKET_NAME: 'cleaning-assessment-service-front-nuxt-${self:provider.stage}' <- suffixとして、${-stage名}をつけるようにしてください。

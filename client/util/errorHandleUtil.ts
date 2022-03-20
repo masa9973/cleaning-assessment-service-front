@@ -1,4 +1,4 @@
-import { ChillnnTrainingError } from 'stage3-abr'
+import { ChillnnTrainingError } from 'cleaning-assessment-service-abr'
 import { IInfoObject } from '~/store/modules/info'
 
 export function errorHandle(err: ChillnnTrainingError): IInfoObject {

@@ -4,7 +4,7 @@ import {
     RepositoryContainer,
     CleanerUsecase,
     ScoreUsecase,
-} from 'stage3-abr'
+} from 'cleaning-assessment-service-abr'
 import { recordMastRepository } from './modules/GraphqlRecordMastRepository'
 import { userMastRepository } from './modules/GraphqlUserMastRepository'
 import { s3Repository } from './modules/S3Repository'

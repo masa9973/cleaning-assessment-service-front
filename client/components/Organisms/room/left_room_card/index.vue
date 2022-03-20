@@ -27,7 +27,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'

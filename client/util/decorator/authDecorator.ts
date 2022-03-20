@@ -1,5 +1,5 @@
 import { Component, Vue } from 'nuxt-property-decorator'
-import { ChillnnTrainingError, ErrorCode } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode } from 'cleaning-assessment-service-abr'
 import { authInteractor } from '@/driver/amplify/auth'
 
 /**

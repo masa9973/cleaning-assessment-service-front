@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 // component
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import UserIcon from '@/components//Organisms/User/Icon/index.vue'
 @Component({

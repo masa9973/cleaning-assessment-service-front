@@ -34,7 +34,7 @@ import {
     RoomModel,
     ScoreModel,
     UserModel,
-} from 'stage3-abr'
+} from 'cleaning-assessment-service-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'
 import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'

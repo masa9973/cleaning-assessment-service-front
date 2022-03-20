@@ -29,7 +29,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, UserModel } from 'stage3-abr'
+import { RecordModel, UserModel } from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import RoomCard from '@/components/Organisms/room/card/index.vue'

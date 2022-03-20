@@ -1,4 +1,4 @@
-import { IScoreMastRepository, ScoreMast } from 'stage3-abr'
+import { IScoreMastRepository, ScoreMast } from 'cleaning-assessment-service-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'

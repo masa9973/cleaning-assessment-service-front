@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Prop, Vue, Component } from 'nuxt-property-decorator'
-import { ScoreItemModel, ScoreModel } from 'stage3-abr'
+import { ScoreItemModel, ScoreModel } from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 @Component({})
 export default class ScoreItemCard extends Vue {

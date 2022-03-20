@@ -1,4 +1,4 @@
-import { HotelMast, IHotelMastRepository } from 'stage3-abr';
+import { HotelMast, IHotelMastRepository } from 'cleaning-assessment-service-abr';
 import { callApi } from '../base';
 import { AddHotelMutation, AddHotelMutationVariables, FetchHotelByHotelIDQuery, FetchHotelByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as mutation from '@/driver/amplify/graphql/mutations'

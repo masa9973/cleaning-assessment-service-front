@@ -1,7 +1,7 @@
 import {
     IUserMastRepository,
     UserMast,
-} from 'stage3-abr'
+} from 'cleaning-assessment-service-abr'
 import { callApi } from '../base'
 import {
     FetchAllUserByHotelIDQuery,

@@ -11,7 +11,7 @@
     </div>
 </template>
 <script lang="ts">
-import { UserModel } from 'stage3-abr'
+import { UserModel } from 'cleaning-assessment-service-abr'
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 // component
 import UserEdit from './modules/UserEdit.vue'

@@ -41,7 +41,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'

@@ -1,4 +1,4 @@
-import { IS3Repository, S3Object } from 'stage3-abr'
+import { IS3Repository, S3Object } from 'cleaning-assessment-service-abr'
 import { storageInteractor } from '~/driver/amplify/storage'
 
 class S3Repository implements IS3Repository {

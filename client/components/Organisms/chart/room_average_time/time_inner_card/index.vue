@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { dateFormatter, RecordModel } from 'stage3-abr'
+import { dateFormatter, RecordModel } from 'cleaning-assessment-service-abr'
 @Component({})
 export default class RoomInnerTimeCard extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel

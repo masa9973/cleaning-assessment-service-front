@@ -22,7 +22,7 @@
 <script lang="ts">
 // recordをpropとして受け取って、cleaningTimeの値によってdivの大きさを変えられるようにする
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'stage3-abr'
+import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
 import RoomInnerTimeCard from '@/components/Organisms/chart/room_average_time/time_inner_card/index.vue'
 @Component({
     components: {

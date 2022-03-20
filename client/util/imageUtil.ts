@@ -1,4 +1,4 @@
-import { ChillnnTrainingError, ErrorCode } from 'stage3-abr'
+import { ChillnnTrainingError, ErrorCode } from 'cleaning-assessment-service-abr'
 
 const MAX_WIDTH: number = 1200
 const MAX_HEIGHT: number = 1200

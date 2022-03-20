@@ -1,5 +1,5 @@
 import { Storage } from '@aws-amplify/storage'
-import { S3Object } from 'stage3-abr'
+import { S3Object } from 'cleaning-assessment-service-abr'
 import { awsmobile } from '~/plugins/amplify'
 
 class StorageInteractor {

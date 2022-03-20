@@ -22,7 +22,7 @@
     </div>
 </template>
 <script lang="ts">
-import { RecordModel, UserModel } from 'stage3-abr'
+import { RecordModel, UserModel } from 'cleaning-assessment-service-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import RecordCard from '@/components/Organisms/record/card/index.vue'
 import AddScore from '@/components/Organisms/score/addscore/index.vue'

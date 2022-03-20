@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, ScoreItemModel, ScoreModel } from 'stage3-abr'
+import { RecordModel, ScoreItemModel, ScoreModel } from 'cleaning-assessment-service-abr'
 @Component({
     components: {
     },

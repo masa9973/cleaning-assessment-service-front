@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RoomModel, ScoreItemModel, ScoreModel, UserModel } from 'stage3-abr'
+import { RoomModel, ScoreItemModel, ScoreModel, UserModel } from 'cleaning-assessment-service-abr'
 import RoomInnerScoreCard from '@/components/Organisms/chart/room_average_score/room_inner_card/index.vue'
 @Component({
     components: {

@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RoomModel } from 'stage3-abr'
+import { RoomModel } from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 
 @Component({

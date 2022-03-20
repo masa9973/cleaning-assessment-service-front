@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { dateFormatter, ScoreModel } from 'stage3-abr'
+import { dateFormatter, ScoreModel } from 'cleaning-assessment-service-abr'
 @Component({})
 export default class RoomInnerScoreCard extends Vue {
     @Prop({ required: true }) scoreModel!: ScoreModel

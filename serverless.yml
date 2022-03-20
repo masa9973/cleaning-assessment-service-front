@@ -1,4 +1,4 @@
-service: stage3-front
+service: cleaning-assessment-service-front
 
 provider:
     name: aws
@@ -138,7 +138,7 @@ resources:
             Properties:
                 Tags:
                     - Key: Name
-                      Value: CHILLNN ${self:provider.stage} Stage3
+                      Value: CHILLNN ${self:provider.stage} cleaning-assessment-service
                 DistributionConfig:
                     Aliases: ${self:custom.env.infra.${self:provider.stage}.CLOUDFRONT_ALIASES}
                     ViewerCertificate:

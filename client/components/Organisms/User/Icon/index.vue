@@ -18,7 +18,7 @@
     </div>
 </template>
 <script lang="ts">
-import { UserModel } from 'stage3-abr'
+import { UserModel } from 'cleaning-assessment-service-abr'
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 // component
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'

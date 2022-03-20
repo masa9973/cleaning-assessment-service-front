@@ -46,7 +46,7 @@
     </div>
 </template>
 <script lang="ts">
-import { UserModel } from 'stage3-abr'
+import { UserModel } from 'cleaning-assessment-service-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'

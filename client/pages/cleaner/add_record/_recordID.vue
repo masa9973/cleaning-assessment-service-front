@@ -45,7 +45,7 @@ import {
     millisecondToStringTime,
     RecordModel,
     timeStampToStringTime,
-} from 'stage3-abr'
+} from 'cleaning-assessment-service-abr'
 import { Component, Vue } from 'nuxt-property-decorator'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
