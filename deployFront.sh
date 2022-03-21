@@ -1,5 +1,5 @@
 #!/bin/sh
-s3Name=cleaning-assessment-service-front-nuxt-ishikawam
+s3Name=cleaning-assessment-service-front-nuxt-ishikawa
 profile=ishikawa_admin
 
 branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
