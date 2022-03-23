@@ -1,16 +1,6 @@
 <template>
     <div class="app_container">
-        <div class="logo_container">
-            <!-- left -->
-            <div class="logo">
-                <!-- <img src="~/assets/img/logo.svg" /> -->
-            </div>
-            <div class="title">
-                <!-- <img src="~/assets/img/CHILLSTAGRAM.png" /> -->
-            </div>
-        </div>
-        <div class="app_inner">
-            <!-- app -->
+        <div class="wrapper">
             <nuxt />
         </div>
     </div>
@@ -30,13 +20,6 @@ export default class DefaultLayout extends Vue {}
     min-height: 100vh;
 
     .logo_container {
-        // padding: 150px 0 60px;
-        text-align: center;
-        height: 100px;
-
-        @media only screen and (max-width: $spSize) {
-            padding: 80px 0 30px;
-        }
     }
 
     .app_inner {

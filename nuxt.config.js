@@ -47,11 +47,6 @@ export default {
                     '清掃評価サービス',
             },
             {
-                hid: 'og:image',
-                property: 'og:image',
-                content: '/thumbnail.jpg',
-            },
-            {
                 hid: 'twitter:card',
                 name: 'twitter:card',
                 content: 'summary_large_image',
