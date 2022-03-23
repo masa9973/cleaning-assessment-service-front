@@ -22,6 +22,7 @@
                 >アカウントをお持ちでない方はこちら</link-button
             >
         </div>
+        <div>googleでログインの方はこちら</div>
     </div>
 </template>
 <script lang="ts">

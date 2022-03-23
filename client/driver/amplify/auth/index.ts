@@ -1,4 +1,4 @@
-import { Auth } from '@aws-amplify/auth'
+import { Auth, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 import { Scalars } from 'cleaning-assessment-service-abr'
 
 class AuthInteractor {
@@ -15,6 +15,12 @@ class AuthInteractor {
 
     public async signIn(email: Scalars['AWSEmail'], password: string) {
         return await Auth.signIn(email, password)
+    }
+
+    public async googleSignIn() {
+        const result = await Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
+        // メールと名前を取得してサインアップさせたい
+        return result
     }
 
     public async completeNewPassword(user: any, password: string) {

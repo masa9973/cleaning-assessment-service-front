@@ -5,6 +5,13 @@ export const awsmobile = {
         identityPoolId: process.env.COGNITO_IDENTITY_POOL_ID,
         userPoolId: process.env.COGNITO_USER_POOL_ID,
         userPoolWebClientId: process.env.COGNITO_USER_POOL_WEB_CLIENT_ID,
+        oauth: {
+            domain: process.env.COGNITO_OAUTH_DOMEIN,
+            scope: ['email', 'profile', 'openid'],
+            redirectSignIn: process.env.COGNITO_OAUTH_REDIRECT_SIGNIN,
+            redirectSignOut: process.env.COGNITO_OAUTH_REDIRECT_SIGNOUT,
+            responseType: 'token',
+        },
     },
     API: {
         aws_appsync_graphqlEndpoint: process.env.APPSYNC_GRAPHQL_ENDPOINT,

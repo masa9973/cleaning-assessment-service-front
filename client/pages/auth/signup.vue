@@ -22,6 +22,8 @@
                 >アカウントをお持ちの方はこちら</link-button
             >
         </div>
+        <div @click="googleSignIn">googleでサインアップの方はこちら</div>
+        <div @click="method">ここでメソッドを実行</div>
     </div>
 </template>
 <script lang="ts">
@@ -33,6 +35,10 @@ import AppButton from '@/components/Atom/AppButton.vue'
 import LinkButton from '@/components/Atom/LinkButton.vue'
 import { authInteractor } from '~/driver/amplify/auth'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
+import { userMastRepository } from '~/api/modules/GraphqlUserMastRepository'
+import { UserMast } from 'cleaning-assessment-service-abr'
+import Auth from '@aws-amplify/auth'
+import UserRecordList from '../cleaner/record_list/user.vue'
 
 @Component({
     layout: 'auth',
@@ -64,6 +70,27 @@ export default class SignUpPage extends Vue {
                 password: this.password,
             },
         })
+    }
+
+    @AsyncLoadingAndErrorHandle()
+    public async googleSignIn() {
+        await authInteractor.googleSignIn()
+        const userInfo = await Auth.currentUserInfo()
+        if (userInfo) {
+            const user = JSON.parse(JSON.stringify(userInfo))
+            this.email = user.mail
+            console.log(user)
+        }
+        const userMast: UserMast = {
+            userID: '',
+            name: '',
+            email: this.email,
+            role: '',
+            createdAt: 0,
+            updatedAt: 0,
+            userHotelID: '',
+        }
+        await userMastRepository.addUserMast(userMast)
     }
 }
 </script>
