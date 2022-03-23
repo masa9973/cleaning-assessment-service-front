@@ -18,19 +18,17 @@ export default class DefaultLayout extends Vue {}
     background-image: url('https://images.unsplash.com/photo-1566041510639-8d95a2490bfb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=678&q=80');
     background-size: cover;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .logo_container {
-    }
-
-    .app_inner {
-        margin: 0 auto;
+    .wrapper {
         width: 500px;
-        box-shadow: 0 0 100px 0 $shadowColor;
-        border-radius: 50px;
+        box-shadow: 0 0 20px 0 $shadowColor;
+        border-radius: 20px;
         background-color: $transparentWhite;
 
         @media only screen and (max-width: $spSize) {
-            border-radius: 20px;
             width: 90%;
         }
     }
