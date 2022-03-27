@@ -60,15 +60,19 @@ export default class VerifyPage extends Vue {
 
     @AsyncLoadingAndErrorHandle()
     public async verifyAndSignIn() {
-        await authInteractor.signUpConfirmed(this.email, this.verifyCode)
-        await authInteractor.signIn(this.email, this.password)
-        const user = await userInteractor.fetchMyUserModel()
-        user.role = 'cleaner'
-        user.userHotelID = this.$route.params.userHotelID
-        await user.register()
-        this.$router.push({
-            name: 'index',
-        })
+        try {
+            await authInteractor.signUpConfirmed(this.email, this.verifyCode)
+            await authInteractor.signIn(this.email, this.password)
+            const user = await userInteractor.fetchMyUserModel()
+            user.role = 'cleaner'
+            user.userHotelID = this.$route.params.userHotelID
+            await user.register()
+            this.$router.push({
+                name: 'index',
+            })
+        } catch (err) {
+            throw authInteractor.errorHandle(err as any)
+        }
     }
 
     public created() {

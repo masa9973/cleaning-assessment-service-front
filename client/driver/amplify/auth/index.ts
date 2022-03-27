@@ -1,5 +1,5 @@
 import { Auth } from '@aws-amplify/auth'
-import { Scalars } from 'cleaning-assessment-service-abr'
+import { ChillnnTrainingError, ErrorCode, Scalars } from 'cleaning-assessment-service-abr'
 
 class AuthInteractor {
     public async isSignIn(): Promise<boolean> {
@@ -61,6 +61,26 @@ class AuthInteractor {
         newPassword: string
     ): Promise<void> {
         await Auth.forgotPasswordSubmit(email, code, newPassword)
+    }
+
+    public errorHandle(err: Error): ChillnnTrainingError | null {
+        // Auth
+        switch (err.name) {
+            // Auth
+            case "UsernameExistsException":
+                return new ChillnnTrainingError(ErrorCode.chillnnTraining_email_already_exists);
+            case "CodeMismatchException":
+                return new ChillnnTrainingError(ErrorCode.chillnnTraining_code_mismatch);
+            case "UserNotConfirmedException":
+                return new ChillnnTrainingError(ErrorCode.chillnnTraining_user_not_confirmed);
+            case "InvalidParameterException":
+                switch (err.message) {
+                    case "Cannot reset password for the user as there is no registered/verified email or phone_number":
+                        return new ChillnnTrainingError(ErrorCode.chillnnTraining_user_not_confirmed);
+                }
+            default:
+                return new ChillnnTrainingError(ErrorCode.chillnnTraining_500_systemError);
+        }
     }
 }
 
