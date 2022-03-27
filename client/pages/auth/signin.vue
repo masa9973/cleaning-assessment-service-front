@@ -53,10 +53,14 @@ export default class SignInPage extends Vue {
 
     @AsyncLoadingAndErrorHandle()
     public async signIn() {
-        await authInteractor.signIn(this.email, this.password)
-        this.$router.push({
-            name: 'index',
-        })
+        try {
+            await authInteractor.signIn(this.email, this.password)
+            this.$router.push({
+                name: 'index',
+            })
+        } catch (err) {
+            throw authInteractor.errorHandle(err as any)
+        }
     }
 }
 </script>

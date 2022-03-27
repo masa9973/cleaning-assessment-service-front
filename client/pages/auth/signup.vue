@@ -53,17 +53,21 @@ export default class SignUpPage extends Vue {
 
     @AsyncLoadingAndErrorHandle()
     public async authSignUp() {
-        await authInteractor.signUp(this.email, this.password)
-        window.alert(
-            '認証用のメールを送信しました。認証コードをご確認ください。'
-        )
-        this.$router.push({
-            name: 'auth-verify',
-            query: {
-                email: this.email,
-                password: this.password,
-            },
-        })
+        try {
+            await authInteractor.signUp(this.email, this.password)
+            window.alert(
+                '認証用のメールを送信しました。認証コードをご確認ください。'
+            )
+            this.$router.push({
+                name: 'auth-verify',
+                query: {
+                    email: this.email,
+                    password: this.password,
+                },
+            })
+        } catch (err) {
+            throw authInteractor.errorHandle(err as any)
+        }
     }
 }
 </script>
