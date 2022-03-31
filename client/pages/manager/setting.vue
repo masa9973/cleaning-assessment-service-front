@@ -4,7 +4,7 @@
             <div class="invite_cleaner_url_container">
                 <div class="title">清掃者登録URL</div>
                 <div id="inviteUrl">
-                    https://dev.cleaning-assessment-service.ishikawam.com/auth_cleaner/signin/{{
+                    https://dev.cleaning-assessment.ishikawam.com/auth_cleaner/signin/{{
                         currentUser.userHotelID
                     }}
                 </div>
@@ -79,7 +79,11 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RoomModel, ScoreItemModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RoomModel,
+    ScoreItemModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
