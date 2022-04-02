@@ -20,7 +20,12 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RoomModel, ScoreItemModel, ScoreModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RoomModel,
+    ScoreItemModel,
+    ScoreModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import RoomInnerScoreCard from '@/components/Organisms/chart/room_average_score/room_inner_card/index.vue'
 @Component({
     components: {
@@ -35,14 +40,20 @@ export default class ScoreChart extends Vue {
     public scores: ScoreModel[] = []
 
     public async created() {
-    this.scoreModels = await this.scoreItemModel.fetchUserMonthScoresByRoomID(this.currentUser.userID, this.roomModel.roomID)
-    this.scores = this.scoreModels.filter((item) => item.scoreItemID === this.scoreItemModel.scoreItemID)
+        this.scoreModels =
+            await this.scoreItemModel.fetchUserMonthScoresByRoomID(
+                this.currentUser.userID,
+                this.roomModel.roomID
+            )
+        this.scores = this.scoreModels.filter(
+            (item) => item.scoreItemID === this.scoreItemModel.scoreItemID
+        )
     }
 }
 </script>
 <style lang="stylus" scoped>
 .chart_title {
-    font-weight: bold
+    font-weight: bold;
 }
 
 .scale_and_chart {
@@ -56,16 +67,18 @@ export default class ScoreChart extends Vue {
     .scale {
         height: 117px;
         font-size: 10px;
-        width 30px
-        position: relative
+        width: 30px;
+        position: relative;
+
         .scale_top {
-            position: absolute
-            left: 15px
+            position: absolute;
+            left: 15px;
         }
+
         .scale_bottom {
-            position: absolute
-            bottom: 7px
-            left: 15px
+            position: absolute;
+            bottom: 7px;
+            left: 15px;
         }
     }
 
@@ -74,6 +87,7 @@ export default class ScoreChart extends Vue {
         flex-direction: row-reverse;
         flex-wrap: nowrap;
         align-items: flex-end;
+        justify-content: flex-start;
         height: 115px;
         justify-content: space-evenly;
         flex-grow: 1;
