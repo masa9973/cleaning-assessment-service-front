@@ -189,7 +189,6 @@ export default class ManagerConfig extends Vue {
 
 .room_list_container {
     border: 1px solid #ccc;
-    padding: 5px;
     background-color: #fff;
     border-radius: 8px;
     margin: 5px;
