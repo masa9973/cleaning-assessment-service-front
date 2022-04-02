@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "abr": "sh node_modules/cleaning-assessment-service-abr/pull.sh",
-        "dev": "ENV=dev nuxt",
+        "dev": "ENV=dev nuxt --port 5050",
         "deploy": "sh deployFront.sh",
         "prd": "ENV=prd nuxt",
         "build": "nuxt build",
