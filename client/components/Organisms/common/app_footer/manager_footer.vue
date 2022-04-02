@@ -14,8 +14,8 @@
                             class="mx-auto"
                             src="~/assets/img/account_circle.png"
                         />
-                        <div class="text_container">アサイン</div>
                     </div>
+                    <div class="text_container">アサイン</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
