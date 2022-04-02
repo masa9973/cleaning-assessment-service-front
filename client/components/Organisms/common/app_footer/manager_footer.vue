@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="cleaner_footer_item_container">
+        <div class="cleaner_footer_item_container text-center">
             <div class="footer_button">
                 <nuxt-link
                     tag="div"
@@ -10,9 +10,12 @@
                     }"
                 >
                     <div class="image_container">
-                        <img src="~/assets/img/account_circle.png" />
+                        <img
+                            class="mx-auto"
+                            src="~/assets/img/account_circle.png"
+                        />
+                        <div class="text_container">アサイン</div>
                     </div>
-                    <div class="text_container">アサイン</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
@@ -24,7 +27,10 @@
                     }"
                 >
                     <div class="image_container">
-                        <img src="~/assets/img/check_circle_outline.png" />
+                        <img
+                            class="mx-auto"
+                            src="~/assets/img/check_circle_outline.png"
+                        />
                     </div>
                     <div class="text_container">評価</div>
                 </nuxt-link>
@@ -38,7 +44,7 @@
                     }"
                 >
                     <div class="image_container">
-                        <img src="~/assets/img/schedule.png" />
+                        <img class="mx-auto" src="~/assets/img/schedule.png" />
                     </div>
                     <div class="text_container">ユーザー一覧</div>
                 </nuxt-link>
@@ -52,7 +58,7 @@
                     }"
                 >
                     <div class="image_container">
-                        <img src="~/assets/img/settings.png" />
+                        <img class="mx-auto" src="~/assets/img/settings.png" />
                     </div>
                     <div class="text_container">設定</div>
                 </nuxt-link>
@@ -77,15 +83,16 @@ export default class AppManagerFooter extends Vue {}
 
     .footer_button {
         width: 30%;
-        text-align: center;
-        align-items: center;
-    .image_container {
-        height: 36px;
-    }
+
+        // text-align: center;
+        // align-items: center;
+        .image_container {
+            height: 36px;
+        }
     }
 
     .link_active_class {
-        background-color: #efefef
+        background-color: #efefef;
     }
 }
 </style>

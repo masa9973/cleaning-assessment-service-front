@@ -1,5 +1,5 @@
 <template>
-    <div class="cleaner_footer_item_container">
+    <div class="cleaner_footer_item_container text-center">
         <div class="footer_button">
             <nuxt-link
                 tag="div"
@@ -9,7 +9,10 @@
                 }"
             >
                 <div class="image_container">
-                    <img src="~/assets/img/account_circle.png" />
+                    <img
+                        class="mx-auto"
+                        src="~/assets/img/account_circle.png"
+                    />
                 </div>
                 <div class="text_container">ホーム</div>
             </nuxt-link>
@@ -23,7 +26,7 @@
                 }"
             >
                 <div class="image_container">
-                    <img src="~/assets/img/schedule.png" />
+                    <img class="mx-auto" src="~/assets/img/schedule.png" />
                 </div>
                 <div class="text_container">記録を見る</div>
             </nuxt-link>
@@ -56,7 +59,7 @@ export default class AppCleanerFooter extends Vue {}
     }
 
     .link_active_class {
-        background-color: #efefef
+        background-color: #efefef;
     }
 }
 </style>
