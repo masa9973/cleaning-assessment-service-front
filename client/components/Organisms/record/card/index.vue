@@ -31,6 +31,7 @@ import {
     millisecondToStringTime,
     RecordModel,
     RoomModel,
+    ScoreModel,
     UserModel,
 } from 'cleaning-assessment-service-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
@@ -44,7 +45,9 @@ import { userInteractor } from '~/api'
 export default class RecordCard extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
     public recordUser: UserModel | null = null
+    public viewCleaningDate: string = ''
     public room: RoomModel | null = null
+    public cleaningRoomName: string = ''
 
     async created() {
         this.recordUser = await userInteractor.fetchUserModelByUserID(
@@ -53,6 +56,12 @@ export default class RecordCard extends Vue {
         this.room = await userInteractor.fetchRoomByRoomID(
             this.recordModel.cleaningRoomID
         )
+        if (!this.room) {
+            throw new ChillnnTrainingError(
+                ErrorCode.chillnnTraining_404_resourceNotFound
+            )
+        }
+        this.cleaningRoomName = this.room.roomName
     }
 
     public getViewCleaningDate(createdAt: number) {
@@ -68,6 +77,10 @@ export default class RecordCard extends Vue {
 
     get createdAt() {
         return this.recordModel.createdAt
+    }
+
+    get cleanerID() {
+        return this.recordModel.cleanerID
     }
 
     get userIconUrl() {
@@ -90,14 +103,8 @@ export default class RecordCard extends Vue {
         return millisecondToStringTime(this.recordModel.cleaningTime)
     }
 
-    get cleaningRoomName() {
-        if (this.room) {
-            return this.room.roomName
-        } else {
-            throw new ChillnnTrainingError(
-                ErrorCode.chillnnTraining_404_resourceNotFound
-            )
-        }
+    get roomName() {
+        return this.room?.roomName
     }
 }
 </script>
