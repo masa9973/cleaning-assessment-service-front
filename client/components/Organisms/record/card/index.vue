@@ -20,7 +20,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </template>
@@ -37,18 +36,15 @@ import {
 } from 'cleaning-assessment-service-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
 import { userInteractor } from '~/api'
-import ScoreItemCard from '@/components/Organisms/score/score_item_card/index.vue'
 
 @Component({
     components: {
         UserIcon,
-        ScoreItemCard,
     },
 })
 export default class RecordCard extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
     public recordUser: UserModel | null = null
-    public scores: ScoreModel[] = []
     public viewCleaningDate: string = ''
     public room: RoomModel | null = null
     public cleaningRoomName: string = ''
@@ -57,7 +53,6 @@ export default class RecordCard extends Vue {
         this.recordUser = await userInteractor.fetchUserModelByUserID(
             this.recordModel.cleanerID
         )
-        this.scores = await this.recordModel.fetchScores()
         this.room = await userInteractor.fetchRoomByRoomID(
             this.recordModel.cleaningRoomID
         )
@@ -143,7 +138,7 @@ export default class RecordCard extends Vue {
     background-color: #F9F9FA;
 
     .cleaner_icon {
-        text-align: center
+        text-align: center;
     }
 
     img {
