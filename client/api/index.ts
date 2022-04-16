@@ -14,11 +14,11 @@ import { roomMastRepository } from './modules/GraphqlRoomMastRepository'
 import { scoreItemMastRepository } from './modules/GraphqlScoreItemMastRepository'
 
 const repositoryContainer = new RepositoryContainer(
+    hotelMastRepository,
     s3Repository,
     userMastRepository,
     recordMastRepository,
     scoreMastRepository,
-    hotelMastRepository,
     roomMastRepository,
     scoreItemMastRepository,
 )
