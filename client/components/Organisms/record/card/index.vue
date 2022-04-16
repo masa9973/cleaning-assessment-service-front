@@ -31,7 +31,6 @@ import {
     millisecondToStringTime,
     RecordModel,
     RoomModel,
-    ScoreModel,
     UserModel,
 } from 'cleaning-assessment-service-abr'
 import UserIcon from '@/components/Organisms/User/Icon/index.vue'
