@@ -1,13 +1,13 @@
 <template>
-    <div class="record_add_container">
+    <div class="text-center pt-60">
         <div class="time_add_cotainer">
-            <div class="start_time">
+            <div class="mb-10">
                 <div>開始時刻{{ viewStartTime }}</div>
                 <app-button :disabled="ifPushStartButton" @click="getStartTime">
                     清掃を開始
                 </app-button>
             </div>
-            <div class="finish_time">
+            <div class="mb-10">
                 <div>終了時刻{{ viewFinishedTime }}</div>
                 <app-button
                     :disabled="ifPushFinishButton"
@@ -17,21 +17,21 @@
                 </app-button>
             </div>
         </div>
-        <div class="app-button">
+        <div class="pb-2">
             <app-button @click="openModal">完了</app-button>
         </div>
-        <app-modal v-model="isShowModal" class="check_modal">
-            <div class="cleaning_result">
+        <app-modal v-model="isShowModal">
+            <div class="text-center">
                 <div>{{ viewStartTime }}〜{{ viewFinishedTime }}</div>
-                <div class="view_time">{{ viewTime }}</div>
+                <div class="text-2xl">{{ viewTime }}</div>
                 <app-button
-                    class="app_button"
+                    class="pb-2"
                     :disabled="!ifPushStartButton || !ifPushFinishButton"
                     @click="register"
                     >送信する</app-button
                 >
                 <app-button
-                    class="app_button"
+                    class="pb-2"
                     :disabled="!ifPushFinishButton"
                     @click="resetFinishButton"
                     >まだ終わっていない</app-button
@@ -119,29 +119,3 @@ export default class AddRecord extends Vue {
     }
 }
 </script>
-<style lang="stylus">
-.record_add_container {
-    text-align: center;
-    padding-top: 50%;
-
-    .start_time {
-        margin-bottom: 40px;
-    }
-
-    .finish_time {
-        margin-bottom: 40px;
-    }
-
-    .cleaning_result {
-        text-align: center;
-
-        .view_time {
-            font-size: 24px;
-        }
-
-        .app_button {
-            padding-bottom: 5px;
-        }
-    }
-}
-</style>

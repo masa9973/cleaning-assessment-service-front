@@ -1,9 +1,21 @@
 <template>
-    <div class="button_container">
-        <button :disabled="disabled" @click="click">
-            <slot />
-        </button>
-    </div>
+    <button
+        class="
+            bg-gray-300
+            rounded-md
+            text-base
+            w-[300px]
+            h-11
+            disabled:bg-slate-300
+            cursor-pointer
+            py-[5px]
+            px-[30px]
+        "
+        :disabled="disabled"
+        @click="click"
+    >
+        <slot />
+    </button>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
@@ -16,27 +28,3 @@ export default class AppButton extends Vue {
     }
 }
 </script>
-<style lang="stylus" scoped>
-.button_container {
-    display: inline-block;
-
-    button {
-        border: 0;
-        border-radius: 5px;
-        font-size: 16px;
-        padding: 5px 30px;
-        cursor: pointer;
-        width: 300px;
-        height: 44px;
-
-        @media only screen and (max-width: $spSize) {
-            font-size: 14px;
-            padding: 5px 20px;
-        }
-
-        &:disabled {
-            color: $borderColor;
-        }
-    }
-}
-</style>

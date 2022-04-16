@@ -7,7 +7,11 @@
         <div class="name">
             <!-- name -->
             <div>{{ userName }}さん</div>
-            <div v-if="showEdit" class="edit_button" @click="openModal">
+            <div
+                v-if="showEdit"
+                class="edit_button pt-1 pl-1"
+                @click="openModal"
+            >
                 <img src="~/assets/img/edit.svg" />
             </div>
         </div>
@@ -90,17 +94,9 @@ export default class UserIcon extends Vue {
 
         .edit_button {
             cursor: pointer;
-            padding-left: 15px;
             width: 20px;
             height: 20px;
             margin-bottom: 5px;
-
-            @media only screen and (max-width: $spSize) {
-                width: 15px;
-                height: 15px;
-                padding-left: 5px;
-                margin-bottom: 2px;
-            }
 
             img {
                 width: 100%;
