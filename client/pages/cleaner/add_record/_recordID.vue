@@ -17,7 +17,7 @@
                 </app-button>
             </div>
         </div>
-        <div class="pb-2">
+        <div class="mb-2">
             <app-button @click="openModal">完了</app-button>
         </div>
         <app-modal v-model="isShowModal">
@@ -25,13 +25,13 @@
                 <div>{{ viewStartTime }}〜{{ viewFinishedTime }}</div>
                 <div class="text-2xl">{{ viewTime }}</div>
                 <app-button
-                    class="pb-2"
+                    class="mb-2"
                     :disabled="!ifPushStartButton || !ifPushFinishButton"
                     @click="register"
                     >送信する</app-button
                 >
                 <app-button
-                    class="pb-2"
+                    class="mb-2"
                     :disabled="!ifPushFinishButton"
                     @click="resetFinishButton"
                     >まだ終わっていない</app-button
