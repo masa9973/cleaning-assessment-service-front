@@ -87,10 +87,8 @@ export default class ScoreChart extends Vue {
         flex-direction: row-reverse;
         flex-wrap: nowrap;
         align-items: flex-end;
-        justify-content: flex-start;
         height: 115px;
         justify-content: space-evenly;
-        flex-grow: 1;
     }
 }
 
