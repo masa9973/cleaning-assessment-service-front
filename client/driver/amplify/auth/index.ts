@@ -63,7 +63,7 @@ class AuthInteractor {
         await Auth.forgotPasswordSubmit(email, code, newPassword)
     }
 
-    public errorHandle(err: Error): ChillnnTrainingError | null {
+    public errorHandle(err: Error): ChillnnTrainingError | string {
         // Auth
         switch (err.name) {
             // Auth
@@ -77,10 +77,9 @@ class AuthInteractor {
                 switch (err.message) {
                     case "Cannot reset password for the user as there is no registered/verified email or phone_number":
                         return new ChillnnTrainingError(ErrorCode.chillnnTraining_user_not_confirmed);
+                    }
                 }
-            default:
-                return new ChillnnTrainingError(ErrorCode.chillnnTraining_500_systemError);
-        }
+            return "Incorrect Mail or Pass"
     }
 }
 
