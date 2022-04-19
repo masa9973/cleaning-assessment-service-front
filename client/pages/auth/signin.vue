@@ -22,6 +22,11 @@
                 >アカウントをお持ちでない方はこちら</link-button
             >
         </div>
+        <error-modal
+            v-if="openModal"
+            :error="err"
+            @close="openModal = false"
+        ></error-modal>
     </div>
 </template>
 <script lang="ts">
@@ -31,6 +36,7 @@ import AuthTitle from '@/components/Organisms/Auth/AuthTitle.vue'
 import AuthInput from '@/components/Organisms/Auth/AuthInput.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import LinkButton from '@/components/Atom/LinkButton.vue'
+import ErrorModal from '@/components/Organisms/modal/error_modal.vue'
 import { authInteractor } from '~/driver/amplify/auth'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
 
@@ -41,11 +47,14 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
         AuthInput,
         AppButton,
         LinkButton,
+        ErrorModal,
     },
 })
 export default class SignInPage extends Vue {
     public email: string = ''
     public password: string = ''
+    public err: any = ''
+    public openModal: boolean = false
 
     public get disabled() {
         return !this.email || !this.password
@@ -59,7 +68,8 @@ export default class SignInPage extends Vue {
                 name: 'index',
             })
         } catch (err) {
-            throw authInteractor.errorHandle(err as any)
+            this.openModal = true
+            this.err = authInteractor.errorHandle(err as any)
         }
     }
 }
