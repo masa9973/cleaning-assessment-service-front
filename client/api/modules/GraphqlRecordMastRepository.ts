@@ -1,4 +1,4 @@
-import { IRecordMastRepository, RecordMast } from 'cleaning-assessment-service-abr'
+import { IRecordMastRepository, RecordMast, RecordMastRepositoryCacheAdaptor } from 'cleaning-assessment-service-abr'
 import { callApi } from '../base'
 import * as query from '@/driver/amplify/graphql/queries'
 import * as mutation from '@/driver/amplify/graphql/mutations'
@@ -123,4 +123,7 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
     }
 }
 
-export const recordMastRepository = new GraphqlRecordMastRepository()
+export const recordMastRepository = new RecordMastRepositoryCacheAdaptor(
+    new GraphqlRecordMastRepository()
+)
+
