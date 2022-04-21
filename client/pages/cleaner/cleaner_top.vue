@@ -30,8 +30,10 @@
                     </nuxt-link>
                 </div>
             </div>
-            <div v-else>アサインされている清掃はありません</div>
+            <div v-else>アサインされている清掃はありません✌️</div>
         </body-wrapper>
+
+        <!-- フッターの分divとる -->
         <div class="h-[60px]"></div>
     </div>
 </template>
