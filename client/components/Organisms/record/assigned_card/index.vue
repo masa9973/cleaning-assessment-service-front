@@ -1,15 +1,21 @@
 <template>
     <div class="assigned_record_card">
         <div v-if="user" class="user_icon_wrapper">
-            <user-icon :user-model="user" :show-edit="isMyPage" />
+            <user-icon :user-model="user" :show-edit="false" />
         </div>
-        <div class="cleaning_room_name">{{ cleaningRoomName }}</div>
+        <div v-if="roomModel" class="cleaning_room_name">
+            {{ cleaningRoomName }}
+        </div>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 // component
-import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RecordModel,
+    RoomModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import UserIcon from '@/components//Organisms/User/Icon/index.vue'
 @Component({
@@ -21,8 +27,6 @@ export default class assignedRecordCard extends Vue {
     @Prop({ required: true }) recordModel!: RecordModel
     public user: UserModel | null = null
     public roomModel: RoomModel | null = null
-    public cleaningRoomName: string = ''
-    public isMyPage: boolean = false
     async created() {
         this.user = await userInteractor.fetchUserModelByUserID(
             this.recordModel.cleanerID
@@ -30,7 +34,10 @@ export default class assignedRecordCard extends Vue {
         this.roomModel = await userInteractor.fetchRoomByRoomID(
             this.recordModel.cleaningRoomID
         )
-        this.cleaningRoomName = this.roomModel!.roomName
+    }
+
+    get cleaningRoomName() {
+        return this.roomModel!.roomName
     }
 }
 </script>
@@ -51,7 +58,7 @@ export default class assignedRecordCard extends Vue {
         display: flex;
         justify-content: center;
         align-items: center;
-        width 30%
+        width: 30%;
     }
 }
 </style>
