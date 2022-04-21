@@ -46,7 +46,7 @@
                     <div class="image_container">
                         <img class="mx-auto" src="~/assets/img/schedule.png" />
                     </div>
-                    <div class="text_container">ユーザー一覧</div>
+                    <div class="text_container">過去の清掃</div>
                 </nuxt-link>
             </div>
             <div class="footer_button">
