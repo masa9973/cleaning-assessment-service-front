@@ -1,4 +1,4 @@
-import { IRoomMastRepository, RoomMast } from 'cleaning-assessment-service-abr';
+import { IRoomMastRepository, RoomMast, RoomMastRepositoryCacheAdaptor } from 'cleaning-assessment-service-abr';
 import { callApi } from '../base';
 import { AddRoomMutation, AddRoomMutationVariables, DeleteRoomMutation, DeleteRoomMutationVariables, FetchRoomByRoomIDQuery, FetchRoomByRoomIDQueryVariables, FetchRoomsByHotelIDQuery, FetchRoomsByHotelIDQueryVariables } from '~/driver/amplify/graphql/API';
 import * as query from '@/driver/amplify/graphql/queries'
@@ -46,3 +46,5 @@ class GraphqlRoomMastRepository implements IRoomMastRepository {
 }
 
 export const roomMastRepository = new GraphqlRoomMastRepository()
+
+// export const roomMastRepository = new RoomMastRepositoryCacheAdaptor(new GraphqlRoomMastRepository)
