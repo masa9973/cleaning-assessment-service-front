@@ -17,6 +17,7 @@ export async function callApi<U, T>(query: any, variables: T): Promise<U> {
     } catch (err) {
         console.error(err)
         const errorCode = (err as any).errors[0].message as ErrorCode
+        // 良いエラーメッセージは、次のアクションまでを指示する
         throw new ChillnnTrainingError(errorCode)
     }
 }
