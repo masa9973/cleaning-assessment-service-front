@@ -74,6 +74,7 @@ export default {
         '@nuxt/postcss8',
         "@nuxtjs/tailwindcss",
     ],
+    // ここのパス違うとカスタムの色効かなかったりする
     tailwindcss: {
         cssPath: "~/client/assets/css/tailwind.css",
         configPath: "~/tailwind.config.js",
