@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="assigned_cleaning">
-            <div class="left_room_item_container">
+            <body-wrapper>
                 <div v-if="leftRoomIDs.length" class="left_room_message">
                     未清掃の部屋一覧
                 </div>
@@ -12,8 +12,9 @@
                             name: 'manager-setting',
                         }"
                     >
-                        <div>清掃可能な部屋はありません</div>
-                        <div>ここを押して部屋を追加できます</div>
+                        <div>
+                            本日未清掃の部屋はありません🎉<br />ここを押して部屋を追加できます
+                        </div>
                     </nuxt-link>
                 </div>
                 <div class="left_room_container">
@@ -24,27 +25,36 @@
                         />
                     </div>
                 </div>
-            </div>
-            <div v-if="assignedRecords.length">
-                <div
-                    v-for="assignedRecord in assignedRecords"
-                    :key="assignedRecord.recordID"
-                >
-                    <div class="record_card_list">
-                        <assigned-record-card :record-model="assignedRecord" />
+            </body-wrapper>
+            <body-wrapper>
+                <div class="font-bold mb-[25px]">アサイン済みの清掃</div>
+                <div v-if="assignedRecords.length">
+                    <div
+                        v-for="assignedRecord in assignedRecords"
+                        :key="assignedRecord.recordID"
+                    >
+                        <div class="record_card_list">
+                            <assigned-record-card
+                                :record-model="assignedRecord"
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div v-else class="no_assigned_cleaning_message">
-                部屋を押して清掃をアサインできます。
-            </div>
+                <div v-else class="no_assigned_cleaning_message">
+                    部屋を押して清掃をアサインできます。
+                </div>
+            </body-wrapper>
         </div>
         <div class="blanc"></div>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RecordModel,
+    RoomModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import assignedRecordCard from '@/components/Organisms/record/assigned_card/index.vue'
@@ -52,6 +62,7 @@ import { userInteractor } from '~/api'
 import AssignRecord from '@/components/Organisms/record/assign_record/index.vue'
 import LeftRoomCard from '@/components/Organisms/room/left_room_card/index.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
+import BodyWrapper from '~/components/Organisms/common/body_wrapper/body_wrapper.vue'
 
 @Component({
     layout: 'manager',
@@ -61,6 +72,7 @@ import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
         assignedRecordCard,
         AssignRecord,
         LeftRoomCard,
+        BodyWrapper,
     },
 })
 export default class ManagerTopPage extends Vue {
@@ -100,17 +112,9 @@ export default class ManagerTopPage extends Vue {
     font-weight: bold;
 }
 
-.left_room_item_container {
-    border: 1px solid #ccc;
-    padding: 5px;
-    background-color: #fff;
-    border-radius: 8px;
-    margin: 5px;
-
-    .left_room_container {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.left_room_container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .blanc {

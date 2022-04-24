@@ -15,7 +15,7 @@
                         />
                     </div>
                 </div>
-                <div v-else>未評価の清掃はありません。</div>
+                <div v-else>未評価の清掃はありません🎉</div>
             </div>
         </div>
         <div class="blanc"></div>
@@ -52,8 +52,8 @@ export default class RecordListForManager extends Vue {
 </script>
 <style lang="stylus" scoped>
 .title {
-    font-weight: bold
-    margin-bottom: 25px
+    font-weight: bold;
+    margin-bottom: 25px;
 }
 
 .records_list_container {
