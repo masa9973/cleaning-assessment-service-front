@@ -218,6 +218,26 @@ export type AddScoreItemMutation = {
   },
 };
 
+export type AddTestRecordMutationVariables = {
+  input: RecordMastInput,
+};
+
+export type AddTestRecordMutation = {
+  addTestRecord:  {
+    __typename: "RecordMast",
+    cleanerID: string,
+    cleaningRoomID: string,
+    cleaningTime: number,
+    createdAt: number,
+    finishedAt: number,
+    ifScored: boolean,
+    recordDate: string,
+    recordHotelID: string,
+    recordID: string,
+    startAt: number,
+  },
+};
+
 export type DeleteRoomMutationVariables = {
   roomID: string,
 };

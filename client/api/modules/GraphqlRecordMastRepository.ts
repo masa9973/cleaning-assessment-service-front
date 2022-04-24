@@ -5,6 +5,8 @@ import * as mutation from '@/driver/amplify/graphql/mutations'
 import {
     AddRecordMutation,
     AddRecordMutationVariables,
+    AddTestRecordMutation,
+    AddTestRecordMutationVariables,
     FetchAllRecordsByHotelIDQuery,
     FetchAllRecordsByHotelIDQueryVariables,
     FetchRecordByRecordIDQuery,
@@ -42,6 +44,16 @@ class GraphqlRecordMastRepository implements IRecordMastRepository {
                 }
             )
         ).updateRecord
+    }
+
+    async addTestRecord(input: RecordMast): Promise<RecordMast> {
+        return (
+            await callApi<AddTestRecordMutation, AddTestRecordMutationVariables>(
+                mutation.addTestRecord, {
+                    input,
+                }
+            )
+        ).addTestRecord
     }
 
     async fetchRecordsByDate(

@@ -66,6 +66,22 @@ export const addScoreItem = /* GraphQL */ `
     }
   }
 `;
+export const addTestRecord = /* GraphQL */ `
+  mutation AddTestRecord($input: RecordMastInput!) {
+    addTestRecord(input: $input) {
+      cleanerID
+      cleaningRoomID
+      cleaningTime
+      createdAt
+      finishedAt
+      ifScored
+      recordDate
+      recordHotelID
+      recordID
+      startAt
+    }
+  }
+`;
 export const deleteRoom = /* GraphQL */ `
   mutation DeleteRoom($roomID: ID!) {
     deleteRoom(roomID: $roomID) {
