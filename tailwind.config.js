@@ -9,7 +9,11 @@ module.exports = {
   ],
   content: ["@/client/components/**/*.{vue,js,ts}", "@/client/layouts/**/*.vue", "@/client/pages/**/*.vue", "@/client/plugins/**/*.{js,ts}", "@/client/nuxt.config.{js,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        borderbase: '#ccc'
+      }
+    },
   },
   plugins: [],
 }
