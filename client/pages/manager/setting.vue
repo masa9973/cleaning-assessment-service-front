@@ -8,12 +8,15 @@
                         currentUser.userHotelID
                     }}
                 </div>
-                <button @click="writeToClipboard">URLコピー</button>
-                <div>
+                <div class="flex items-center justify-center mt-1">
+                    <app-button @click="writeToClipboard">URLコピー</app-button>
+                </div>
+                <!-- dev用 -->
+                <!-- <div>
                     localhost:3000/auth_cleaner/signin/{{
                         currentUser.userHotelID
                     }}
-                </div>
+                </div> -->
             </div>
             <div class="room_list_container">
                 <div class="title">登録済みの部屋一覧</div>
@@ -26,7 +29,7 @@
                         {{ room.roomName }}
                     </div>
                 </div>
-                <div class="register_button">
+                <div class="register_button mt-1">
                     <app-button @click="openAddRoomModal"
                         >部屋を登録する</app-button
                     >
@@ -43,7 +46,7 @@
                         {{ scoreItem.scoreItemName }}
                     </div>
                 </div>
-                <div class="register_button">
+                <div class="register_button mt-1">
                     <app-button @click="openAddItemModal"
                         >評価項目を登録する</app-button
                     >

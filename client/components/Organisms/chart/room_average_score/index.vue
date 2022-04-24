@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="chart_title">{{ scoreItemModel.scoreItemName }}</div>
-        <div class="scale_and_chart">
+        <div class="scale_and_chart overflow-x-scroll">
             <div class="scale">
                 <div class="scale_top">10</div>
                 <div class="scale_bottom">0</div>

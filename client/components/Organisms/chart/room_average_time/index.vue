@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="chart_title">清掃時間グラフ</div>
-        <div class="scale_and_chart">
+        <div class="scale_and_chart overflow-x-scroll">
             <div class="scale">
                 <div class="scale_top">1時間</div>
                 <div class="scale_bottom">0分</div>
@@ -22,7 +22,11 @@
 <script lang="ts">
 // recordをpropとして受け取って、cleaningTimeの値によってdivの大きさを変えられるようにする
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RecordModel,
+    RoomModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import RoomInnerTimeCard from '@/components/Organisms/chart/room_average_time/time_inner_card/index.vue'
 @Component({
     components: {
@@ -59,16 +63,18 @@ export default class TimeChart extends Vue {
     .scale {
         height: 117px;
         font-size: 10px;
-        width: 30px
-        position: relative
+        width: 30px;
+        position: relative;
+
         .scale_top {
-            position: absolute
-            left: 3px
+            position: absolute;
+            left: 3px;
         }
+
         .scale_bottom {
-            position: absolute
-            bottom: 0px
-            left: 6px
+            position: absolute;
+            bottom: 0px;
+            left: 6px;
         }
     }
 
