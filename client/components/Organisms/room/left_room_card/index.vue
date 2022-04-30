@@ -21,17 +21,26 @@
                 <app-button :disabled="!selectedUserID" @click="assigned"
                     >アサインする</app-button
                 >
+                <!-- テストデータを作成するためのボタン -->
+                <!-- <app-button :disabled="!selectedUserID" @click="test()"
+                    >テストデータを作成する</app-button
+                > -->
             </div>
         </app-modal>
     </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { RecordModel, RoomModel, UserModel } from 'cleaning-assessment-service-abr'
+import {
+    RecordModel,
+    RoomModel,
+    UserModel,
+} from 'cleaning-assessment-service-abr'
 import { userInteractor } from '~/api'
 import AppModal from '@/components/Organisms/common/app_modal/index.vue'
 import AppButton from '@/components/Atom/AppButton.vue'
 import { AsyncLoadingAndErrorHandle } from '~/util/decorator/baseDecorator'
+import { recordMastRepository } from '~/api/modules/GraphqlRecordMastRepository'
 
 @Component({
     components: {
@@ -68,6 +77,16 @@ export default class LeftRoomCard extends Vue {
         this.isShowModal = false
         this.$emit('registered')
     }
+
+    @AsyncLoadingAndErrorHandle()
+    public async test() {
+        this.blancRecord = await this.roomModel!.createNewRecord()
+        this.blancRecord.cleanerID = this.selectedUserID
+        await this.blancRecord.register()
+        await recordMastRepository.addTestRecord(this.blancRecord)
+        this.isShowModal = false
+        this.$emit('registered')
+    }
 }
 </script>
 <style lang="stylus" scoped>
@@ -79,12 +98,12 @@ export default class LeftRoomCard extends Vue {
 }
 
 .button_container {
-    text-align: center
+    text-align: center;
 }
 
 .choice_cleaner_container {
-    display: flex
-    justify-content: space-evenly
-    padding-bottom: 5px
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
 }
 </style>
